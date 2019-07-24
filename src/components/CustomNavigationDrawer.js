@@ -26,7 +26,7 @@ const Menu = [
 ];
 
 const styles = theme => ({
-    root: {
+    drawerPaper: {
       position: 'static'
     }
   });
@@ -43,11 +43,15 @@ export class CustomNavigationDrawer extends Component {
                 <Drawer
                 anchor="left"
                 variant="permanent"
-                className={classes.root}>
+                classes={{paper: classes.drawerPaper}}>
                     <List>
                         {Menu.map((item, index) => (
-                            <ListItem component={item.external ? MaterialLink : Link} href={item.external ? item.pathname : null} to={item.external ? null : {pathname: item.pathname, search: this.props.location.search}} button key={item.label}>
-                            <ListItemText primary={item.label} />
+                            <ListItem
+                                component={item.external ? MaterialLink : Link}
+                                href={item.external ? item.pathname : null}
+                                to={item.external ? null : {pathname: item.pathname, search: this.props.location.search}}
+                                button key={item.label}>
+                                <ListItemText primary={item.label} />
                             </ListItem>
                         ))}
                     </List>
@@ -61,8 +65,12 @@ export class CustomNavigationDrawer extends Component {
                 open={false}>
                     <List>
                         {Menu.map((item, index) => (
-                            <ListItem component={item.external ? MaterialLink : Link} href={item.external ? item.pathname : null} to={item.external ? null : {pathname: item.pathname, search: this.props.location.search}} button key={item.label}>
-                            <ListItemText primary={item.label} />
+                            <ListItem
+                                component={item.external ? MaterialLink : Link}
+                                href={item.external ? item.pathname : null}
+                                to={item.external ? null : {pathname: item.pathname, search: this.props.location.search}}
+                                button key={item.label}>
+                                <ListItemText primary={item.label} />
                             </ListItem>
                         ))}
                     </List>
