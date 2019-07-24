@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
-import { Link } from 'react-router-dom'
-
+import { Link, withRouter } from 'react-router-dom'
+import withStyles from '@material-ui/styles/withStyles';
 import { Link as MaterialLink } from '@material-ui/core';
 import List from '@material-ui/core/List';
 import ListItem from '@material-ui/core/ListItem';
@@ -8,7 +8,6 @@ import ListItemText from '@material-ui/core/ListItemText';
 import SwipeableDrawer from '@material-ui/core/SwipeableDrawer';
 import Drawer from '@material-ui/core/Drawer';
 import Hidden from '@material-ui/core/Hidden';
-import withStyles from '@material-ui/styles/withStyles';
 
 
 const Menu = [
@@ -27,10 +26,10 @@ const Menu = [
 ];
 
 const styles = theme => ({
-    visibleDrawer: {
-        backgroundColor: 'red'
+    root: {
+      position: 'static'
     }
-});
+  });
 
 
 export class CustomNavigationDrawer extends Component {
@@ -40,12 +39,11 @@ export class CustomNavigationDrawer extends Component {
 
         return(
         <React.Fragment>
-            <Hidden smUp implementation="css">
-                <SwipeableDrawer
+            <Hidden xsDown implementation="css">
+                <Drawer
                 anchor="left"
-                open={this.props.openDrawer}
-                onClose={this.props.mobileMenuClose}
-                onOpen={this.props.mobileMenuOpen}>
+                variant="permanent"
+                className={classes.root}>
                     <List>
                         {Menu.map((item, index) => (
                             <ListItem component={item.external ? MaterialLink : Link} href={item.external ? item.pathname : null} to={item.external ? null : {pathname: item.pathname, search: this.props.location.search}} button key={item.label}>
@@ -53,13 +51,14 @@ export class CustomNavigationDrawer extends Component {
                             </ListItem>
                         ))}
                     </List>
-                </SwipeableDrawer>
+                </Drawer>
             </Hidden>
 
-            <Hidden xsDown implementation="css">
+            <Hidden smUp implementation="css">
                 <Drawer
                 anchor="left"
-                variant="permanent">
+                variant="temporary"
+                open={false}>
                     <List>
                         {Menu.map((item, index) => (
                             <ListItem component={item.external ? MaterialLink : Link} href={item.external ? item.pathname : null} to={item.external ? null : {pathname: item.pathname, search: this.props.location.search}} button key={item.label}>
@@ -74,4 +73,4 @@ export class CustomNavigationDrawer extends Component {
     }
 }
 
-export default withStyles(styles)(CustomNavigationDrawer);
+export default withRouter(withStyles(styles)(CustomNavigationDrawer));

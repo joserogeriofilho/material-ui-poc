@@ -8,6 +8,7 @@ import { Route, Switch, BrowserRouter } from 'react-router-dom'
 import Page1 from './pages/Page1'
 import Page2 from './pages/Page2'
 import Page3 from './pages/Page3'
+import CustomNavigationDrawer from './components/CustomNavigationDrawer'
 
 
 const theme = createMuiTheme({
@@ -21,20 +22,16 @@ const theme = createMuiTheme({
   }
 });
 
-const navDrawerWidth = 240;
-
 const styles = theme => ({
   wrapper: {
     display: 'flex',
     height: '100%'
   },
   navDrawer: {
-    backgroundColor: 'lightgray',
-    width: navDrawerWidth,
     height: '100%'
   },
   content: {
-    backgroundColor: 'gray',
+    backgroundColor: '#fff',
     width: '100%',
     height: '100%'
   }
@@ -65,7 +62,7 @@ class App extends Component {
         <BrowserRouter>
           <div className={classes.wrapper}>
             <div className={classes.navDrawer}>
-              <span>Nav</span>
+              <CustomNavigationDrawer />
             </div>
             <div className={classes.content}>
               <Switch>
