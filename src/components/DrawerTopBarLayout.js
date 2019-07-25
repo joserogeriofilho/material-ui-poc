@@ -6,6 +6,7 @@ import List from '@material-ui/core/List';
 import ListItem from '@material-ui/core/ListItem';
 import ListItemText from '@material-ui/core/ListItemText';
 import Drawer from '@material-ui/core/Drawer';
+import SwipeableDrawer from '@material-ui/core/SwipeableDrawer';
 import Hidden from '@material-ui/core/Hidden';
 import AppBar from '@material-ui/core/AppBar';
 import Toolbar from '@material-ui/core/Toolbar';
@@ -50,15 +51,15 @@ const styles = theme => ({
 export class DrawerTopBarLayout extends Component {
 
     state = {
-        openDrawer: false
+        menuDrawer: false
     };
     
     mobileMenuOpen = (event) => {
-        this.setState({ openDrawer: true });
+        this.setState({ menuDrawer: true });
     }
     
     mobileMenuClose = (event) => {
-        this.setState({ openDrawer: false });
+        this.setState({ menuDrawer: false });
     }
 
     render(){
@@ -88,10 +89,11 @@ export class DrawerTopBarLayout extends Component {
                 </Hidden>
 
                 <Hidden smUp implementation="css">
-                    <Drawer
-                    anchor="left"
-                    variant="temporary"
-                    open={false}>
+                    <SwipeableDrawer anchor="left" variant="temporary"
+                    open={this.state.menuDrawer}
+                    onClose={this.mobileMenuClose}
+                    onOpen={this.mobileMenuOpen}
+                    classes={{paper: classes.drawerPaper, docked: classes.height100}}>
                         <List>
                             {Menu.map((item, index) => (
                                 <ListItem
@@ -103,7 +105,7 @@ export class DrawerTopBarLayout extends Component {
                                 </ListItem>
                             ))}
                         </List>
-                    </Drawer>
+                    </SwipeableDrawer>
                 </Hidden>
             </div>
 
@@ -111,7 +113,7 @@ export class DrawerTopBarLayout extends Component {
                 <Hidden smUp implementation="css">
                     <AppBar position="static">
                         <Toolbar>
-                            <IconButton edge="start" className={classes.menuButton} color="inherit" aria-label="Menu">
+                            <IconButton onClick={this.mobileMenuOpen} edge="start" className={classes.menuButton} color="inherit" aria-label="Menu">
                                 <MenuIcon />
                             </IconButton>
 
