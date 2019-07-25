@@ -13,6 +13,7 @@ import Toolbar from '@material-ui/core/Toolbar';
 import Typography from '@material-ui/core/Typography';
 import IconButton from '@material-ui/core/IconButton';
 import MenuIcon from '@material-ui/icons/Menu';
+import Divider from '@material-ui/core/Divider';
 
 
 const Menu = [
@@ -21,11 +22,11 @@ const Menu = [
         pathname: "/page1"
     },
     {
-        label: "User",
+        label: "User Registration",
         pathname: "/page2"
     },
     {
-        label: "Account",
+        label: "Card Grid",
         pathname: "/page3"
     }
 ];
@@ -39,11 +40,19 @@ const styles = theme => ({
         height: '100%'
       },
     content: {
-        width: '100%'
+        width: '100%',
     },
     drawerPaper: {
       position: 'static',
       width: '240px'
+    },
+    drawerHeader: {
+        backgroundColor: theme.palette.primary.main,
+        color: "white",
+        padding: '24px'
+    },
+    drawerTitle: {
+        lineHeight: '120%'
     }
   });
 
@@ -74,6 +83,12 @@ export class DrawerTopBarLayout extends Component {
                     anchor="left"
                     variant="permanent"
                     classes={{paper: classes.drawerPaper, docked: classes.height100}}>
+                        <div className={classes.drawerHeader}>
+                            <Typography variant="h6" className={classes.drawerTitle}>
+                                Material-UI<br/>Showcase
+                            </Typography>
+                        </div>
+
                         <List>
                             {Menu.map((item, index) => (
                                 <ListItem
@@ -94,6 +109,12 @@ export class DrawerTopBarLayout extends Component {
                     onClose={this.mobileMenuClose}
                     onOpen={this.mobileMenuOpen}
                     classes={{paper: classes.drawerPaper, docked: classes.height100}}>
+                        <div className={classes.drawerHeader}>
+                            <Typography variant="h6" className={classes.title}>
+                                Material-UI<br/>Showcase
+                            </Typography>
+                        </div>
+
                         <List>
                             {Menu.map((item, index) => (
                                 <ListItem
@@ -123,7 +144,7 @@ export class DrawerTopBarLayout extends Component {
                         </Toolbar>
                     </AppBar>
                 </Hidden>
-
+                
                 {this.props.children}
             </div>
         </div>
@@ -131,4 +152,4 @@ export class DrawerTopBarLayout extends Component {
     }
 }
 
-export default withRouter(withStyles(styles)(DrawerTopBarLayout));
+export default withRouter(withStyles(styles, {withTheme:true})(DrawerTopBarLayout));
