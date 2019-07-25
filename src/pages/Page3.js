@@ -1,7 +1,7 @@
 import React, { Component } from 'react'
 import { withRouter } from 'react-router-dom'
 import withStyles from '@material-ui/styles/withStyles';
-import DrawerTopBarLayout from '../components/DrawerTopBarLayout'
+import DrawerTopBarLayout from '../layouts/DrawerTopBarLayout'
 import Container from '@material-ui/core/Container';
 import Grid from '@material-ui/core/Grid';
 import Typography from '@material-ui/core/Typography';
