@@ -31,8 +31,8 @@ const styles = theme => ({
         height: '100%'
     },
     drawerPaper: {
-      position: 'static',
-      width: '240px'
+    position: 'static',
+    width: '240px'
     },
     drawerHeader: {
         backgroundColor: theme.palette.primary.main,
@@ -44,10 +44,10 @@ const styles = theme => ({
     }
 });
 
-class NavigationDrawer extends Component {
 
-    render(){
-        const { classes } = this.props;
+export function NavigationDrawer(props){
+
+        const { classes } = props;
 
         const drawer = (
             <React.Fragment>
@@ -62,7 +62,7 @@ class NavigationDrawer extends Component {
                         <ListItem
                             component={item.external ? MaterialLink : Link}
                             href={item.external ? item.pathname : null}
-                            to={item.external ? null : {pathname: item.pathname, search: this.props.location.search}}
+                            to={item.external ? null : {pathname: item.pathname, search: props.location.search}}
                             button key={item.label}>
                             <ListItemText primary={item.label} />
                         </ListItem>
@@ -84,16 +84,15 @@ class NavigationDrawer extends Component {
 
                 <Hidden smUp implementation="css">
                     <SwipeableDrawer anchor="left" variant="temporary"
-                        open={this.props.menuDrawer}
-                        onOpen={this.props.mobileMenuOpen}
-                        onClose={this.props.mobileMenuClose}
+                        open={props.menuDrawer}
+                        onOpen={props.mobileMenuOpen}
+                        onClose={props.mobileMenuClose}
                         classes={{paper: classes.drawerPaper, docked: classes.height100}}>
                             {drawer}
                     </SwipeableDrawer>
                 </Hidden>
             </React.Fragment>
         );
-    }
 }
 
 export default withRouter(withStyles(styles, {withTheme:true})(NavigationDrawer));
