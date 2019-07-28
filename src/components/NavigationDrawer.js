@@ -1,4 +1,4 @@
-import React, { Component } from 'react'
+import React from 'react'
 import { Link, withRouter } from 'react-router-dom'
 import withStyles from '@material-ui/styles/withStyles';
 import { Link as MaterialLink } from '@material-ui/core';
@@ -9,20 +9,24 @@ import Drawer from '@material-ui/core/Drawer';
 import SwipeableDrawer from '@material-ui/core/SwipeableDrawer';
 import Hidden from '@material-ui/core/Hidden';
 import Typography from '@material-ui/core/Typography';
+import ListItemIcon from '@material-ui/core/ListItemIcon';
 
 
 const Menu = [
     {
         label: "Home",
-        pathname: "/"
+        pathname: "/",
+        icon: "home"
     },
     {
         label: "User Registration",
-        pathname: "/userRegistration"
+        pathname: "/userRegistration",
+        icon: "person"
     },
     {
         label: "Card Grid",
-        pathname: "/cardGrid"
+        pathname: "/cardGrid",
+        icon: "collections"
     }
 ];
 
@@ -42,9 +46,16 @@ const styles = theme => ({
     drawerTitle: {
         lineHeight: '120%'
     },
+    item: {
+        fontWeight: '500',
+        fontSize: '14px'
+    },
     selectedItem: {
         color: theme.palette.secondary.main,
-        backgroundColor: 'transparent !important'
+        backgroundColor: 'transparent !important',
+        '& .MuiListItemIcon-root': {
+            color: theme.palette.secondary.main
+        }
     }
 });
 
@@ -68,10 +79,11 @@ export function NavigationDrawer(props){
                             href={item.external ? item.pathname : null}
                             to={item.external ? null : {pathname: item.pathname, search: props.location.search}}
                             selected={props.location.pathname === item.pathname ? true : false}
-                            classes = {{selected: classes.selectedItem}}
+                            classes = {{root: classes.itemRoot, selected: classes.selectedItem}}
                             button
                             key={item.label}>
-                            <ListItemText primary={item.label} />
+                            <ListItemIcon><i className="material-icons list-icon">{ item.icon }</i></ListItemIcon>
+                            <ListItemText primary={item.label} classes={{primary: classes.item}} />
                         </ListItem>
                     ))}
                 </List>

@@ -9,9 +9,8 @@ import Hidden from '@material-ui/core/Hidden';
 
 
 const styles = theme => ({
-  pagetitle: {
-    paddingTop: '24px',
-    color: theme.palette.secondary.main
+  paddingTop: {
+    paddingTop: '24px'
   },
 });
 
@@ -29,7 +28,7 @@ export class CardGridPage extends Component {
               <Grid container spacing={3}>
                 <Grid item xs={12}>
                   <Hidden xsDown implementation="css">
-                    <Typography variant="h5" className={classes.pagetitle}>
+                    <Typography variant="h5" className={classes.paddingTop}  color='secondary'>
                       {pageTitle}
                     </Typography>
                   </Hidden>

@@ -12,7 +12,7 @@ const styles = theme => ({
         height: '100%'
     },
     content: {
-        width: '100%'
+        width: '100%',
     },
 });
 

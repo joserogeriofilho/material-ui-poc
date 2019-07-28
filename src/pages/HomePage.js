@@ -10,9 +10,8 @@ import Button from '@material-ui/core/Button';
 
 
 const styles = theme => ({
-    pagetitle: {
-      paddingTop: '24px',
-      color: theme.palette.secondary.main
+  paddingTop24: {
+      paddingTop: '24px'
     },
     button: {
       margin: theme.spacing(1),
@@ -33,7 +32,7 @@ export class HomePage extends Component {
               <Grid container spacing={3}>
                 <Grid item xs={12}>
                   <Hidden xsDown implementation="css">
-                    <Typography variant="h5" className={classes.pagetitle}>
+                    <Typography variant="h5" className={classes.paddingTop24}  color='secondary'>
                       {pageTitle}
                     </Typography>
                   </Hidden>
