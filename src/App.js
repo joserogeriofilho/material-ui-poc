@@ -9,10 +9,10 @@ import Routes from './Routes'
 const theme = createMuiTheme({
   palette: {
     secondary: {
-      main: blue[900]
+      main: '#E91E63'
     },
     primary: {
-      main: indigo[700]
+      main: '#282E3D'
     }
   }
 });

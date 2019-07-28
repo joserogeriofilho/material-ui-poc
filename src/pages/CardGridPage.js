@@ -9,24 +9,27 @@ import Hidden from '@material-ui/core/Hidden';
 
 
 const styles = theme => ({
-    
-  });
+  pagetitle: {
+    paddingTop: '24px',
+    color: theme.palette.secondary.main
+  },
+});
 
 
-export class Page1 extends Component {
+export class CardGridPage extends Component {
 
     render(){
         const { classes } = this.props;
-        const pageTitle = "Home";
-
+        const pageTitle = "Card Grid";
+        
         return (
-          <DrawerTopBarLayout title={pageTitle}>
+            <DrawerTopBarLayout title={pageTitle}>
 
             <Container>
               <Grid container spacing={3}>
                 <Grid item xs={12}>
                   <Hidden xsDown implementation="css">
-                    <Typography variant="h5">
+                    <Typography variant="h5" className={classes.pagetitle}>
                       {pageTitle}
                     </Typography>
                   </Hidden>
@@ -38,10 +41,10 @@ export class Page1 extends Component {
               </Grid>
             </Container>
 
-          </DrawerTopBarLayout>
+            </DrawerTopBarLayout>
         );
     }
 
 }
 
-export default withRouter(withStyles(styles)(Page1));
+export default withRouter(withStyles(styles)(CardGridPage));

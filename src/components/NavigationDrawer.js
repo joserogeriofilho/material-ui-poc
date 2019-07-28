@@ -14,15 +14,15 @@ import Typography from '@material-ui/core/Typography';
 const Menu = [
     {
         label: "Home",
-        pathname: "/page1"
+        pathname: "/"
     },
     {
         label: "User Registration",
-        pathname: "/page2"
+        pathname: "/userRegistration"
     },
     {
         label: "Card Grid",
-        pathname: "/page3"
+        pathname: "/cardGrid"
     }
 ];
 
@@ -41,6 +41,10 @@ const styles = theme => ({
     },
     drawerTitle: {
         lineHeight: '120%'
+    },
+    selectedItem: {
+        color: theme.palette.secondary.main,
+        backgroundColor: 'transparent !important'
     }
 });
 
@@ -63,7 +67,10 @@ export function NavigationDrawer(props){
                             component={item.external ? MaterialLink : Link}
                             href={item.external ? item.pathname : null}
                             to={item.external ? null : {pathname: item.pathname, search: props.location.search}}
-                            button key={item.label}>
+                            selected={props.location.pathname === item.pathname ? true : false}
+                            classes = {{selected: classes.selectedItem}}
+                            button
+                            key={item.label}>
                             <ListItemText primary={item.label} />
                         </ListItem>
                     ))}

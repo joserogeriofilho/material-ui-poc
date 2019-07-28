@@ -10,10 +10,10 @@ const styles = theme => ({
     wrapper: {
         display: 'flex',
         height: '100%'
-      },
+    },
     content: {
-        width: '100%',
-    }
+        width: '100%'
+    },
 });
 
 

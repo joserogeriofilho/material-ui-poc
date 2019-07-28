@@ -1,16 +1,16 @@
 import React from 'react'
 import { Route, Switch, BrowserRouter } from 'react-router-dom'
-import Page1 from './pages/Page1'
-import Page2 from './pages/Page2'
-import Page3 from './pages/Page3'
+import HomePage from './pages/HomePage'
+import UserRegistrationPage from './pages/UserRegistrationPage'
+import CardGridPage from './pages/CardGridPage'
 
 export default props => (
     <BrowserRouter>
         <Switch>
-            <Route exact path='/' component={ Page1 } />
-            <Route exact path='/page1' component={ Page1 } />
-            <Route exact path='/page2' component={ Page2 } />
-            <Route exact path='/page3' component={ Page3 } />
+            <Route exact path='/' component={ HomePage } />
+            <Route exact path='/home' component={ HomePage } />
+            <Route exact path='/userRegistration' component={ UserRegistrationPage } />
+            <Route exact path='/cardGrid' component={ CardGridPage } />
         </Switch>
     </BrowserRouter>
   )

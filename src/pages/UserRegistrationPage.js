@@ -9,11 +9,14 @@ import Hidden from '@material-ui/core/Hidden';
 
 
 const styles = theme => ({
-    
+  pagetitle: {
+    paddingTop: '24px',
+    color: theme.palette.secondary.main
+  },
 });
 
 
-export class Page2 extends Component {
+export class UserRegistrationPage extends Component {
 
     render(){
         const { classes } = this.props;
@@ -26,7 +29,7 @@ export class Page2 extends Component {
               <Grid container spacing={3}>
                 <Grid item xs={12}>
                   <Hidden xsDown implementation="css">
-                    <Typography variant="h5">
+                    <Typography variant="h5" className={classes.pagetitle}>
                       {pageTitle}
                     </Typography>
                   </Hidden>
@@ -44,4 +47,4 @@ export class Page2 extends Component {
 
 }
 
-export default withRouter(withStyles(styles)(Page2));
+export default withRouter(withStyles(styles)(UserRegistrationPage));
