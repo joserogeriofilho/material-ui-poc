@@ -2,7 +2,6 @@ import React, { Component } from 'react'
 import { withRouter } from 'react-router-dom'
 import withStyles from '@material-ui/styles/withStyles';
 import DrawerTopBarLayout from '../layouts/DrawerTopBarLayout'
-import Container from '@material-ui/core/Container';
 import Grid from '@material-ui/core/Grid';
 import Typography from '@material-ui/core/Typography';
 import Hidden from '@material-ui/core/Hidden';
@@ -11,7 +10,7 @@ import Paper from '@material-ui/core/Paper';
 
 const styles = theme => ({
   paperRoot: {
-    padding: theme.spacing(3, 2)
+    padding: theme.spacing(2)
   }
 });
 
@@ -24,11 +23,9 @@ export class UserRegistrationPage extends Component {
         
         return (
             <DrawerTopBarLayout title={pageTitle}>
+              <Grid container spacing={3}>
 
-            <Container>
-              <Grid container>
-
-                <Hidden xsDown implementation="css">
+                <Hidden xsDown>
                   <Grid item xs={12}>
                     <Typography variant="h5" color='secondary'>
                       {pageTitle}
@@ -54,8 +51,6 @@ export class UserRegistrationPage extends Component {
                 </Grid>
 
               </Grid>
-            </Container>
-
             </DrawerTopBarLayout>
         );
     }

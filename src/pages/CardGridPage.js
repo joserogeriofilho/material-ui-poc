@@ -23,23 +23,17 @@ export class CardGridPage extends Component {
         
         return (
             <DrawerTopBarLayout title={pageTitle}>
-
-            <Container>
               <Grid container spacing={3}>
-                <Grid item xs={12}>
-                  <Hidden xsDown implementation="css">
-                    <Typography variant="h5" className={classes.paddingTop}  color='secondary'>
+
+                <Hidden xsDown>
+                  <Grid item xs={12}>
+                    <Typography variant="h5" color='secondary'>
                       {pageTitle}
                     </Typography>
-                  </Hidden>
+                  </Grid>
+                </Hidden>
 
-                  <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aenean aliquam varius felis sed pulvinar. Quisque luctus lacus mi, in gravida felis iaculis vel. Donec blandit dapibus tempus. Nam pulvinar placerat iaculis. In viverra eu urna interdum molestie. Cras mollis orci vitae sollicitudin imperdiet. Nulla fringilla sollicitudin odio, bibendum imperdiet purus consequat convallis. Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas.</p>
-
-                  <p>Nunc finibus odio nec luctus interdum. Suspendisse potenti. Ut tincidunt orci libero, id efficitur tellus commodo eget. Integer vitae porttitor tortor. Proin tincidunt ante sagittis dignissim tempor. Cras mollis tortor et dapibus consequat. Duis quis ipsum at elit gravida mattis eget congue mauris.</p>
-                </Grid>
               </Grid>
-            </Container>
-
             </DrawerTopBarLayout>
         );
     }
