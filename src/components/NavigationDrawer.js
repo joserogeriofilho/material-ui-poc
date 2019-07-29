@@ -19,8 +19,8 @@ const Menu = [
         icon: "home"
     },
     {
-        label: "User Registration",
-        pathname: "/userRegistration",
+        label: "Users",
+        pathname: "/users",
         icon: "person"
     },
     {
