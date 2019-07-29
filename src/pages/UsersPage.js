@@ -12,7 +12,12 @@ import Button from '@material-ui/core/Button'
 
 const styles = theme => ({
   paper: {
-    padding: theme.spacing(3)
+    padding: theme.spacing(3),
+    [theme.breakpoints.down('xs')]: {
+      backgroundColor: 'transparent',
+      boxShadow: 'none',
+      padding: theme.spacing(0, 0, 3, 0)
+    }
   },
   buttons: {
     display: 'flex',
