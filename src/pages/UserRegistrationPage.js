@@ -10,8 +10,11 @@ import TextField from '@material-ui/core/TextField';
 
 
 const styles = theme => ({
-  paperRoot: {
-    padding: theme.spacing(2)
+  paper: {
+    padding: theme.spacing(3)
+  },
+  textFieldRoot: {
+    marginTop: theme.spacing(0)
   }
 });
 
@@ -28,53 +31,48 @@ export class UserRegistrationPage extends Component {
 
                 <Hidden xsDown>
                   <Grid item xs={12}>
-                    <Typography variant="h5" color='secondary'>
+                    <Typography variant="h5" color='secondary' gutterBottom={true}>
                       {pageTitle}
                     </Typography>
                   </Grid>
                 </Hidden>
 
                 <Grid item xs={12}>
-                  <Paper className={classes.paperRoot}>
-
+                  <Paper className={classes.paper}>
+                  <Grid container spacing={3}>
                     <Grid item xs={12}>
                       <Typography variant="h6" component="h3">
                         Add New User
                       </Typography>
                     </Grid>
-
-                    <form noValidate autoComplete="off">
-                      <Grid item xs={12} container>
-                        <Grid item xs={12} sm={6}>
-                          <TextField
-                            id="user-last-name"
-                            label="Last Name"
-                            value={null}
-                            onChange={null}
-                            margin="normal"
-                            variant="outlined"
-                            fullWidth
-                          />
-                        </Grid>
-
-                        <Grid item xs={12} sm={6}>
-                          <TextField
-                            id="user-first-name"
-                            label="First Name"
-                            value={null}
-                            onChange={null}
-                            margin="normal"
-                            variant="outlined"
-                            fullWidth
-                          />
-                        </Grid>
-                      </Grid>
-                    </form>
+                    <Grid item xs={12} sm={6}>
+                      <TextField
+                        id="user-last-name"
+                        label="Last Name"
+                        value={null}
+                        onChange={null}
+                        margin="normal"
+                        variant="outlined"
+                        classes={{root: classes.textFieldRoot}}
+                        fullWidth />
+                    </Grid>
+                    <Grid item xs={12} sm={6}>
+                      <TextField
+                        id="user-first-name"
+                        label="First Name"
+                        value={null}
+                        onChange={null}
+                        margin="normal"
+                        variant="outlined"
+                        classes={{root: classes.textFieldRoot}}
+                        fullWidth />
+                    </Grid>
+                  </Grid>
                   </Paper>
                 </Grid>
 
                 <Grid item xs={12}>
-                  <Paper className={classes.paperRoot}>
+                  <Paper>
                     <Typography variant="h5" component="h3">
                       List of Users
                     </Typography>
