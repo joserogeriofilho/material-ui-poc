@@ -16,7 +16,7 @@ const styles = theme => ({
     [theme.breakpoints.down('xs')]: {
       backgroundColor: 'transparent',
       boxShadow: 'none',
-      padding: theme.spacing(0, 0, 3, 0)
+      padding: theme.spacing(0, 0, 2, 0)
     }
   },
   buttons: {
@@ -34,11 +34,11 @@ export class UsersPage extends Component {
         
         return (
             <DrawerTopBarLayout title={pageTitle}>
-              <Grid container spacing={2}>
+              <Grid container spacing={3}>
 
                 <Hidden xsDown>
                   <Grid item xs={12}>
-                    <Typography variant="h5" color='secondary' gutterBottom={true}>
+                    <Typography variant="h5" color='secondary'>
                       {pageTitle}
                     </Typography>
                   </Grid>
