@@ -44,7 +44,8 @@ const styles = theme => ({
         padding: '24px'
     },
     drawerTitle: {
-        lineHeight: '120%'
+        lineHeight: '120%',
+        fontSize: '1.13rem'
     },
     item: {
         fontWeight: '500',
