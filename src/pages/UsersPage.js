@@ -16,7 +16,7 @@ const styles = theme => ({
     [theme.breakpoints.down('xs')]: {
       backgroundColor: 'transparent',
       boxShadow: 'none',
-      padding: theme.spacing(0, 0, 2, 0)
+      padding: theme.spacing(0, 1, 2, 1)
     }
   },
   buttons: {

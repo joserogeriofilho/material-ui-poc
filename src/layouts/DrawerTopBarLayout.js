@@ -2,9 +2,9 @@ import React, { Component } from 'react'
 import { withRouter } from 'react-router-dom'
 import withStyles from '@material-ui/styles/withStyles'
 import Hidden from '@material-ui/core/Hidden'
+import Container from '@material-ui/core/Container'
 import NavigationDrawer from '../components/NavigationDrawer'
 import { TopBar } from '../components/TopBar'
-import Grid from '@material-ui/core/Grid';
 
 
 const styles = theme => ({
@@ -16,7 +16,7 @@ const styles = theme => ({
         width: '100%'
     },
     content: {
-        padding: theme.spacing(3)
+        padding: theme.spacing(3, 0, 0, 0)
     },
 });
 
@@ -51,7 +51,9 @@ class DrawerTopBarLayout extends Component {
                 </Hidden>
                 
                 <div className={classes.content}>
-                    {this.props.children}
+                    <Container maxWidth={'lg'}>
+                        {this.props.children}
+                    </Container>
                 </div>
             </div>
         </div>

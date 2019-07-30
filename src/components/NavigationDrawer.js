@@ -40,12 +40,16 @@ const styles = theme => ({
     },
     drawerHeader: {
         backgroundColor: theme.palette.primary.main,
-        color: "white",
+        color: 'white',
+        display: 'flex',
+        flexDirection: 'column-reverse',
+        height: '128px',
         padding: '24px'
     },
     drawerTitle: {
-        lineHeight: '120%',
-        fontSize: '1.13rem'
+        lineHeight: '125%',
+        fontSize: '0.875rem',
+        fontWeight: 500
     },
     item: {
         fontWeight: '500',
