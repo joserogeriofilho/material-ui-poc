@@ -97,7 +97,7 @@ export function NavigationDrawer(props){
 
         return(
             <React.Fragment>
-                <Hidden className={classes.height100} xsDown implementation="css">
+                <Hidden className={classes.height100} smDown implementation="css">
                     <Drawer
                     anchor="left"
                     variant="permanent"

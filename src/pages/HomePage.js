@@ -2,16 +2,14 @@ import React, { Component } from 'react'
 import { withRouter } from 'react-router-dom'
 import withStyles from '@material-ui/styles/withStyles';
 import DrawerTopBarLayout from '../layouts/DrawerTopBarLayout'
-import Container from '@material-ui/core/Container';
 import Grid from '@material-ui/core/Grid';
 import Typography from '@material-ui/core/Typography';
 import Hidden from '@material-ui/core/Hidden';
-import Button from '@material-ui/core/Button';
 
 
 const styles = theme => ({
 
-  });
+});
 
 
 export class HomePage extends Component {
@@ -22,7 +20,6 @@ export class HomePage extends Component {
 
         return (
           <DrawerTopBarLayout title={pageTitle}>
-
             <Grid container spacing={3}>
 
               <Hidden xsDown>
@@ -34,7 +31,6 @@ export class HomePage extends Component {
               </Hidden>
 
             </Grid>
-
           </DrawerTopBarLayout>
         );
     }

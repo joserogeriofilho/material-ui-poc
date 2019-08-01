@@ -8,6 +8,11 @@ import Hidden from '@material-ui/core/Hidden';
 import Paper from '@material-ui/core/Paper';
 import TextField from '@material-ui/core/TextField';
 import Button from '@material-ui/core/Button'
+import Table from '@material-ui/core/Table';
+import TableBody from '@material-ui/core/TableBody';
+import TableCell from '@material-ui/core/TableCell';
+import TableHead from '@material-ui/core/TableHead';
+import TableRow from '@material-ui/core/TableRow';
 
 
 const styles = theme => ({
@@ -25,102 +30,166 @@ const styles = theme => ({
   }
 });
 
+const API_URL = 'https://react-showcase-server.herokuapp.com/';
+const DEFAULT_QUERY = 'users';
+const SORT_QUERY = '?_sort=lastName&_order=asc';
+
 
 export class UsersPage extends Component {
 
-    render(){
-        const { classes } = this.props;
-        const pageTitle = "Users";
-        
-        return (
-            <DrawerTopBarLayout title={pageTitle}>
-              <Grid container spacing={3}>
+  constructor(props){
+    super(props);
 
-                <Hidden xsDown>
-                  <Grid item xs={12}>
-                    <Typography variant="h5" color='secondary'>
-                      {pageTitle}
-                    </Typography>
-                  </Grid>
-                </Hidden>
+    this.getUsers = this.getUsers.bind(this);
+  }
 
+  state = {
+    lastName: '',
+    firstName: '',
+    username: '',
+    email: '',
+    users: [],
+    isLoading: false,
+    error: null
+  };
+
+  getUsers() {
+    this.setState({ isLoading: true });
+
+    fetch(API_URL + DEFAULT_QUERY + SORT_QUERY)
+      .then(response => {
+          if(response.ok) {
+              return response.json()
+          } else {
+              throw new Error('Something went wrong...')
+          }
+      })
+      .then(data => this.setState({ users: data, isLoading: false}))
+      .catch(error => this.setState({ error, isLoading: false }));
+  }
+
+  componentDidMount() {
+    this.getUsers();
+  }
+
+render(){
+  const { classes } = this.props;
+  const pageTitle = "Users";
+  
+  return (
+    <DrawerTopBarLayout title={pageTitle}>
+        <Grid container spacing={3}>
+
+          <Hidden smDown>
+            <Grid item xs={12}>
+              <Typography variant="h5" color='secondary'>
+                {pageTitle}
+              </Typography>
+            </Grid>
+          </Hidden>
+
+          <Grid item xs={12}>
+            <Paper className={classes.paper}>
+              <Grid container spacing={2}>
                 <Grid item xs={12}>
-                  <Paper className={classes.paper}>
-                    <Grid container spacing={2}>
-                      <Grid item xs={12}>
-                        <Typography variant="h6" component="h3">
-                          Add New User
-                        </Typography>
-                      </Grid>
-                      <Grid item xs={12} sm={6}>
-                        <TextField
-                          id="user-last-name"
-                          label="Last Name"
-                          value={null}
-                          onChange={null}
-                          margin="dense"
-                          variant="outlined"
-                          fullWidth />
-                      </Grid>
-                      <Grid item xs={12} sm={6}>
-                        <TextField
-                          id="user-first-name"
-                          label="First Name"
-                          value={null}
-                          onChange={null}
-                          margin="dense"
-                          variant="outlined"
-                          fullWidth />
-                      </Grid>
-                      <Grid item xs={12} sm={6}>
-                        <TextField
-                          id="user-name"
-                          label="Username"
-                          value={null}
-                          onChange={null}
-                          margin="dense"
-                          variant="outlined"
-                          fullWidth />
-                      </Grid>
-                      <Grid item xs={12} sm={6}>
-                        <TextField
-                          id="user-email"
-                          label="E-mail"
-                          helperText="We'll never share your e-mail with anyone else."
-                          value={null}
-                          onChange={null}
-                          margin="dense"
-                          variant="outlined"
-                          fullWidth />
-                      </Grid>
-                      <Grid item xs={12} className={classes.buttons}>
-                        <Button className={classes.button}>
-                          CLEAR FORM
-                        </Button>
-                        <Button variant="contained" color="secondary" className={classes.button}>
-                          ADD USER
-                        </Button>
-                      </Grid>
-                    </Grid>
-                  </Paper>
+                  <Typography variant="h6" component="h3">
+                    Add New User
+                  </Typography>
                 </Grid>
-
-                <Grid item xs={12}>
-                  <Paper className={classes.paper}>
-                    <Grid container spacing={2}>
-                      <Grid item xs={12}>
-                        <Typography variant="h6" component="h3">
-                          List of Users
-                        </Typography>
-                      </Grid>
-                    </Grid>
-                  </Paper>
+                <Grid item xs={12} sm={6}>
+                  <TextField
+                    id="user-last-name"
+                    label="Last Name"
+                    value={null}
+                    onChange={null}
+                    margin="dense"
+                    variant="outlined"
+                    fullWidth />
                 </Grid>
-
+                <Grid item xs={12} sm={6}>
+                  <TextField
+                    id="user-first-name"
+                    label="First Name"
+                    value={null}
+                    onChange={null}
+                    margin="dense"
+                    variant="outlined"
+                    fullWidth />
+                </Grid>
+                <Grid item xs={12} sm={6}>
+                  <TextField
+                    id="user-name"
+                    label="Username"
+                    value={null}
+                    onChange={null}
+                    margin="dense"
+                    variant="outlined"
+                    fullWidth />
+                </Grid>
+                <Grid item xs={12} sm={6}>
+                  <TextField
+                    id="user-email"
+                    label="E-mail"
+                    helperText="We'll never share your e-mail with anyone else."
+                    value={null}
+                    onChange={null}
+                    margin="dense"
+                    variant="outlined"
+                    fullWidth />
+                </Grid>
+                <Grid item xs={12} className={classes.buttons}>
+                  <Button className={classes.button}>
+                    CLEAR FORM
+                  </Button>
+                  <Button variant="contained" color="secondary" className={classes.button}>
+                    ADD USER
+                  </Button>
+                </Grid>
               </Grid>
-            </DrawerTopBarLayout>
-        );
-    }
+            </Paper>
+          </Grid>
+
+          <Grid item xs={12}>
+            <Paper className={classes.paper}>
+              <Grid container spacing={2}>
+                <Grid item xs={12}>
+                  <Typography variant="h6" component="h3">
+                    List of Users
+                  </Typography>
+                </Grid>
+
+                <Grid item xs={12}>
+                  <Table>
+                    <TableHead>
+                      <TableRow>
+                        <TableCell>Last Name</TableCell>
+                        <TableCell>First Name</TableCell>
+                        <TableCell>Username</TableCell>
+                        <TableCell>E-mail</TableCell>
+                      </TableRow>
+                    </TableHead>
+                    <TableBody>
+                      {this.state.users.map(user => (
+                        <TableRow key={user.id}>
+                          <TableCell component="th" scope="row">
+                            {user.lastName}
+                          </TableCell>
+                          <TableCell>{user.firstName}</TableCell>
+                          <TableCell>{user.userName}</TableCell>
+                          <TableCell>{user.email}</TableCell>
+                        </TableRow>
+                      ))}
+                    </TableBody>
+                  </Table>
+                </Grid>
+              </Grid>
+            </Paper>
+          </Grid>
+
+        </Grid>
+      </DrawerTopBarLayout>
+    )
+  }
 
 }
 

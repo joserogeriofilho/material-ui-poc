@@ -10,14 +10,17 @@ import { TopBar } from '../components/TopBar'
 const styles = theme => ({
     outsideWrapper: {
         display: 'flex',
-        height: '100%'
+        height: '100%',
+        overflow: 'hidden'
     },
     insideWrapper: {
-        width: '100%'
+        width: '100%',
+        height: '100%',
+        overflowY: 'auto'
     },
     content: {
         padding: theme.spacing(3, 0, 0, 0)
-    },
+    }
 });
 
 
@@ -46,12 +49,12 @@ class DrawerTopBarLayout extends Component {
                 mobileMenuClose={this.mobileMenuClose} />
 
             <div className={classes.insideWrapper}>
-                <Hidden smUp implementation="css">
+                <Hidden mdUp implementation="css">
                     <TopBar mobileMenuOpen={this.mobileMenuOpen} title={this.props.title} />
                 </Hidden>
                 
                 <div className={classes.content}>
-                    <Container maxWidth={'lg'}>
+                    <Container maxWidth={'lg'} className={classes.container}>
                         {this.props.children}
                     </Container>
                 </div>
