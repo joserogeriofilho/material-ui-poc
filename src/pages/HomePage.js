@@ -27,6 +27,7 @@ export class HomePage extends Component {
                   <Typography variant="h5" color='secondary'>
                     {pageTitle}
                   </Typography>
+                  <p>REACT_APP_NOT_SECRET_CODE={process.env.REACT_APP_NOT_SECRET_CODE}</p>
                 </Grid>
               </Hidden>
 
