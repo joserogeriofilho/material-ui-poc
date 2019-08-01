@@ -30,7 +30,7 @@ const styles = theme => ({
   }
 });
 
-const API_URL = 'https://react-showcase-server.herokuapp.com/';
+const API_URL = process.env.REACT_APP_API_URL;
 const DEFAULT_QUERY = 'users';
 const SORT_QUERY = '?_sort=lastName&_order=asc';
 
