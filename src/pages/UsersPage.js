@@ -30,7 +30,7 @@ const styles = theme => ({
   }
 });
 
-const API_URL = 'https://react-showcase-server.herokuapp.com/';
+const API_URL = process.env.REACT_APP_API_URL;
 const DEFAULT_QUERY = 'users';
 const SORT_QUERY = '?_sort=lastName&_order=asc';
 
@@ -41,13 +41,16 @@ export class UsersPage extends Component {
     super(props);
 
     this.getUsers = this.getUsers.bind(this);
+    this.handleChange = this.handleChange.bind(this);
   }
 
   state = {
-    lastName: '',
-    firstName: '',
-    username: '',
-    email: '',
+    values: {
+      lastName: '',
+      firstName: '',
+      username: '',
+      email: '',
+    },
     users: [],
     isLoading: false,
     error: null
@@ -68,6 +71,12 @@ export class UsersPage extends Component {
       .catch(error => this.setState({ error, isLoading: false }));
   }
 
+  handleChange(event){
+    let change = { values: this.state.values };
+    change.values[event.target.id] = event.target.value;
+    this.setState(change);
+  }
+
   componentDidMount() {
     this.getUsers();
   }
@@ -75,6 +84,15 @@ export class UsersPage extends Component {
 render(){
   const { classes } = this.props;
   const pageTitle = "Users";
+
+  const values = this.state.values;
+  const users = this.state.users;
+  const isLoading = this.state.isLoading;
+  const error = this.state.error;
+
+  const handleChange = this.handleChange;
+  const deleteUser = this.deleteUser;
+  const getUsers = this.getUsers;
   
   return (
     <DrawerTopBarLayout title={pageTitle}>
@@ -98,41 +116,41 @@ render(){
                 </Grid>
                 <Grid item xs={12} sm={6}>
                   <TextField
-                    id="user-last-name"
+                    id="lastName"
                     label="Last Name"
-                    value={null}
-                    onChange={null}
+                    value={values.lastName}
+                    onChange={handleChange}
                     margin="dense"
                     variant="outlined"
                     fullWidth />
                 </Grid>
                 <Grid item xs={12} sm={6}>
                   <TextField
-                    id="user-first-name"
+                    id="firstName"
                     label="First Name"
-                    value={null}
-                    onChange={null}
+                    value={values.firstName}
+                    onChange={handleChange}
                     margin="dense"
                     variant="outlined"
                     fullWidth />
                 </Grid>
                 <Grid item xs={12} sm={6}>
                   <TextField
-                    id="user-name"
+                    id="username"
                     label="Username"
-                    value={null}
-                    onChange={null}
+                    value={values.username}
+                    onChange={handleChange}
                     margin="dense"
                     variant="outlined"
                     fullWidth />
                 </Grid>
                 <Grid item xs={12} sm={6}>
                   <TextField
-                    id="user-email"
+                    id="email"
                     label="E-mail"
                     helperText="We'll never share your e-mail with anyone else."
-                    value={null}
-                    onChange={null}
+                    value={values.email}
+                    onChange={handleChange}
                     margin="dense"
                     variant="outlined"
                     fullWidth />
