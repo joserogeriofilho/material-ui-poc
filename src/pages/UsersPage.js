@@ -1,18 +1,14 @@
 import React, { Component } from 'react'
 import { withRouter } from 'react-router-dom'
-import withStyles from '@material-ui/styles/withStyles';
-import DrawerTopBarLayout from '../layouts/DrawerTopBarLayout'
-import Grid from '@material-ui/core/Grid';
-import Typography from '@material-ui/core/Typography';
-import Hidden from '@material-ui/core/Hidden';
-import Paper from '@material-ui/core/Paper';
-import TextField from '@material-ui/core/TextField';
+import withStyles from '@material-ui/styles/withStyles'
+import Grid from '@material-ui/core/Grid'
+import Typography from '@material-ui/core/Typography'
+import Hidden from '@material-ui/core/Hidden'
+import Paper from '@material-ui/core/Paper'
+import TextField from '@material-ui/core/TextField'
 import Button from '@material-ui/core/Button'
-import Table from '@material-ui/core/Table';
-import TableBody from '@material-ui/core/TableBody';
-import TableCell from '@material-ui/core/TableCell';
-import TableHead from '@material-ui/core/TableHead';
-import TableRow from '@material-ui/core/TableRow';
+import DrawerTopBarLayout from '../layouts/DrawerTopBarLayout'
+import { UserTable } from '../components/UserTable'
 
 
 const styles = theme => ({
@@ -132,40 +128,7 @@ render(){
 
   let userTable;
 
-  if ( isLoading ){
-    userTable =
-      <span>Loading...</span>
-  } else if ( error ) {
-    userTable =
-      <div>
-        <span>An error ocurred:</span>
-        <p>{error.toString()}</p>
-      </div>
-  } else {
-    userTable =
-      <Table>
-        <TableHead>
-          <TableRow>
-            <TableCell>Last Name</TableCell>
-            <TableCell>First Name</TableCell>
-            <TableCell>Username</TableCell>
-            <TableCell>E-mail</TableCell>
-          </TableRow>
-        </TableHead>
-        <TableBody>
-          {this.state.users.map(user => (
-            <TableRow key={user.id}>
-              <TableCell component="th" scope="row">
-                {user.lastName}
-              </TableCell>
-              <TableCell>{user.firstName}</TableCell>
-              <TableCell>{user.userName}</TableCell>
-              <TableCell>{user.email}</TableCell>
-            </TableRow>
-          ))}
-        </TableBody>
-      </Table>
-  }
+  
 
   return (
     <DrawerTopBarLayout title={pageTitle}>
@@ -249,7 +212,7 @@ render(){
                   </Typography>
                 </Grid>
                 <Grid item xs={12}>
-                  {userTable}
+                  <UserTable users={users} isLoading={isLoading} error={error} />
                 </Grid>
               </Grid>
             </Paper>
