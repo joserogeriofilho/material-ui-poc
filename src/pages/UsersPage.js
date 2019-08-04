@@ -119,6 +119,7 @@ export class UsersPage extends Component {
 render(){
   const { classes } = this.props;
   const pageTitle = "Users";
+
   const values = this.state.values;
   const users = this.state.users;
   const isLoading = this.state.isLoading;
@@ -126,9 +127,6 @@ render(){
   const handleChange = this.handleChange;
   const postNewUser = this.postNewUser;
 
-  let userTable;
-
-  
 
   return (
     <DrawerTopBarLayout title={pageTitle}>
