@@ -41,7 +41,9 @@ export class UsersPage extends Component {
     super(props);
 
     this.getUsers = this.getUsers.bind(this);
+    this.clearForm = this.clearForm.bind(this);
     this.handleChange = this.handleChange.bind(this);
+    this.postNewUser = this.postNewUser.bind(this);
   }
 
   state = {
@@ -71,6 +73,43 @@ export class UsersPage extends Component {
       .catch(error => this.setState({ error, isLoading: false }));
   }
 
+  postNewUser(){
+    const lastName = this.state.values.lastName;
+    const firstName = this.state.values.firstName;
+    const username = this.state.values.username;
+    const email = this.state.values.email;
+
+    fetch(API_URL + DEFAULT_QUERY,
+        {
+            method: 'POST',
+            headers: new Headers({'Content-Type': 'application/json'}),
+            body: JSON.stringify({firstName:firstName, lastName:lastName, userName:username, email:email})
+        }
+    ).then(response => {
+        if(response.ok) {
+            return response.json();
+        } else {
+            throw new Error('Something went wrong...')
+        }
+    }).then((data) => {
+        console.log('Insertion of ' + JSON.stringify(data));
+        this.clearForm();
+        this.getUsers();
+    })
+    .catch((err) => console.log(err));
+  }
+
+  clearForm(){
+    let values = {
+      lastName: '',
+      firstName: '',
+      username: '',
+      email: '',
+    }
+
+    this.setState({ values });
+  }
+
   handleChange(event){
     let change = { values: this.state.values };
     change.values[event.target.id] = event.target.value;
@@ -84,16 +123,50 @@ export class UsersPage extends Component {
 render(){
   const { classes } = this.props;
   const pageTitle = "Users";
-
   const values = this.state.values;
   const users = this.state.users;
   const isLoading = this.state.isLoading;
   const error = this.state.error;
-
   const handleChange = this.handleChange;
-  const deleteUser = this.deleteUser;
-  const getUsers = this.getUsers;
-  
+  const postNewUser = this.postNewUser;
+
+  let userTable;
+
+  if ( isLoading ){
+    userTable =
+      <span>Loading...</span>
+  } else if ( error ) {
+    userTable =
+      <div>
+        <span>An error ocurred:</span>
+        <p>{error.toString()}</p>
+      </div>
+  } else {
+    userTable =
+      <Table>
+        <TableHead>
+          <TableRow>
+            <TableCell>Last Name</TableCell>
+            <TableCell>First Name</TableCell>
+            <TableCell>Username</TableCell>
+            <TableCell>E-mail</TableCell>
+          </TableRow>
+        </TableHead>
+        <TableBody>
+          {this.state.users.map(user => (
+            <TableRow key={user.id}>
+              <TableCell component="th" scope="row">
+                {user.lastName}
+              </TableCell>
+              <TableCell>{user.firstName}</TableCell>
+              <TableCell>{user.userName}</TableCell>
+              <TableCell>{user.email}</TableCell>
+            </TableRow>
+          ))}
+        </TableBody>
+      </Table>
+  }
+
   return (
     <DrawerTopBarLayout title={pageTitle}>
         <Grid container spacing={3}>
@@ -156,10 +229,10 @@ render(){
                     fullWidth />
                 </Grid>
                 <Grid item xs={12} className={classes.buttons}>
-                  <Button className={classes.button}>
+                  <Button className={classes.button} onClick={this.clearForm}>
                     CLEAR FORM
                   </Button>
-                  <Button variant="contained" color="secondary" className={classes.button}>
+                  <Button variant="contained" color="secondary" className={classes.button} onClick={postNewUser}>
                     ADD USER
                   </Button>
                 </Grid>
@@ -175,30 +248,8 @@ render(){
                     List of Users
                   </Typography>
                 </Grid>
-
                 <Grid item xs={12}>
-                  <Table>
-                    <TableHead>
-                      <TableRow>
-                        <TableCell>Last Name</TableCell>
-                        <TableCell>First Name</TableCell>
-                        <TableCell>Username</TableCell>
-                        <TableCell>E-mail</TableCell>
-                      </TableRow>
-                    </TableHead>
-                    <TableBody>
-                      {this.state.users.map(user => (
-                        <TableRow key={user.id}>
-                          <TableCell component="th" scope="row">
-                            {user.lastName}
-                          </TableCell>
-                          <TableCell>{user.firstName}</TableCell>
-                          <TableCell>{user.userName}</TableCell>
-                          <TableCell>{user.email}</TableCell>
-                        </TableRow>
-                      ))}
-                    </TableBody>
-                  </Table>
+                  {userTable}
                 </Grid>
               </Grid>
             </Paper>
