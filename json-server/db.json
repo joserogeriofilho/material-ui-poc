@@ -1,0 +1,212 @@
+{
+  "cards": [
+    {
+      "id": 0,
+      "image": "/img/card1.jpg",
+      "title": "White Dove",
+      "description": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nunc at magna eros."
+    },
+    {
+      "id": 1,
+      "image": "/img/card2.jpg",
+      "title": "Red Cougar",
+      "description": "Aliquam mattis nisi sit amet ante dictum, nec commodo turpis feugiat. Nunc vitae dui nisl."
+    },
+    {
+      "id": 2,
+      "image": "/img/card3.jpg",
+      "title": "Black Duck",
+      "description": "Vivamus pharetra ipsum cursus porttitor lobortis."
+    },
+    {
+      "id": 3,
+      "image": "/img/card4.jpg",
+      "title": "Gold Monkey",
+      "description": "Curabitur dolor orci, interdum eget consectetur ac, hendrerit sit amet nisi."
+    }
+  ],
+  "users": [
+    {
+      "id": 0,
+      "firstName": "Jordan",
+      "lastName": "Griffith",
+      "userName": "jordangriffith",
+      "email": "jgriffith848@htiffirgnadroj.net"
+    },
+    {
+      "id": 1,
+      "firstName": "Cristina",
+      "lastName": "Frank",
+      "userName": "cristinafrank",
+      "email": "cfrank968@knarfanitsirc.com"
+    },
+    {
+      "id": 2,
+      "firstName": "Sara",
+      "lastName": "Pham",
+      "userName": "sarapham",
+      "email": "spham435@mahparas.com"
+    },
+    {
+      "id": 3,
+      "firstName": "Ann",
+      "lastName": "Fowler",
+      "userName": "annfowler",
+      "email": "afowler291@relwofnna.com"
+    },
+    {
+      "id": 4,
+      "firstName": "Simone",
+      "lastName": "Lynch",
+      "userName": "simonelynch",
+      "email": "slynch230@hcnylenomis.net"
+    },
+    {
+      "id": 5,
+      "firstName": "Daniel",
+      "lastName": "Richards",
+      "userName": "danielrichards",
+      "email": "drichards948@sdrahcirleinad.biz"
+    },
+    {
+      "id": 6,
+      "firstName": "Carlos",
+      "lastName": "Webb",
+      "userName": "carloswebb",
+      "email": "cwebb648@bbewsolrac.net"
+    },
+    {
+      "id": 7,
+      "firstName": "Quentin",
+      "lastName": "Hansen",
+      "userName": "quentinhansen",
+      "email": "qhansen243@nesnahnitneuq.org"
+    },
+    {
+      "id": 8,
+      "firstName": "Jeanette",
+      "lastName": "Brooks",
+      "userName": "jeanettebrooks",
+      "email": "jbrooks258@skoorbettenaej.com"
+    },
+    {
+      "id": 9,
+      "firstName": "Leonardo",
+      "lastName": "Pham",
+      "userName": "leonardopham",
+      "email": "lpham421@mahpodranoel.org"
+    },
+    {
+      "id": 10,
+      "firstName": "Stanley",
+      "lastName": "Hanson",
+      "userName": "stanleyhanson",
+      "email": "shanson174@nosnahyelnats.biz"
+    },
+    {
+      "id": 11,
+      "firstName": "Samuel",
+      "lastName": "Williams",
+      "userName": "samuelwilliams",
+      "email": "swilliams659@smailliwleumas.biz"
+    },
+    {
+      "id": 12,
+      "firstName": "Christopher",
+      "lastName": "Barnett",
+      "userName": "christopherbarnett",
+      "email": "cbarnett770@ttenrabrehpotsirhc.org"
+    },
+    {
+      "id": 13,
+      "firstName": "Pablo",
+      "lastName": "Acosta",
+      "userName": "pabloacosta",
+      "email": "pacosta797@atsocaolbap.com"
+    },
+    {
+      "id": 14,
+      "firstName": "Cara",
+      "lastName": "Clarke",
+      "userName": "caraclarke",
+      "email": "cclarke582@ekralcarac.com"
+    },
+    {
+      "id": 15,
+      "firstName": "Shawna",
+      "lastName": "Hammond",
+      "userName": "shawnahammond",
+      "email": "shammond430@dnommahanwahs.com"
+    },
+    {
+      "id": 16,
+      "firstName": "Mackenzie",
+      "lastName": "Pope",
+      "userName": "mackenziepope",
+      "email": "mpope362@epopeiznekcam.net"
+    },
+    {
+      "id": 17,
+      "firstName": "Isaac",
+      "lastName": "Shaw",
+      "userName": "isaacshaw",
+      "email": "ishaw127@wahscaasi.org"
+    },
+    {
+      "id": 18,
+      "firstName": "Brianna",
+      "lastName": "Mack",
+      "userName": "briannamack",
+      "email": "bmack695@kcamannairb.net"
+    },
+    {
+      "id": 19,
+      "firstName": "Miles",
+      "lastName": "Reyes",
+      "userName": "milesreyes",
+      "email": "mreyes976@seyerselim.org"
+    },
+    {
+      "id": 20,
+      "firstName": "Enrique",
+      "lastName": "Hicks",
+      "userName": "enriquehicks",
+      "email": "ehicks934@skciheuqirne.net"
+    },
+    {
+      "id": 21,
+      "firstName": "Brandi",
+      "lastName": "Watson",
+      "userName": "brandiwatson",
+      "email": "bwatson539@nostawidnarb.net"
+    },
+    {
+      "firstName": "John",
+      "lastName": "Constantine",
+      "userName": "john666",
+      "email": "john666@gmail.com",
+      "id": 22
+    },
+    {
+      "firstName": "Bruno",
+      "lastName": "Anacleto",
+      "userName": "banacleto",
+      "email": "banacleto@gmail.com",
+      "id": 23
+    },
+    {
+      "firstName": "Roger",
+      "lastName": "Bezerra Barbosa Filho",
+      "userName": "roger.sama",
+      "email": "roger.sama@gmail.com",
+      "id": 24
+    },
+    {
+      "firstName": "Edward",
+      "lastName": "Conan Doyle",
+      "userName": "ed.doyle",
+      "email": "ed.doyle@gmail.com",
+      "id": 25
+    }
+  ]
+}

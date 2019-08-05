@@ -146,7 +146,7 @@ export function UserTable(props) {
               <TableCell>{user.email}</TableCell>
               <TableCell align="center">
                 <div className={ classes.actionsButtonsWrapper }>
-                  <IconButton aria-label="Delete"><Icon>delete</Icon></IconButton>
+                  <IconButton onClick={() => props.deleteUser(user.id)} aria-label="Delete"><Icon>delete</Icon></IconButton>
                 </div>
               </TableCell>
             </TableRow>

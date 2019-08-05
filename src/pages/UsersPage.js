@@ -40,6 +40,7 @@ export class UsersPage extends Component {
     this.clearForm = this.clearForm.bind(this);
     this.handleChange = this.handleChange.bind(this);
     this.postNewUser = this.postNewUser.bind(this);
+    this.deleteUser = this.deleteUser.bind(this);
   }
 
   state = {
@@ -97,6 +98,23 @@ export class UsersPage extends Component {
     .catch((err) => console.log(err));
   }
 
+  deleteUser(id){
+    fetch(API_URL + DEFAULT_QUERY + '/' + id,
+      {
+        method: 'DELETE',
+      }
+    ).then(response => {
+      if(response.ok) {
+        return response.json();
+      } else {
+        throw new Error('Something went wrong...')
+      }
+    }).then(() => {
+      this.getUsers();
+    })
+    .catch((err) => console.log(err));
+  }
+
   clearForm(){
     let values = {
       lastName: '',
@@ -128,6 +146,7 @@ render(){
   const error = this.state.error;
   const handleChange = this.handleChange;
   const postNewUser = this.postNewUser;
+  const deleteUser = this.deleteUser;
 
 
   return (
@@ -211,7 +230,11 @@ render(){
                 </Typography>
               </Grid>
               <Grid item xs={12}>
-                <UserTable users={users} isLoading={isLoading} error={error} />
+                <UserTable
+                  users={users}
+                  isLoading={isLoading}
+                  error={error}
+                  deleteUser={deleteUser}/>
               </Grid>
             </Grid>
           </Paper>
