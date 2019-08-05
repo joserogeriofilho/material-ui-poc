@@ -7,17 +7,17 @@ import MenuIcon from '@material-ui/icons/Menu'
 
 
 export function TopBar(props) {
-    return(
-        <AppBar position="static">
-            <Toolbar>
-                <IconButton onClick={props.mobileMenuOpen} edge="start"color="inherit" aria-label="Menu">
-                    <MenuIcon />
-                </IconButton>
+  return(
+    <AppBar position="static">
+      <Toolbar>
+        <IconButton onClick={props.mobileMenuOpen} edge="start"color="inherit" aria-label="Menu">
+          <MenuIcon />
+        </IconButton>
 
-                <Typography variant="h6">
-                    {props.title}
-                </Typography>
-            </Toolbar>
-        </AppBar>
-    );
+        <Typography variant="h6">
+          {props.title}
+        </Typography>
+      </Toolbar>
+    </AppBar>
+  );
 }

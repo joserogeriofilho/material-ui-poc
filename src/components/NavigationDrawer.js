@@ -10,6 +10,7 @@ import SwipeableDrawer from '@material-ui/core/SwipeableDrawer';
 import Hidden from '@material-ui/core/Hidden';
 import Typography from '@material-ui/core/Typography';
 import ListItemIcon from '@material-ui/core/ListItemIcon';
+import Icon from '@material-ui/core/Icon';
 
 
 const Menu = [
@@ -87,7 +88,7 @@ export function NavigationDrawer(props){
                             classes = {{root: classes.itemRoot, selected: classes.selectedItem}}
                             button
                             key={item.label}>
-                            <ListItemIcon><i className="material-icons list-icon">{ item.icon }</i></ListItemIcon>
+                            <ListItemIcon><Icon>{item.icon}</Icon></ListItemIcon>
                             <ListItemText primary={item.label} classes={{primary: classes.item}} />
                         </ListItem>
                     ))}

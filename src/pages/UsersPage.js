@@ -58,15 +58,18 @@ export class UsersPage extends Component {
     this.setState({ isLoading: true });
 
     fetch(API_URL + DEFAULT_QUERY + SORT_QUERY)
-      .then(response => {
-          if(response.ok) {
-              return response.json()
-          } else {
-              throw new Error('Something went wrong...')
-          }
-      })
-      .then(data => this.setState({ users: data, isLoading: false}))
-      .catch(error => this.setState({ error, isLoading: false }));
+    .then(response => {
+      if(response.ok) {
+        return response.json()
+      } else {
+        throw new Error('Something went wrong...')
+      }
+    })
+    .then(data =>
+      this.setState({ users: data, isLoading: false})
+    ).catch(error =>
+      this.setState({ error, isLoading: false })
+    );
   }
 
   postNewUser(){
@@ -76,21 +79,20 @@ export class UsersPage extends Component {
     const email = this.state.values.email;
 
     fetch(API_URL + DEFAULT_QUERY,
-        {
-            method: 'POST',
-            headers: new Headers({'Content-Type': 'application/json'}),
-            body: JSON.stringify({firstName:firstName, lastName:lastName, userName:username, email:email})
-        }
+      {
+        method: 'POST',
+        headers: new Headers({'Content-Type': 'application/json'}),
+        body: JSON.stringify({firstName:firstName, lastName:lastName, userName:username, email:email})
+      }
     ).then(response => {
-        if(response.ok) {
-            return response.json();
-        } else {
-            throw new Error('Something went wrong...')
-        }
+      if(response.ok) {
+        return response.json();
+      } else {
+        throw new Error('Something went wrong...')
+      }
     }).then((data) => {
-        console.log('Insertion of ' + JSON.stringify(data));
-        this.clearForm();
-        this.getUsers();
+      this.clearForm();
+      this.getUsers();
     })
     .catch((err) => console.log(err));
   }
@@ -130,95 +132,93 @@ render(){
 
   return (
     <DrawerTopBarLayout title={pageTitle}>
-        <Grid container spacing={3}>
+      <Grid container spacing={3}>
+        <Hidden smDown>
+          <Grid item xs={12}>
+            <Typography variant="h5" color='secondary'>
+              {pageTitle}
+            </Typography>
+          </Grid>
+        </Hidden>
 
-          <Hidden smDown>
-            <Grid item xs={12}>
-              <Typography variant="h5" color='secondary'>
-                {pageTitle}
-              </Typography>
+        <Grid item xs={12}>
+          <Paper className={classes.paper}>
+            <Grid container spacing={2}>
+              <Grid item xs={12}>
+                <Typography variant="h6" component="h3">
+                  Add New User
+                </Typography>
+              </Grid>
+              <Grid item xs={12} sm={6}>
+                <TextField
+                  id="lastName"
+                  label="Last Name"
+                  value={values.lastName}
+                  onChange={handleChange}
+                  margin="dense"
+                  variant="outlined"
+                  fullWidth />
+              </Grid>
+              <Grid item xs={12} sm={6}>
+                <TextField
+                  id="firstName"
+                  label="First Name"
+                  value={values.firstName}
+                  onChange={handleChange}
+                  margin="dense"
+                  variant="outlined"
+                  fullWidth />
+              </Grid>
+              <Grid item xs={12} sm={6}>
+                <TextField
+                  id="username"
+                  label="Username"
+                  value={values.username}
+                  onChange={handleChange}
+                  margin="dense"
+                  variant="outlined"
+                  fullWidth />
+              </Grid>
+              <Grid item xs={12} sm={6}>
+                <TextField
+                  id="email"
+                  label="E-mail"
+                  helperText="We'll never share your e-mail with anyone else."
+                  value={values.email}
+                  onChange={handleChange}
+                  margin="dense"
+                  variant="outlined"
+                  fullWidth />
+              </Grid>
+              <Grid item xs={12} className={classes.buttons}>
+                <Button className={classes.button} onClick={this.clearForm}>
+                  CLEAR FORM
+                </Button>
+                <Button variant="contained" color="secondary" className={classes.button} onClick={postNewUser}>
+                  ADD USER
+                </Button>
+              </Grid>
             </Grid>
-          </Hidden>
-
-          <Grid item xs={12}>
-            <Paper className={classes.paper}>
-              <Grid container spacing={2}>
-                <Grid item xs={12}>
-                  <Typography variant="h6" component="h3">
-                    Add New User
-                  </Typography>
-                </Grid>
-                <Grid item xs={12} sm={6}>
-                  <TextField
-                    id="lastName"
-                    label="Last Name"
-                    value={values.lastName}
-                    onChange={handleChange}
-                    margin="dense"
-                    variant="outlined"
-                    fullWidth />
-                </Grid>
-                <Grid item xs={12} sm={6}>
-                  <TextField
-                    id="firstName"
-                    label="First Name"
-                    value={values.firstName}
-                    onChange={handleChange}
-                    margin="dense"
-                    variant="outlined"
-                    fullWidth />
-                </Grid>
-                <Grid item xs={12} sm={6}>
-                  <TextField
-                    id="username"
-                    label="Username"
-                    value={values.username}
-                    onChange={handleChange}
-                    margin="dense"
-                    variant="outlined"
-                    fullWidth />
-                </Grid>
-                <Grid item xs={12} sm={6}>
-                  <TextField
-                    id="email"
-                    label="E-mail"
-                    helperText="We'll never share your e-mail with anyone else."
-                    value={values.email}
-                    onChange={handleChange}
-                    margin="dense"
-                    variant="outlined"
-                    fullWidth />
-                </Grid>
-                <Grid item xs={12} className={classes.buttons}>
-                  <Button className={classes.button} onClick={this.clearForm}>
-                    CLEAR FORM
-                  </Button>
-                  <Button variant="contained" color="secondary" className={classes.button} onClick={postNewUser}>
-                    ADD USER
-                  </Button>
-                </Grid>
-              </Grid>
-            </Paper>
-          </Grid>
-
-          <Grid item xs={12}>
-            <Paper className={classes.paper}>
-              <Grid container spacing={2}>
-                <Grid item xs={12}>
-                  <Typography variant="h6" component="h3">
-                    List of Users
-                  </Typography>
-                </Grid>
-                <Grid item xs={12}>
-                  <UserTable users={users} isLoading={isLoading} error={error} />
-                </Grid>
-              </Grid>
-            </Paper>
-          </Grid>
-
+          </Paper>
         </Grid>
-      </DrawerTopBarLayout>
-    )
+
+        <Grid item xs={12}>
+          <Paper className={classes.paper}>
+            <Grid container spacing={2}>
+              <Grid item xs={12}>
+                <Typography variant="h6" component="h3">
+                  List of Users
+                </Typography>
+              </Grid>
+              <Grid item xs={12}>
+                <UserTable users={users} isLoading={isLoading} error={error} />
+              </Grid>
+            </Grid>
+          </Paper>
+        </Grid>
+      </Grid>
+    </DrawerTopBarLayout>
+    );
   }
 
 }
