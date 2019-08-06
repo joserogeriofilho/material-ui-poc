@@ -14,21 +14,26 @@ import Icon from '@material-ui/core/Icon';
 
 
 const Menu = [
-    {
-        label: "Home",
-        pathname: "/",
-        icon: "home"
-    },
-    {
-        label: "Users",
-        pathname: "/users",
-        icon: "person"
-    },
-    {
-        label: "Card Grid",
-        pathname: "/cardGrid",
-        icon: "collections"
-    }
+  {
+    label: "Home",
+    pathname: "/",
+    icon: "home"
+  },
+  {
+    label: "Users",
+    pathname: "/users",
+    icon: "person"
+  },
+  {
+    label: "Card Grid",
+    pathname: "/cardGrid",
+    icon: "collections"
+  },
+  {
+    label: "Teste",
+    pathname: "/teste",
+    icon: "star"
+  }
 ];
 
 const styles = theme => ({

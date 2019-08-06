@@ -88,7 +88,8 @@ const useStylesTable = makeStyles(theme => ({
       overflowX: 'auto',
     },
     actionsButtonsWrapper: {
-      display: 'flex'
+      display: 'flex',
+      justifyContent: 'center'
     }
 }));
 
