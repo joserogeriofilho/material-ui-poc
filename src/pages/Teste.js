@@ -6,11 +6,12 @@ import Typography from '@material-ui/core/Typography'
 import Hidden from '@material-ui/core/Hidden'
 import Paper from '@material-ui/core/Paper'
 import TextField from '@material-ui/core/TextField'
-import Button from '@material-ui/core/Button'
+import grey from '@material-ui/core/colors/grey';
 import DrawerTopBarLayout from '../layouts/DrawerTopBarLayout'
 import { UserTable } from '../components/UserTable'
 import Fab from '@material-ui/core/Fab';
 import AddIcon from '@material-ui/icons/Add';
+import { ScoreCard } from '../components/ScoreCard'
 
 
 const styles = theme => ({
@@ -30,6 +31,17 @@ const styles = theme => ({
     position: 'absolute',
     bottom: theme.spacing(5),
     right: theme.spacing(5)
+  },
+  paperIndicator: {
+
+  },
+  indicatorHeader: {
+    backgroundColor: grey[200],
+    borderRadius: '4px 0 0 4px',
+    padding: theme.spacing(3)
+  },
+  indicatorBody: {
+    padding: theme.spacing(3)
   }
 });
 
@@ -122,6 +134,16 @@ render(){
             </Typography>
           </Grid>
         </Hidden>
+
+        <Grid item lg={4}>
+          <ScoreCard />
+        </Grid>
+        <Grid item lg={4}>
+          <ScoreCard />
+        </Grid>
+        <Grid item lg={4}>
+          <ScoreCard />
+        </Grid>
 
         <Grid item xs={12}>
           <Paper className={classes.paper}>
