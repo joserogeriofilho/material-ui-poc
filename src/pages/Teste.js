@@ -15,6 +15,7 @@ import DrawerTopBarLayout   from '../layouts/DrawerTopBarLayout'
 
 const styles = theme => ({
   paper: {
+    marginTop: theme.spacing(3),
     padding: theme.spacing(3),
     [theme.breakpoints.down('xs')]: {
       backgroundColor: 'transparent',
@@ -114,7 +115,7 @@ render(){
 
   return (
     <DrawerTopBarLayout title={pageTitle}>
-      <Grid container spacing={3}>
+      <Grid container spacing={2}>
         <Hidden smDown>
           <Grid item xs={12}>
             <Typography variant="h5" color='secondary'>
