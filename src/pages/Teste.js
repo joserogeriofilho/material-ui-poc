@@ -36,7 +36,6 @@ const styles = theme => ({
 
 const API_URL = process.env.REACT_APP_API_URL;
 const DEFAULT_QUERY = 'users';
-const SEARCH_QUERY = '?q=';
 const SORT_QUERY = '?_sort=lastName&_order=asc';
 
 
@@ -51,16 +50,19 @@ export class Teste extends Component {
   }
 
   state = {
-    search: '',
     users: [],
+    matchedUsers: [],
     isLoading: false,
     error: null
   };
 
+
+  // Fetch API functions
   getUsers() {
     this.setState({ isLoading: true });
 
-    fetch(API_URL + DEFAULT_QUERY + SEARCH_QUERY + this.state.search)
+    //fetch(API_URL + DEFAULT_QUERY + SEARCH_QUERY + this.state.search)
+    fetch(API_URL + DEFAULT_QUERY + SORT_QUERY)
     .then(response => {
       if(response.ok) {
         return response.json()
@@ -69,7 +71,7 @@ export class Teste extends Component {
       }
     })
     .then(data =>
-      this.setState({ users: data, isLoading: false})
+      this.setState({ users: data, matchedUsers: data, isLoading: false})
     ).catch(error =>
       this.setState({ error, isLoading: false })
     );
@@ -92,87 +94,92 @@ export class Teste extends Component {
     .catch((err) => console.log(err));
   }
 
+  // Handles
   handleSearch(event){
-    this.setState({ search: event.target.value });
-    this.getUsers();
+    let matches = this.state.users.filter(user => 
+      user.firstName.toLowerCase().includes( event.target.value.toLowerCase() ) ||
+      user.lastName.toLowerCase().includes( event.target.value.toLowerCase() ) ||
+      user.userName.toLowerCase().includes( event.target.value.toLowerCase() ) ||
+      user.email.toLowerCase().includes( event.target.value.toLowerCase() )
+    );
+
+    this.setState({ matchedUsers: matches })
   }
 
+  // React Components lifecycle functions
   componentDidMount() {
     this.getUsers();
   }
 
-render(){
-  const { classes } = this.props;
-  const pageTitle = "Users";
+  render(){
+    const { classes } = this.props;
+    const pageTitle = "Users";
 
-  const search = this.state.search;
-  const users = this.state.users;
-  const isLoading = this.state.isLoading;
-  const error = this.state.error;
-  const handleSearch = this.handleSearch;
-  const deleteUser = this.deleteUser;
+    const search = this.state.search;
+    const isLoading = this.state.isLoading;
+    const error = this.state.error;
+    const handleSearch = this.handleSearch;
+    const deleteUser = this.deleteUser;
 
-
-  return (
-    <DrawerTopBarLayout title={pageTitle}>
-      <Grid container spacing={2}>
-        <Hidden smDown>
-          <Grid item xs={12}>
-            <Typography variant="h5" color='secondary'>
-              {pageTitle}
-            </Typography>
-          </Grid>
-        </Hidden>
-
-        <Grid item xs={12} sm={4}>
-          <ScoreCard icon="people_outline" label="Total users" value="26" />
-        </Grid>
-        <Grid item xs={6} sm={4}>
-        <ScoreCard icon="work_outline" label="Categories" value="3" />
-        </Grid>
-        <Grid item xs={6} sm={4}>
-        <ScoreCard icon="cake_outline" label="Mean age" value="27,6" />
-        </Grid>
-
-        <Grid item xs={12}>
-          <Paper className={classes.paper}>
-            <Grid container spacing={2}>
-              <Grid container item xs={12} alignItems="center">
-                <Grid item xs={6}>
-                  <Typography variant="h6" component="h3">
-                    List and Search
-                  </Typography>
-                </Grid>
-                <Grid item xs={6}>
-                  <TextField
-                    id="usersSearch"
-                    label="Search"
-                    value={search}
-                    onChange={handleSearch}
-                    margin="dense"
-                    variant="outlined"
-                    fullWidth />
-                </Grid>
-              </Grid>
-              <Grid item xs={12}>
-                <UserTable
-                  users={users}
-                  isLoading={isLoading}
-                  error={error}
-                  deleteUser={deleteUser}/>
-              </Grid>
+    return (
+      <DrawerTopBarLayout title={pageTitle}>
+        <Grid container spacing={2}>
+          <Hidden smDown>
+            <Grid item xs={12}>
+              <Typography variant="h5" color='secondary'>
+                {pageTitle}
+              </Typography>
             </Grid>
-          </Paper>
-        </Grid>
-      </Grid>
+          </Hidden>
 
-      <Fab color="secondary" aria-label="add" className={ classes.floatButton }>
-        <AddIcon />
-      </Fab>
-    </DrawerTopBarLayout>
+          <Grid item xs={12} sm={4}>
+            <ScoreCard icon="people_outline" label="Total users" value="26" />
+          </Grid>
+          <Grid item xs={6} sm={4}>
+          <ScoreCard icon="work_outline" label="Categories" value="3" />
+          </Grid>
+          <Grid item xs={6} sm={4}>
+          <ScoreCard icon="cake_outline" label="Mean age" value="27,6" />
+          </Grid>
+
+          <Grid item xs={12}>
+            <Paper className={classes.paper}>
+              <Grid container spacing={2}>
+                <Grid container item xs={12} alignItems="center">
+                  <Grid item xs={6}>
+                    <Typography variant="h6" component="h3">
+                      List and Search
+                    </Typography>
+                  </Grid>
+                  <Grid item xs={6}>
+                    <TextField
+                      id="usersSearch"
+                      label="Search"
+                      value={search}
+                      onChange={handleSearch}
+                      margin="dense"
+                      variant="outlined"
+                      fullWidth />
+                  </Grid>
+                </Grid>
+                <Grid item xs={12}>
+                  <UserTable
+                    users={this.state.matchedUsers}
+                    isLoading={isLoading}
+                    error={error}
+                    deleteUser={deleteUser}/>
+                </Grid>
+              </Grid>
+            </Paper>
+          </Grid>
+        </Grid>
+
+        <Fab color="secondary" aria-label="add" className={ classes.floatButton }>
+          <AddIcon />
+        </Fab>
+      </DrawerTopBarLayout>
     );
   }
-
 }
 
 export default withRouter(withStyles(styles)(Teste));

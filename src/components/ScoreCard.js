@@ -59,7 +59,7 @@ export function ScoreCard(props) {
     <Card className={classes.root}>
       <Grid container>
         <Hidden smDown>
-          <Grid item xs={0} md={4} className={classes.scoreHeader}>
+          <Grid item md={4} className={classes.scoreHeader}>
             <Icon className={classes.scoreIcon}>{props.icon}</Icon>
           </Grid>
         </Hidden>
