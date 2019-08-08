@@ -1,17 +1,16 @@
 import React, { Component } from 'react'
-import { withRouter } from 'react-router-dom'
-import withStyles from '@material-ui/styles/withStyles'
-import Grid from '@material-ui/core/Grid'
-import Typography from '@material-ui/core/Typography'
-import Hidden from '@material-ui/core/Hidden'
-import Paper from '@material-ui/core/Paper'
-import TextField from '@material-ui/core/TextField'
-import grey from '@material-ui/core/colors/grey';
-import DrawerTopBarLayout from '../layouts/DrawerTopBarLayout'
-import { UserTable } from '../components/UserTable'
-import Fab from '@material-ui/core/Fab';
-import AddIcon from '@material-ui/icons/Add';
-import { ScoreCard } from '../components/ScoreCard'
+import { withRouter }       from 'react-router-dom'
+import Fab                  from '@material-ui/core/Fab';
+import Grid                 from '@material-ui/core/Grid'
+import Hidden               from '@material-ui/core/Hidden'
+import Paper                from '@material-ui/core/Paper'
+import TextField            from '@material-ui/core/TextField'
+import Typography           from '@material-ui/core/Typography'
+import withStyles           from '@material-ui/styles/withStyles'
+import AddIcon              from '@material-ui/icons/Add';
+import { UserTable }        from '../components/UserTable'
+import { ScoreCard }        from '../components/ScoreCard'
+import DrawerTopBarLayout   from '../layouts/DrawerTopBarLayout'
 
 
 const styles = theme => ({
@@ -20,7 +19,7 @@ const styles = theme => ({
     [theme.breakpoints.down('xs')]: {
       backgroundColor: 'transparent',
       boxShadow: 'none',
-      padding: theme.spacing(0, 1, 2, 1)
+      padding: theme.spacing(0)
     }
   },
   paperButtons: {
@@ -31,17 +30,6 @@ const styles = theme => ({
     position: 'absolute',
     bottom: theme.spacing(5),
     right: theme.spacing(5)
-  },
-  paperIndicator: {
-
-  },
-  indicatorHeader: {
-    backgroundColor: grey[200],
-    borderRadius: '4px 0 0 4px',
-    padding: theme.spacing(3)
-  },
-  indicatorBody: {
-    padding: theme.spacing(3)
   }
 });
 
@@ -135,14 +123,14 @@ render(){
           </Grid>
         </Hidden>
 
-        <Grid item lg={4}>
-          <ScoreCard />
+        <Grid item xs={6} sm={4}>
+          <ScoreCard icon="people_outline" label="Total users" value="26" />
         </Grid>
-        <Grid item lg={4}>
-          <ScoreCard />
+        <Grid item xs={6} sm={4}>
+        <ScoreCard icon="work_outline" label="Categories" value="3" />
         </Grid>
-        <Grid item lg={4}>
-          <ScoreCard />
+        <Grid item xs={12} sm={4}>
+        <ScoreCard icon="cake_outline" label="Mean age" value="27,6" />
         </Grid>
 
         <Grid item xs={12}>

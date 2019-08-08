@@ -1,22 +1,54 @@
-import React from 'react'
-import Grid from '@material-ui/core/Grid'
-import Typography from '@material-ui/core/Typography'
-import Paper from '@material-ui/core/Paper'
+import React          from 'react'
+import Card          from '@material-ui/core/Card'
+import Grid           from '@material-ui/core/Grid'
+import Hidden           from '@material-ui/core/Hidden'
+import Icon           from '@material-ui/core/Icon';
+import Typography     from '@material-ui/core/Typography'
+import grey           from '@material-ui/core/colors/grey';
 import { makeStyles } from '@material-ui/core/styles';
-import grey from '@material-ui/core/colors/grey';
 
 
 const useStyles = makeStyles(theme => ({
   root: {
-
+    display: 'flex',
+    alignItems: 'stretch',
+    height: '100%',
+    '& .MuiGrid-root': {
+      display: 'flex',
+      justifyContent: 'center',
+      alignItems: 'center',
+    }
   },
   scoreHeader: {
-    backgroundColor: grey[200],
+    backgroundColor: grey[100],
     borderRadius: '4px 0 0 4px',
-    padding: theme.spacing(3)
+    color: grey[500],
+    height: '100%',
+    padding: theme.spacing(3),
+    [theme.breakpoints.down('lg')]: {
+      padding: theme.spacing(2),
+    }
+  },
+  scoreIcon: {
+    fontSize: '2.25rem'
   },
   scoreBody: {
-    padding: theme.spacing(3)
+    flexDirection: 'column',
+    padding: theme.spacing(3),
+    [theme.breakpoints.down('lg')]: {
+      padding: theme.spacing(2),
+    }
+  },
+  scoreNumber: {
+    fontSize: '2.25rem',
+    fontWeight: '300',
+    marginTop: '-8px',
+  },
+  scoreLabel: {
+    fontSize: '1rem',
+    fontWeight: '500',
+    marginTop: '-4px',
+    textAlign: 'center'
   }
 }));
 
@@ -24,15 +56,18 @@ export function ScoreCard(props) {
   const classes = useStyles();
 
   return(
-    <Paper className={classes.paperIndicator}>
+    <Card className={classes.root}>
       <Grid container>
-        <Grid item xs={4} className={classes.scoreHeader}>
-          <Typography variant="h5" color='secondary'>Opa</Typography>
-        </Grid>
-        <Grid item xs={8} className={classes.scoreBody}>
-          <Typography variant="h5" color='secondary'>Opa</Typography>
+        <Hidden smDown>
+          <Grid item xs={0} md={4} className={classes.scoreHeader}>
+            <Icon className={classes.scoreIcon}>{props.icon}</Icon>
+          </Grid>
+        </Hidden>
+        <Grid item xs={12} md={8} className={classes.scoreBody}>
+          <Typography color='secondary' className={classes.scoreNumber}>{props.value}</Typography>
+          <Typography className={classes.scoreLabel}>{props.label}</Typography>
         </Grid>
       </Grid>
-    </Paper>
+    </Card>
   );
 }
