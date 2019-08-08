@@ -16,8 +16,8 @@ import LastPageIcon from '@material-ui/icons/LastPage';
 import CircularProgress from '@material-ui/core/CircularProgress';
 
 
-const useStylesPaginationActions = makeStyles(theme => ({
-  root: {
+const paginationStyles = makeStyles(theme => ({
+  wrapper: {
     flexShrink: 0,
     color: theme.palette.text.secondary,
     marginLeft: theme.spacing(2.5),
@@ -28,7 +28,7 @@ const useStylesPaginationActions = makeStyles(theme => ({
 
 // Pagination actions
 function TablePaginationActions(props) {
-  const classes = useStylesPaginationActions();
+  const classes = paginationStyles();
   const theme = useTheme();
   const { count, page, rowsPerPage, onChangePage } = props;
 
@@ -49,7 +49,7 @@ function TablePaginationActions(props) {
   }
 
   return (
-    <div className={classes.root}>
+    <div className={classes.wrapper}>
       <IconButton
         onClick={handleFirstPageButtonClick}
         disabled={page === 0}
@@ -83,19 +83,22 @@ function TablePaginationActions(props) {
 }
   
 
-const useStylesTable = makeStyles(theme => ({
-    tableWrapper: {
+const tableStyles = makeStyles(theme => ({
+    wrapper: {
       overflowX: 'auto',
     },
-    actionsButtonsWrapper: {
+    actionsWrapper: {
       display: 'flex',
       justifyContent: 'center'
+    },
+    paginationRoot: {
+      borderBottom: '0'
     }
 }));
 
 // Actual table
 export function UserTable(props) {
-  const classes = useStylesTable();
+  const classes = tableStyles();
 
   // States
   const [page, setPage] = React.useState(0);
@@ -125,7 +128,7 @@ export function UserTable(props) {
   
   else {
     return (
-      <div className={classes.tableWrapper}>
+      <div className={classes.wrapper}>
         <Table>
           <TableHead>
             <TableRow>
@@ -146,7 +149,7 @@ export function UserTable(props) {
               <TableCell>{user.userName}</TableCell>
               <TableCell>{user.email}</TableCell>
               <TableCell align="center">
-                <div className={ classes.actionsButtonsWrapper }>
+                <div className={ classes.actionsWrapper }>
                   <IconButton onClick={props.deleteUser.bind(this, user.id)} aria-label="Delete"><Icon>delete</Icon></IconButton>
                 </div>
               </TableCell>
@@ -154,10 +157,11 @@ export function UserTable(props) {
             ))}
           </TableBody>
           <TableFooter>
-            <TableRow>
+            <TableRow >
               <TablePagination
+                classes={{root: classes.paginationRoot}}
                 rowsPerPageOptions={[5, 10, 25]}
-                colSpan={3}
+                colSpan={2}
                 count={props.users.length}
                 rowsPerPage={rowsPerPage}
                 page={page}

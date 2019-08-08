@@ -27,13 +27,6 @@
   ],
   "users": [
     {
-      "id": 0,
-      "firstName": "Jordan",
-      "lastName": "Griffith",
-      "userName": "jordangriffith",
-      "email": "jgriffith848@htiffirgnadroj.net"
-    },
-    {
       "id": 1,
       "firstName": "Cristina",
       "lastName": "Frank",

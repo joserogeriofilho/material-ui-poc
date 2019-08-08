@@ -15,7 +15,7 @@ import DrawerTopBarLayout   from '../layouts/DrawerTopBarLayout'
 
 const styles = theme => ({
   paper: {
-    marginTop: theme.spacing(3),
+    margin: theme.spacing(3, 0, 5, 0),
     padding: theme.spacing(3),
     [theme.breakpoints.down('xs')]: {
       backgroundColor: 'transparent',
@@ -29,8 +29,8 @@ const styles = theme => ({
   },
   floatButton: {
     position: 'absolute',
-    bottom: theme.spacing(5),
-    right: theme.spacing(5)
+    bottom: theme.spacing(3),
+    right: theme.spacing(3)
   }
 });
 
@@ -124,13 +124,13 @@ render(){
           </Grid>
         </Hidden>
 
-        <Grid item xs={6} sm={4}>
+        <Grid item xs={12} sm={4}>
           <ScoreCard icon="people_outline" label="Total users" value="26" />
         </Grid>
         <Grid item xs={6} sm={4}>
         <ScoreCard icon="work_outline" label="Categories" value="3" />
         </Grid>
-        <Grid item xs={12} sm={4}>
+        <Grid item xs={6} sm={4}>
         <ScoreCard icon="cake_outline" label="Mean age" value="27,6" />
         </Grid>
 
