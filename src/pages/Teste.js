@@ -174,10 +174,10 @@ export class Teste extends Component {
           </Grid>
         </Grid>
 
-        <Link to={{ pathname: '/teste/singleUser', state: {user: this.state.users[0]} }}>
-        <Fab color="secondary" aria-label="add" className={classes.floatButton}>
-          <AddIcon />
-        </Fab>
+        <Link to={{ pathname: '/teste/singleUser', state: {} }}>
+          <Fab color="secondary" aria-label="add" className={classes.floatButton}>
+            <AddIcon />
+          </Fab>
         </Link>
       </DrawerTopBarLayout>
     );

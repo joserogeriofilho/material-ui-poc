@@ -1,4 +1,5 @@
 import React from 'react';
+import { Link } from 'react-router-dom'
 import { makeStyles, useTheme } from '@material-ui/core/styles';
 import Table from '@material-ui/core/Table';
 import TableHead from '@material-ui/core/TableHead';
@@ -93,6 +94,9 @@ const tableStyles = makeStyles(theme => ({
     },
     paginationRoot: {
       borderBottom: '0'
+    },
+    link: {
+      textDecoration: 'none'
     }
 }));
 
@@ -149,9 +153,13 @@ export function UserTable(props) {
               <TableCell>{user.userName}</TableCell>
               <TableCell>{user.email}</TableCell>
               <TableCell align="center">
-                <div className={ classes.actionsWrapper }>
+                <div className={classes.actionsWrapper}>
+                  <Link to={{ pathname: '/teste/singleUser', state: {user: user} }} className={classes.link}>
+                    <IconButton aria-label="Delete"><Icon>edit</Icon></IconButton>
+                  </Link>
                   <IconButton onClick={props.deleteUser.bind(this, user.id)} aria-label="Delete"><Icon>delete</Icon></IconButton>
                 </div>
+
               </TableCell>
             </TableRow>
             ))}
