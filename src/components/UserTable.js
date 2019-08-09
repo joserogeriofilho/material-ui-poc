@@ -129,7 +129,7 @@ export function UserTable(props) {
   else {
     return (
       <div className={classes.wrapper}>
-        <Table>
+        <Table size="small">
           <TableHead>
             <TableRow>
             <TableCell>Last Name</TableCell>

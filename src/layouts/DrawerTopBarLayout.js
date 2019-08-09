@@ -50,7 +50,10 @@ class DrawerTopBarLayout extends Component {
 
         <div className={classes.insideWrapper}>
           <Hidden mdUp implementation="css">
-            <TopBar mobileMenuOpen={this.mobileMenuOpen} title={this.props.title} />
+            <TopBar
+              returnTo={this.props.returnTo}
+              title={this.props.title}
+              mobileMenuOpen={this.mobileMenuOpen}/>
           </Hidden>
 
           <div className={classes.content}>

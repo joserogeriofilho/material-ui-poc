@@ -4,6 +4,7 @@ import HomePage from './pages/HomePage'
 import UsersPage from './pages/UsersPage'
 import CardGridPage from './pages/CardGridPage'
 import Teste from './pages/Teste'
+import SingleUserPage from './pages/SingleUserPage'
 
 export default props => (
     <BrowserRouter>
@@ -13,6 +14,7 @@ export default props => (
             <Route exact path='/users' component={ UsersPage } />
             <Route exact path='/cardGrid' component={ CardGridPage } />
             <Route exact path='/teste' component={ Teste } />
+            <Route exact path='/teste/singleUser' component={ SingleUserPage } />
         </Switch>
     </BrowserRouter>
   )

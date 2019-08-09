@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import { withRouter }       from 'react-router-dom'
+import { Link, withRouter } from 'react-router-dom'
 import Fab                  from '@material-ui/core/Fab';
 import Grid                 from '@material-ui/core/Grid'
 import Hidden               from '@material-ui/core/Hidden'
@@ -174,9 +174,11 @@ export class Teste extends Component {
           </Grid>
         </Grid>
 
-        <Fab color="secondary" aria-label="add" className={ classes.floatButton }>
+        <Link to={{ pathname: '/teste/singleUser', state: {user: this.state.users[0]} }}>
+        <Fab color="secondary" aria-label="add" className={classes.floatButton}>
           <AddIcon />
         </Fab>
+        </Link>
       </DrawerTopBarLayout>
     );
   }
