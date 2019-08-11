@@ -154,10 +154,20 @@ export function UserTable(props) {
               <TableCell>{user.email}</TableCell>
               <TableCell align="center">
                 <div className={classes.actionsWrapper}>
-                  <Link to={{ pathname: '/teste/singleUser', state: {user: user} }} className={classes.link}>
-                    <IconButton aria-label="Delete"><Icon>edit</Icon></IconButton>
-                  </Link>
-                  <IconButton onClick={props.deleteUser.bind(this, user.id)} aria-label="Delete"><Icon>delete</Icon></IconButton>
+                  <IconButton
+                    aria-label="Edit"
+                    component={Link}
+                    to={{
+                      pathname: '/teste/singleUser',
+                      state: {user: user}
+                    }} >
+                    <Icon>edit</Icon>
+                  </IconButton>
+                  <IconButton
+                    onClick={props.deleteUser.bind(this, user.id)}
+                    aria-label="Delete" >
+                    <Icon>delete</Icon>
+                  </IconButton>
                 </div>
 
               </TableCell>

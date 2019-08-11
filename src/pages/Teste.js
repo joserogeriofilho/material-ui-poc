@@ -44,8 +44,9 @@ export class Teste extends Component {
   constructor(props){
     super(props);
 
-    this.getUsers = this.getUsers.bind(this);
     this.handleSearch = this.handleSearch.bind(this);
+
+    this.getUsers = this.getUsers.bind(this);
     this.deleteUser = this.deleteUser.bind(this);
   }
 
@@ -61,7 +62,6 @@ export class Teste extends Component {
   getUsers() {
     this.setState({ isLoading: true });
 
-    //fetch(API_URL + DEFAULT_QUERY + SEARCH_QUERY + this.state.search)
     fetch(API_URL + DEFAULT_QUERY + SORT_QUERY)
     .then(response => {
       if(response.ok) {
@@ -167,18 +167,24 @@ export class Teste extends Component {
                     users={this.state.matchedUsers}
                     isLoading={isLoading}
                     error={error}
-                    deleteUser={deleteUser}/>
+                    deleteUser={deleteUser} />
                 </Grid>
               </Grid>
             </Paper>
           </Grid>
         </Grid>
 
-        <Link to={{ pathname: '/teste/singleUser', state: {} }}>
-          <Fab color="secondary" aria-label="add" className={classes.floatButton}>
-            <AddIcon />
-          </Fab>
-        </Link>
+        <Fab
+          color="secondary"
+          aria-label="add"
+          className={classes.floatButton}
+          component={Link}
+          to={{
+            pathname: '/teste/singleUser',
+            state: {}
+          }} >
+          <AddIcon />
+        </Fab>
       </DrawerTopBarLayout>
     );
   }

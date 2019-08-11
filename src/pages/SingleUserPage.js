@@ -23,8 +23,39 @@ const styles = makeStyles(theme => ({
   }
 }));
 
+
 function SingleUserPage(props) {
+  const API_URL = process.env.REACT_APP_API_URL;
+  const DEFAULT_QUERY = 'users';
+
+  function putUser(user) {
+    fetch(API_URL + DEFAULT_QUERY + '/' + user.id,
+    {
+      method: 'PUT',
+      headers: new Headers({'Content-Type': 'application/json'}),
+      body: JSON.stringify({
+        firstName:user.firstName,
+        lastName:user.lastName,
+        userName:user.username,
+        email:user.email
+      })
+    }
+    ).then(response => {
+      if(response.ok) {
+        return response.json()
+      } else {
+        throw new Error('Something went wrong...')
+      }
+    })
+    .then(data =>
+      console.log(data)
+    ).catch(error =>
+      console.log(error.message)
+    );
+  }
+
   let user = props.location.state.user;
+
   const classes = styles();
 
   const pageTitle = typeof user === 'undefined' ? 'Add New User' : `${user.firstName} ${user.lastName}`;
@@ -86,10 +117,14 @@ function SingleUserPage(props) {
                   fullWidth />
               </Grid>
               <Grid item xs={12} className={classes.buttons}>
-                <Button className={classes.button}>
+                <Button className={classes.button} >
                   CLEAR FORM
                 </Button>
-                <Button variant="contained" color="secondary" className={classes.button}>
+                <Button
+                  variant="contained"
+                  color="secondary"
+                  className={classes.button}
+                  onClick={ () => putUser(user)} >
                   ADD USER
                 </Button>
               </Grid>

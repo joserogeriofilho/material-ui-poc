@@ -73,7 +73,7 @@ export class UsersPage extends Component {
     );
   }
 
-  postNewUser(){
+  postUser(){
     const lastName = this.state.values.lastName;
     const firstName = this.state.values.firstName;
     const username = this.state.values.username;
@@ -83,7 +83,12 @@ export class UsersPage extends Component {
       {
         method: 'POST',
         headers: new Headers({'Content-Type': 'application/json'}),
-        body: JSON.stringify({firstName:firstName, lastName:lastName, userName:username, email:email})
+        body: JSON.stringify({
+          firstName:firstName,
+          lastName:lastName,
+          userName:username,
+          email:email
+        })
       }
     ).then(response => {
       if(response.ok) {
