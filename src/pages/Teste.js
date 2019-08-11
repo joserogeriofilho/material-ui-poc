@@ -45,7 +45,6 @@ export class Teste extends Component {
     super(props);
 
     this.handleSearch = this.handleSearch.bind(this);
-
     this.getUsers = this.getUsers.bind(this);
     this.deleteUser = this.deleteUser.bind(this);
   }
