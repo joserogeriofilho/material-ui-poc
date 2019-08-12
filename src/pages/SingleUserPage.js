@@ -8,6 +8,12 @@ import Hidden               from '@material-ui/core/Hidden'
 import Button               from '@material-ui/core/Button'
 import IconButton           from '@material-ui/core/IconButton'
 import Icon                 from '@material-ui/core/Icon';
+import Dialog               from '@material-ui/core/Dialog';
+import DialogContent        from '@material-ui/core/DialogContent';
+import DialogContentText    from '@material-ui/core/DialogContentText';
+import CircularProgress     from '@material-ui/core/CircularProgress';
+import DialogActions        from '@material-ui/core/DialogActions';
+import DialogTitle          from '@material-ui/core/DialogTitle';
 import withStyles           from '@material-ui/styles/withStyles'
 
 
@@ -19,6 +25,10 @@ const styles = theme => ({
       boxShadow: 'none',
       padding: theme.spacing(0, 1, 2, 1)
     }
+  },
+  dialogActions: {
+    flexDirection: 'row-reverse',
+    justifyContent: 'space-between'
   }
 });
 
@@ -32,8 +42,9 @@ export class SingleUserPage extends Component {
     super(props);
 
     this.putUser = this.putUser.bind(this);
-    this.handleChange = this.handleChange.bind(this);
     this.goBack = this.goBack.bind(this);
+    this.handleChange = this.handleChange.bind(this);
+    this.handleDialogClose = this.handleDialogClose.bind(this);   
 
     this.state = {
       values: {
@@ -42,13 +53,15 @@ export class SingleUserPage extends Component {
         userName: props.location.state.user.userName,
         email: props.location.state.user.email,
       },
-      isLoading: false,
-      error: null
+      loading: false,
+      dialogState: 0,   // 0 closed, 1 success, 2 error
     }
   }
 
-  putUser(user) {
-    fetch(API_URL + DEFAULT_QUERY + '/' + user.id,
+  putUser() {
+    this.setState({ loading: true });
+    
+    fetch(API_URL + DEFAULT_QUERY + '/' + this.props.location.state.user.id,
     {
       method: 'PUT',
       headers: new Headers({'Content-Type': 'application/json'}),
@@ -67,9 +80,9 @@ export class SingleUserPage extends Component {
       }
     })
     .then(data =>
-      this.goBack()
+      this.setState({ loading: false, dialogState: 1 })
     ).catch(error =>
-      console.log(error.message)
+      this.setState({ loading: false, dialogState: 2 })
     );
   }
 
@@ -83,16 +96,52 @@ export class SingleUserPage extends Component {
     this.setState(change);
   }
 
+  handleDialogClose(){
+    this.setState({dialogState: 0});
+  }
 
   render(){
-    let user = this.props.location.state.user;
-
     const { classes } = this.props;
     const pageTitle = 'Edit User';
 
     const values = this.state.values;
-    const handleChange = this.handleChange;
+    const putUser = this.putUser;
     const goBack = this.goBack;
+    const handleChange = this.handleChange;
+
+    const successDialog = (
+      <Dialog
+        open={this.state.dialogState !== 0}
+        aria-labelledby="alert-dialog-title"
+        aria-describedby="alert-dialog-description" >
+        <DialogTitle id="alert-dialog-title">Success</DialogTitle>
+        <DialogContent>
+          <DialogContentText id="alert-dialog-description">Changes successfully updated.</DialogContentText>
+        </DialogContent>
+        <DialogActions>
+          <Button onClick={this.handleDialogClose} color="secondary">
+            OK
+          </Button>
+        </DialogActions>
+      </Dialog>
+    );
+
+    const errorDialog = (
+      <Dialog
+        open={this.state.dialogState !== 0}
+        aria-labelledby="alert-dialog-title"
+        aria-describedby="alert-dialog-description" >
+        <DialogTitle id="alert-dialog-title">Error</DialogTitle>
+        <DialogContent>
+          <DialogContentText id="alert-dialog-description">Something went wrong. Please, try again.</DialogContentText>
+        </DialogContent>
+        <DialogActions>
+          <Button onClick={this.handleDialogClose} color="secondary">
+            OK
+          </Button>
+        </DialogActions>
+      </Dialog>
+    );
 
     return(
       <DrawerTopBarLayout
@@ -163,13 +212,15 @@ export class SingleUserPage extends Component {
                   <Button
                     variant="contained"
                     color="secondary"
-                    onClick={this.putUser.bind(this, user)} >
+                    onClick={putUser} >
                     SAVE
                   </Button>
                 </Grid>
               </Grid>
             </Paper>
           </Grid>
+
+          { this.state.dialogState === 1 ? successDialog : this.state.dialogState === 2 ? errorDialog : null }
   
         </Grid>
       </DrawerTopBarLayout>
