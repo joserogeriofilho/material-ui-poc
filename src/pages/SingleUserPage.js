@@ -32,7 +32,8 @@ const styles = theme => ({
   },
   loadingDialog: {
     background: 'transparent !important',
-    boxShadow: 'none !important'
+    boxShadow: 'none !important',
+    overflow: 'hidden'
   }
 });
 
@@ -49,6 +50,7 @@ export class SingleUserPage extends Component {
     this.goBack = this.goBack.bind(this);
     this.handleChange = this.handleChange.bind(this);
     this.handleDialogClose = this.handleDialogClose.bind(this);   
+    this.handleDialogConfirm = this.handleDialogConfirm.bind(this);   
 
     this.state = {
       values: {
@@ -104,6 +106,11 @@ export class SingleUserPage extends Component {
     this.setState({dialogState: 0});
   }
 
+  handleDialogConfirm(){
+    this.setState({dialogState: 0});
+    this.goBack();
+  }
+
   render(){
     const { classes } = this.props;
     const pageTitle = 'Edit User';
@@ -135,7 +142,7 @@ export class SingleUserPage extends Component {
           <DialogContentText id="alert-dialog-description">Changes successfully updated.</DialogContentText>
         </DialogContent>
         <DialogActions>
-          <Button onClick={this.handleDialogClose} color="secondary">
+          <Button onClick={this.handleDialogConfirm} color="secondary">
             OK
           </Button>
         </DialogActions>
