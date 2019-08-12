@@ -29,6 +29,10 @@ const styles = theme => ({
   dialogActions: {
     flexDirection: 'row-reverse',
     justifyContent: 'space-between'
+  },
+  loadingDialog: {
+    background: 'transparent !important',
+    boxShadow: 'none !important'
   }
 });
 
@@ -105,9 +109,21 @@ export class SingleUserPage extends Component {
     const pageTitle = 'Edit User';
 
     const values = this.state.values;
+    const dialogState = this.state.dialogState;
+    const loading = this.state.loading;
     const putUser = this.putUser;
     const goBack = this.goBack;
     const handleChange = this.handleChange;
+
+    const loadingDialog = (
+      <Dialog
+        open={loading}
+        classes={{paper: classes.loadingDialog}}
+        aria-labelledby="alert-dialog-title"
+        aria-describedby="alert-dialog-description" >
+          <CircularProgress color="secondary" />
+      </Dialog>
+    );
 
     const successDialog = (
       <Dialog
@@ -220,7 +236,7 @@ export class SingleUserPage extends Component {
             </Paper>
           </Grid>
 
-          { this.state.dialogState === 1 ? successDialog : this.state.dialogState === 2 ? errorDialog : null }
+          { loading ? loadingDialog : dialogState === 1 ? successDialog : dialogState === 2 ? errorDialog : null }
   
         </Grid>
       </DrawerTopBarLayout>

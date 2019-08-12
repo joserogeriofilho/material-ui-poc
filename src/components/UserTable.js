@@ -97,6 +97,12 @@ const tableStyles = makeStyles(theme => ({
     },
     link: {
       textDecoration: 'none'
+    },
+    loading: {
+      display: 'flex',
+      justifyContent: 'center',
+      alignItems: 'center',
+      minHeight: '100px'
     }
 }));
 
@@ -118,7 +124,7 @@ export function UserTable(props) {
   }
 
   if ( props.isLoading ){
-    return ( <div><CircularProgress color="secondary" /></div> );
+    return ( <div className={classes.loading} ><CircularProgress color="secondary" /></div> );
   }
   
   if ( props.error ) {
