@@ -10,8 +10,7 @@ import { makeStyles } from '@material-ui/core/styles';
 
 const styles = makeStyles(theme => ({
   linkButton: {
-    color: 'white',
-    textDecoration: 'none'
+    color: 'white'
   }
 }));
 
@@ -29,14 +28,13 @@ export function TopBar(props) {
   );
 
   const returnButton = (
-    <Link href={props.returnTo}>
-      <IconButton
-        className={classes.linkButton}
-        edge="start"
-        aria-label="Return">
-        <Icon>arrow_back</Icon>
-      </IconButton>
-    </Link>
+    <IconButton
+      href={props.returnTo}
+      className={classes.linkButton}
+      edge="start"
+      aria-label="Return">
+      <Icon>arrow_back</Icon>
+    </IconButton>
   );
 
   return(

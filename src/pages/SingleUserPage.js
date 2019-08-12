@@ -1,10 +1,13 @@
 import React, { Component } from 'react'
-import DrawerTopBarLayout from '../layouts/DrawerTopBarLayout'
-import Grid from '@material-ui/core/Grid'
-import Typography from '@material-ui/core/Typography'
-import Paper from '@material-ui/core/Paper'
-import TextField from '@material-ui/core/TextField'
-import Button from '@material-ui/core/Button'
+import DrawerTopBarLayout   from '../layouts/DrawerTopBarLayout'
+import Grid                 from '@material-ui/core/Grid'
+import Typography           from '@material-ui/core/Typography'
+import Paper                from '@material-ui/core/Paper'
+import TextField            from '@material-ui/core/TextField'
+import Hidden               from '@material-ui/core/Hidden'
+import Button               from '@material-ui/core/Button'
+import IconButton           from '@material-ui/core/IconButton'
+import Icon                 from '@material-ui/core/Icon';
 import withStyles           from '@material-ui/styles/withStyles'
 
 
@@ -16,10 +19,6 @@ const styles = theme => ({
       boxShadow: 'none',
       padding: theme.spacing(0, 1, 2, 1)
     }
-  },
-  buttons: {
-    display: 'flex',
-    justifyContent: 'space-between',
   }
 });
 
@@ -33,6 +32,19 @@ export class SingleUserPage extends Component {
     super(props);
 
     this.putUser = this.putUser.bind(this);
+    this.handleChange = this.handleChange.bind(this);
+    this.goBack = this.goBack.bind(this);
+
+    this.state = {
+      values: {
+        lastName: props.location.state.user.lastName,
+        firstName: props.location.state.user.firstName,
+        userName: props.location.state.user.userName,
+        email: props.location.state.user.email,
+      },
+      isLoading: false,
+      error: null
+    }
   }
 
   putUser(user) {
@@ -41,10 +53,10 @@ export class SingleUserPage extends Component {
       method: 'PUT',
       headers: new Headers({'Content-Type': 'application/json'}),
       body: JSON.stringify({
-        firstName:user.firstName,
-        lastName:user.lastName,
-        userName:user.userName,
-        email:user.email
+        firstName:this.state.values.firstName,
+        lastName:this.state.values.lastName,
+        userName:this.state.values.userName,
+        email:this.state.values.email
       })
     }
     ).then(response => {
@@ -55,22 +67,32 @@ export class SingleUserPage extends Component {
       }
     })
     .then(data =>
-      console.log(data)
+      this.goBack()
     ).catch(error =>
       console.log(error.message)
     );
   }
 
-  render(){
-    const { classes } = this.props;
-    let user = this.props.location.state.user;
-    const pageTitle = typeof user === 'undefined' ? 'Add New User' : `${user.firstName} ${user.lastName}`;
+  goBack(){
+    this.props.history.goBack();
+  }
 
-    let firstName = typeof user === 'undefined' ? '' : user.firstName;
-    let lastName = typeof user === 'undefined' ? '' : user.lastName;
-    let userName = typeof user === 'undefined' ? '' : user.userName;
-    let email = typeof user === 'undefined' ? '' : user.email;
-    
+  handleChange(event){
+    let change = { values: this.state.values };
+    change.values[event.target.id] = event.target.value;
+    this.setState(change);
+  }
+
+
+  render(){
+    let user = this.props.location.state.user;
+
+    const { classes } = this.props;
+    const pageTitle = 'Edit User';
+
+    const values = this.state.values;
+    const handleChange = this.handleChange;
+    const goBack = this.goBack;
 
     return(
       <DrawerTopBarLayout
@@ -81,16 +103,27 @@ export class SingleUserPage extends Component {
           <Grid item xs={12}>
             <Paper className={classes.paper}>
               <Grid container spacing={2}>
-                <Grid item xs={12}>
-                  <Typography variant="h6" component="h3">
-                    {pageTitle}
-                  </Typography>
-                </Grid>
+
+                <Hidden smDown>
+                  <Grid item xs={12} container justify='flex-start' alignItems='center'>
+                    <IconButton
+                      onClick={goBack}
+                      edge="start"
+                      aria-label="Return">
+                      <Icon>arrow_back</Icon>
+                    </IconButton>
+                    <Typography variant="h6" component="h3">
+                      {pageTitle}
+                    </Typography>
+                  </Grid>
+                </Hidden>
+
                 <Grid item xs={12} sm={6}>
                   <TextField
                     id="lastName"
                     label="Last Name"
-                    value={lastName}
+                    value={values.lastName}
+                    onChange={handleChange}
                     margin="dense"
                     variant="outlined"
                     fullWidth />
@@ -99,7 +132,8 @@ export class SingleUserPage extends Component {
                   <TextField
                     id="firstName"
                     label="First Name"
-                    value={firstName}
+                    value={values.firstName}
+                    onChange={handleChange}
                     margin="dense"
                     variant="outlined"
                     fullWidth />
@@ -108,7 +142,8 @@ export class SingleUserPage extends Component {
                   <TextField
                     id="username"
                     label="Username"
-                    value={userName}
+                    value={values.userName}
+                    onChange={handleChange}
                     margin="dense"
                     variant="outlined"
                     fullWidth />
@@ -118,21 +153,18 @@ export class SingleUserPage extends Component {
                     id="email"
                     label="E-mail"
                     helperText="We'll never share your e-mail with anyone else."
-                    value={email}
+                    value={values.email}
+                    onChange={handleChange}
                     margin="dense"
                     variant="outlined"
                     fullWidth />
                 </Grid>
-                <Grid item xs={12} className={classes.buttons}>
-                  <Button className={classes.button} >
-                    CLEAR FORM
-                  </Button>
+                <Grid item xs={12} justify="flex-end" container>
                   <Button
                     variant="contained"
                     color="secondary"
-                    className={classes.button}
                     onClick={this.putUser.bind(this, user)} >
-                    ADD USER
+                    SAVE
                   </Button>
                 </Grid>
               </Grid>

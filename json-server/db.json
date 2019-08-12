@@ -62,11 +62,11 @@
       "email": "slynch230@hcnylenomis.net"
     },
     {
-      "id": 5,
       "firstName": "Daniel",
-      "lastName": "Richards",
+      "lastName": "Hebert Richards",
       "userName": "danielrichards",
-      "email": "drichards948@sdrahcirleinad.biz"
+      "email": "drichards948@sdrahcirleinad.biz",
+      "id": 5
     },
     {
       "id": 6,
@@ -83,13 +83,6 @@
       "email": "qhansen243@nesnahnitneuq.org"
     },
     {
-      "id": 8,
-      "firstName": "Jeanette",
-      "lastName": "Brooks",
-      "userName": "jeanettebrooks",
-      "email": "jbrooks258@skoorbettenaej.com"
-    },
-    {
       "id": 9,
       "firstName": "Leonardo",
       "lastName": "Pham",
@@ -102,33 +95,6 @@
       "lastName": "Hanson",
       "userName": "stanleyhanson",
       "email": "shanson174@nosnahyelnats.biz"
-    },
-    {
-      "id": 11,
-      "firstName": "Samuel",
-      "lastName": "Williams",
-      "userName": "samuelwilliams",
-      "email": "swilliams659@smailliwleumas.biz"
-    },
-    {
-      "firstName": "Christopher",
-      "lastName": "Barnett",
-      "email": "cbarnett770@ttenrabrehpotsirhc.org",
-      "id": 12
-    },
-    {
-      "id": 13,
-      "firstName": "Pablo",
-      "lastName": "Acosta",
-      "userName": "pabloacosta",
-      "email": "pacosta797@atsocaolbap.com"
-    },
-    {
-      "id": 14,
-      "firstName": "Cara",
-      "lastName": "Clarke",
-      "userName": "caraclarke",
-      "email": "cclarke582@ekralcarac.com"
     },
     {
       "id": 15,
@@ -187,13 +153,7 @@
       "id": 22
     },
     {
-      "firstName": "Bruno",
-      "lastName": "Anacleto",
-      "email": "banacleto@gmail.com",
-      "id": 23
-    },
-    {
-      "firstName": "Edward",
+      "firstName": "Arthur",
       "lastName": "Conan Doyle",
       "userName": "ed.doyle",
       "email": "ed.doyle@gmail.com",
