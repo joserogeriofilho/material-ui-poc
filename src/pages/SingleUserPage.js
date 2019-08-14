@@ -31,8 +31,8 @@ const styles = theme => ({
     justifyContent: 'space-between'
   },
   loadingDialog: {
-    background: 'transparent !important',
-    boxShadow: 'none !important',
+    background: 'transparent',
+    boxShadow: 'none',
     overflow: 'hidden'
   }
 });
@@ -46,28 +46,58 @@ export class SingleUserPage extends Component {
   constructor(props){
     super(props);
 
+    this.postUser = this.postUser.bind(this);
     this.putUser = this.putUser.bind(this);
     this.goBack = this.goBack.bind(this);
     this.handleChange = this.handleChange.bind(this);
     this.handleDialogClose = this.handleDialogClose.bind(this);   
-    this.handleDialogConfirm = this.handleDialogConfirm.bind(this);   
+    this.handleDialogConfirm = this.handleDialogConfirm.bind(this);
+
+    let user = props.location.state.user;
 
     this.state = {
+      user: user,
       values: {
-        lastName: props.location.state.user.lastName,
-        firstName: props.location.state.user.firstName,
-        userName: props.location.state.user.userName,
-        email: props.location.state.user.email,
+        lastName: typeof user === 'undefined' ? '' : user.lastName,
+        firstName: typeof user === 'undefined' ? '' : user.firstName,
+        userName: typeof user === 'undefined' ? '' : user.userName,
+        email: typeof user === 'undefined' ? '' : user.email,
       },
       loading: false,
       dialogState: 0,   // 0 closed, 1 success, 2 error
     }
   }
 
+  postUser(){
+    fetch(API_URL + DEFAULT_QUERY,
+      {
+        method: 'POST',
+        headers: new Headers({'Content-Type': 'application/json'}),
+        body: JSON.stringify({
+          firstName:this.state.values.lastName,
+          lastName:this.state.values.firstName,
+          userName:this.state.values.userName,
+          email:this.state.values.email
+        })
+      }
+    ).then(response => {
+      if(response.ok) {
+        return response.json();
+      } else {
+        throw new Error('Something went wrong...')
+      }
+    }).then((data) => {
+      this.setState({ loading: false, dialogState: 1 })
+    })
+    .catch((err) => {
+      this.setState({ loading: false, dialogState: 2 })
+    });
+  }
+
   putUser() {
     this.setState({ loading: true });
     
-    fetch(API_URL + DEFAULT_QUERY + '/' + this.props.location.state.user.id,
+    fetch(API_URL + DEFAULT_QUERY + '/' + this.state.user.id,
     {
       method: 'PUT',
       headers: new Headers({'Content-Type': 'application/json'}),
@@ -113,14 +143,17 @@ export class SingleUserPage extends Component {
 
   render(){
     const { classes } = this.props;
-    const pageTitle = 'Edit User';
 
+    const user = this.state.user;
     const values = this.state.values;
     const dialogState = this.state.dialogState;
     const loading = this.state.loading;
+    const postUser = this.postUser;
     const putUser = this.putUser;
     const goBack = this.goBack;
     const handleChange = this.handleChange;
+
+    const pageTitle = typeof user === 'undefined' ? 'New User' :'Edit User';
 
     const loadingDialog = (
       <Dialog
@@ -212,7 +245,7 @@ export class SingleUserPage extends Component {
                 </Grid>
                 <Grid item xs={12} sm={6}>
                   <TextField
-                    id="username"
+                    id="userName"
                     label="Username"
                     value={values.userName}
                     onChange={handleChange}
@@ -235,7 +268,7 @@ export class SingleUserPage extends Component {
                   <Button
                     variant="contained"
                     color="secondary"
-                    onClick={putUser} >
+                    onClick={typeof user === 'undefined' ? postUser : putUser} >
                     SAVE
                   </Button>
                 </Grid>

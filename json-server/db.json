@@ -158,6 +158,13 @@
       "userName": "ed.doyle",
       "email": "ed.doyle@gmail.com",
       "id": 25
+    },
+    {
+      "firstName": "Barbosa da Silva",
+      "lastName": "Arlindo",
+      "userName": "arlindosilva",
+      "email": "arlindosilva@somemail.com",
+      "id": 26
     }
   ]
 }
