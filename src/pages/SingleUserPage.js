@@ -74,8 +74,8 @@ export class SingleUserPage extends Component {
         method: 'POST',
         headers: new Headers({ 'Content-Type': 'application/json' }),
         body: JSON.stringify({
-          firstName:this.state.values.lastName,
-          lastName:this.state.values.firstName,
+          firstName:this.state.values.firstName,
+          lastName:this.state.values.lastName,
           userName:this.state.values.userName,
           email:this.state.values.email
         })
@@ -218,7 +218,7 @@ export class SingleUserPage extends Component {
 
     return(
       <DrawerTopBarLayout
-        returnTo={'/teste'}
+        returnTo={'/users'}
         title={pageTitle}>
         <Grid container spacing={3}>
   

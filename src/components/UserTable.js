@@ -164,7 +164,7 @@ export function UserTable(props) {
                     aria-label="Edit"
                     component={Link}
                     to={{
-                      pathname: '/teste/singleUser',
+                      pathname: '/singleUser',
                       state: {user: user}
                     }} >
                     <Icon>edit</Icon>

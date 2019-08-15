@@ -28,11 +28,6 @@ const Menu = [
     label: "Card Grid",
     pathname: "/cardGrid",
     icon: "collections"
-  },
-  {
-    label: "Teste",
-    pathname: "/teste",
-    icon: "star"
   }
 ];
 

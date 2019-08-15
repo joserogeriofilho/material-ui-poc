@@ -1,28 +1,36 @@
 import React, { Component } from 'react'
-import { withRouter } from 'react-router-dom'
-import withStyles from '@material-ui/styles/withStyles'
-import Grid from '@material-ui/core/Grid'
-import Typography from '@material-ui/core/Typography'
-import Hidden from '@material-ui/core/Hidden'
-import Paper from '@material-ui/core/Paper'
-import TextField from '@material-ui/core/TextField'
-import Button from '@material-ui/core/Button'
-import DrawerTopBarLayout from '../layouts/DrawerTopBarLayout'
-import { UserTable } from '../components/UserTable'
+import { Link, withRouter } from 'react-router-dom'
+import Fab                  from '@material-ui/core/Fab';
+import Grid                 from '@material-ui/core/Grid'
+import Hidden               from '@material-ui/core/Hidden'
+import Paper                from '@material-ui/core/Paper'
+import TextField            from '@material-ui/core/TextField'
+import Typography           from '@material-ui/core/Typography'
+import withStyles           from '@material-ui/styles/withStyles'
+import AddIcon              from '@material-ui/icons/Add';
+import { UserTable }        from '../components/UserTable'
+import { ScoreCard }        from '../components/ScoreCard'
+import DrawerTopBarLayout   from '../layouts/DrawerTopBarLayout'
 
 
 const styles = theme => ({
   paper: {
+    margin: theme.spacing(3, 0, 5, 0),
     padding: theme.spacing(3),
     [theme.breakpoints.down('xs')]: {
       backgroundColor: 'transparent',
       boxShadow: 'none',
-      padding: theme.spacing(0, 1, 2, 1)
+      padding: theme.spacing(0)
     }
   },
-  buttons: {
+  paperButtons: {
     display: 'flex',
     justifyContent: 'space-between',
+  },
+  floatButton: {
+    position: 'absolute',
+    bottom: theme.spacing(3),
+    right: theme.spacing(3)
   }
 });
 
@@ -36,25 +44,20 @@ export class UsersPage extends Component {
   constructor(props){
     super(props);
 
+    this.handleSearch = this.handleSearch.bind(this);
     this.getUsers = this.getUsers.bind(this);
-    this.clearForm = this.clearForm.bind(this);
-    this.handleChange = this.handleChange.bind(this);
-    this.postNewUser = this.postNewUser.bind(this);
     this.deleteUser = this.deleteUser.bind(this);
   }
 
   state = {
-    values: {
-      lastName: '',
-      firstName: '',
-      username: '',
-      email: '',
-    },
     users: [],
+    matchedUsers: [],
     isLoading: false,
     error: null
   };
 
+
+  // Fetch API functions
   getUsers() {
     this.setState({ isLoading: true });
 
@@ -67,40 +70,10 @@ export class UsersPage extends Component {
       }
     })
     .then(data =>
-      this.setState({ users: data, isLoading: false})
+      this.setState({ users: data, matchedUsers: data, isLoading: false})
     ).catch(error =>
       this.setState({ error, isLoading: false })
     );
-  }
-
-  postUser(){
-    const lastName = this.state.values.lastName;
-    const firstName = this.state.values.firstName;
-    const username = this.state.values.username;
-    const email = this.state.values.email;
-
-    fetch(API_URL + DEFAULT_QUERY,
-      {
-        method: 'POST',
-        headers: new Headers({'Content-Type': 'application/json'}),
-        body: JSON.stringify({
-          firstName:firstName,
-          lastName:lastName,
-          userName:username,
-          email:email
-        })
-      }
-    ).then(response => {
-      if(response.ok) {
-        return response.json();
-      } else {
-        throw new Error('Something went wrong...')
-      }
-    }).then((data) => {
-      this.clearForm();
-      this.getUsers();
-    })
-    .catch((err) => console.log(err));
   }
 
   deleteUser(id){
@@ -120,135 +93,100 @@ export class UsersPage extends Component {
     .catch((err) => console.log(err));
   }
 
-  clearForm(){
-    let values = {
-      lastName: '',
-      firstName: '',
-      username: '',
-      email: '',
-    }
+  // Handles
+  handleSearch(event){
+    let matches = this.state.users.filter(user => 
+      user.firstName.toLowerCase().includes( event.target.value.toLowerCase() ) ||
+      user.lastName.toLowerCase().includes( event.target.value.toLowerCase() ) ||
+      user.userName.toLowerCase().includes( event.target.value.toLowerCase() ) ||
+      user.email.toLowerCase().includes( event.target.value.toLowerCase() )
+    );
 
-    this.setState({ values });
+    this.setState({ matchedUsers: matches })
   }
 
-  handleChange(event){
-    let change = { values: this.state.values };
-    change.values[event.target.id] = event.target.value;
-    this.setState(change);
-  }
-
+  // React Components lifecycle functions
   componentDidMount() {
     this.getUsers();
   }
 
-render(){
-  const { classes } = this.props;
-  const pageTitle = "Users";
+  render(){
+    const { classes } = this.props;
+    const pageTitle = "Users";
 
-  const values = this.state.values;
-  const users = this.state.users;
-  const isLoading = this.state.isLoading;
-  const error = this.state.error;
-  const handleChange = this.handleChange;
-  const postNewUser = this.postNewUser;
-  const deleteUser = this.deleteUser;
+    const search = this.state.search;
+    const isLoading = this.state.isLoading;
+    const error = this.state.error;
+    const handleSearch = this.handleSearch;
+    const deleteUser = this.deleteUser;
 
+    return (
+      <DrawerTopBarLayout title={pageTitle}>
+        <Grid container spacing={2}>
+          <Hidden smDown>
+            <Grid item xs={12}>
+              <Typography variant="h5" color='secondary'>
+                {pageTitle}
+              </Typography>
+            </Grid>
+          </Hidden>
 
-  return (
-    <DrawerTopBarLayout title={pageTitle}>
-      <Grid container spacing={3}>
-        <Hidden smDown>
-          <Grid item xs={12}>
-            <Typography variant="h5" color='secondary'>
-              {pageTitle}
-            </Typography>
+          <Grid item xs={12} sm={4}>
+            <ScoreCard icon="people_outline" label="Total users" value="26" />
           </Grid>
-        </Hidden>
+          <Grid item xs={6} sm={4}>
+          <ScoreCard icon="work_outline" label="Categories" value="3" />
+          </Grid>
+          <Grid item xs={6} sm={4}>
+          <ScoreCard icon="cake_outline" label="Mean age" value="27,6" />
+          </Grid>
 
-        <Grid item xs={12}>
-          <Paper className={classes.paper}>
-            <Grid container spacing={2}>
-              <Grid item xs={12}>
-                <Typography variant="h6" component="h3">
-                  Add New User
-                </Typography>
+          <Grid item xs={12}>
+            <Paper className={classes.paper}>
+              <Grid container spacing={2}>
+                <Grid container item xs={12} alignItems="center">
+                  <Grid item xs={6}>
+                    <Typography variant="h6" component="h3">
+                      List and Search
+                    </Typography>
+                  </Grid>
+                  <Grid item xs={6}>
+                    <TextField
+                      id="usersSearch"
+                      label="Search"
+                      value={search}
+                      onChange={handleSearch}
+                      margin="dense"
+                      variant="outlined"
+                      fullWidth />
+                  </Grid>
+                </Grid>
+                <Grid item xs={12}>
+                  <UserTable
+                    users={this.state.matchedUsers}
+                    isLoading={isLoading}
+                    error={error}
+                    deleteUser={deleteUser} />
+                </Grid>
               </Grid>
-              <Grid item xs={12} sm={6}>
-                <TextField
-                  id="lastName"
-                  label="Last Name"
-                  value={values.lastName}
-                  onChange={handleChange}
-                  margin="dense"
-                  variant="outlined"
-                  fullWidth />
-              </Grid>
-              <Grid item xs={12} sm={6}>
-                <TextField
-                  id="firstName"
-                  label="First Name"
-                  value={values.firstName}
-                  onChange={handleChange}
-                  margin="dense"
-                  variant="outlined"
-                  fullWidth />
-              </Grid>
-              <Grid item xs={12} sm={6}>
-                <TextField
-                  id="username"
-                  label="Username"
-                  value={values.username}
-                  onChange={handleChange}
-                  margin="dense"
-                  variant="outlined"
-                  fullWidth />
-              </Grid>
-              <Grid item xs={12} sm={6}>
-                <TextField
-                  id="email"
-                  label="E-mail"
-                  helperText="We'll never share your e-mail with anyone else."
-                  value={values.email}
-                  onChange={handleChange}
-                  margin="dense"
-                  variant="outlined"
-                  fullWidth />
-              </Grid>
-              <Grid item xs={12} className={classes.buttons}>
-                <Button className={classes.button} onClick={this.clearForm}>
-                  CLEAR FORM
-                </Button>
-                <Button variant="contained" color="secondary" className={classes.button} onClick={postNewUser}>
-                  ADD USER
-                </Button>
-              </Grid>
-            </Grid>
-          </Paper>
+            </Paper>
+          </Grid>
         </Grid>
 
-        <Grid item xs={12}>
-          <Paper className={classes.paper}>
-            <Grid container spacing={2}>
-              <Grid item xs={12}>
-                <Typography variant="h6" component="h3">
-                  List of Users
-                </Typography>
-              </Grid>
-              <Grid item xs={12}>
-                <UserTable
-                  users={users}
-                  isLoading={isLoading}
-                  error={error}
-                  deleteUser={deleteUser}/>
-              </Grid>
-            </Grid>
-          </Paper>
-        </Grid>
-      </Grid>
-    </DrawerTopBarLayout>
+        <Fab
+          color="secondary"
+          aria-label="add"
+          className={classes.floatButton}
+          component={Link}
+          to={{
+            pathname: '/singleUser',
+            state: {}
+          }} >
+          <AddIcon />
+        </Fab>
+      </DrawerTopBarLayout>
     );
   }
-
 }
 
 export default withRouter(withStyles(styles)(UsersPage));
