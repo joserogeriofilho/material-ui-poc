@@ -161,10 +161,17 @@
     },
     {
       "firstName": "Barbosa da Silva",
-      "lastName": "Arlindo",
+      "lastName": "Arlindo Arnaldo",
       "userName": "arlindosilva",
       "email": "arlindosilva@somemail.com",
       "id": 26
+    },
+    {
+      "firstName": "Maria Braga",
+      "lastName": "Ana",
+      "userName": "anabraga",
+      "email": "anabraga@somemail.com",
+      "id": 27
     }
   ]
 }

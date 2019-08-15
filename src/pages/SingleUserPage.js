@@ -72,7 +72,7 @@ export class SingleUserPage extends Component {
     fetch(API_URL + DEFAULT_QUERY,
       {
         method: 'POST',
-        headers: new Headers({'Content-Type': 'application/json'}),
+        headers: new Headers({ 'Content-Type': 'application/json' }),
         body: JSON.stringify({
           firstName:this.state.values.lastName,
           lastName:this.state.values.firstName,
@@ -100,7 +100,7 @@ export class SingleUserPage extends Component {
     fetch(API_URL + DEFAULT_QUERY + '/' + this.state.user.id,
     {
       method: 'PUT',
-      headers: new Headers({'Content-Type': 'application/json'}),
+      headers: new Headers({ 'Content-Type': 'application/json' }),
       body: JSON.stringify({
         firstName:this.state.values.firstName,
         lastName:this.state.values.lastName,
@@ -122,21 +122,21 @@ export class SingleUserPage extends Component {
     );
   }
 
-  goBack(){
+  goBack() {
     this.props.history.goBack();
   }
 
-  handleChange(event){
+  handleChange(event) {
     let change = { values: this.state.values };
     change.values[event.target.id] = event.target.value;
     this.setState(change);
   }
 
-  handleDialogClose(){
+  handleDialogClose() {
     this.setState({dialogState: 0});
   }
 
-  handleDialogConfirm(){
+  handleDialogConfirm() {
     this.setState({dialogState: 0});
     this.goBack();
   }
@@ -148,12 +148,25 @@ export class SingleUserPage extends Component {
     const values = this.state.values;
     const dialogState = this.state.dialogState;
     const loading = this.state.loading;
-    const postUser = this.postUser;
-    const putUser = this.putUser;
+
     const goBack = this.goBack;
     const handleChange = this.handleChange;
+    const handleDialogConfirm = this.handleDialogConfirm;
+    const handleDialogClose = this.handleDialogClose;
 
-    const pageTitle = typeof user === 'undefined' ? 'New User' :'Edit User';
+    let pageTitle, buttonLabel, buttonClick, successMessage;
+
+    if ( typeof user === 'undefined' ) {
+      pageTitle = 'New User';
+      buttonLabel = 'REGISTER';
+      buttonClick = this.postUser;
+      successMessage = 'User registered successfully.'
+    } else {
+      pageTitle = 'Edit User';
+      buttonLabel = 'SAVE';
+      buttonClick = this.putUser;
+      successMessage = 'Changes successfully updated.'
+    }
 
     const loadingDialog = (
       <Dialog
@@ -167,15 +180,17 @@ export class SingleUserPage extends Component {
 
     const successDialog = (
       <Dialog
-        open={this.state.dialogState !== 0}
+        open={dialogState !== 0}
         aria-labelledby="alert-dialog-title"
         aria-describedby="alert-dialog-description" >
         <DialogTitle id="alert-dialog-title">Success</DialogTitle>
         <DialogContent>
-          <DialogContentText id="alert-dialog-description">Changes successfully updated.</DialogContentText>
+          <DialogContentText id="alert-dialog-description">
+            {successMessage}
+          </DialogContentText>
         </DialogContent>
         <DialogActions>
-          <Button onClick={this.handleDialogConfirm} color="secondary">
+          <Button onClick={handleDialogConfirm} color="secondary">
             OK
           </Button>
         </DialogActions>
@@ -184,15 +199,17 @@ export class SingleUserPage extends Component {
 
     const errorDialog = (
       <Dialog
-        open={this.state.dialogState !== 0}
+        open={dialogState !== 0}
         aria-labelledby="alert-dialog-title"
         aria-describedby="alert-dialog-description" >
         <DialogTitle id="alert-dialog-title">Error</DialogTitle>
         <DialogContent>
-          <DialogContentText id="alert-dialog-description">Something went wrong. Please, try again.</DialogContentText>
+          <DialogContentText id="alert-dialog-description">
+            Something went wrong. Please, try again.
+          </DialogContentText>
         </DialogContent>
         <DialogActions>
-          <Button onClick={this.handleDialogClose} color="secondary">
+          <Button onClick={handleDialogClose} color="secondary">
             OK
           </Button>
         </DialogActions>
@@ -268,8 +285,8 @@ export class SingleUserPage extends Component {
                   <Button
                     variant="contained"
                     color="secondary"
-                    onClick={typeof user === 'undefined' ? postUser : putUser} >
-                    SAVE
+                    onClick={buttonClick} >
+                    {buttonLabel}
                   </Button>
                 </Grid>
               </Grid>
