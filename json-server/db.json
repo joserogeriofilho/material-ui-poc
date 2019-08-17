@@ -174,7 +174,7 @@
       "id": 27
     },
     {
-      "firstName": "Lady",
+      "firstName": "Laura Edward",
       "lastName": "Abba",
       "userName": "ladyabba",
       "email": "ladyabba@somemail.com",
@@ -186,6 +186,27 @@
       "userName": "someUser",
       "email": "someuser@mail.com",
       "id": 29
+    },
+    {
+      "firstName": "John",
+      "lastName": "Azazel",
+      "userName": "johnazazel",
+      "email": "johnazazel@somemail.com",
+      "id": 30
+    },
+    {
+      "firstName": "Lilian",
+      "lastName": "Abramelin",
+      "userName": "lilianabramelin",
+      "email": "lilianabra@somemail.com",
+      "id": 31
+    },
+    {
+      "firstName": "William",
+      "lastName": "Whilberg",
+      "userName": "willwhil",
+      "email": "willwhil@somemail.com",
+      "id": 32
     }
   ]
 }
