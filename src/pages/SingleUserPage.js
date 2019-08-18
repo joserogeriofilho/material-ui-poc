@@ -57,14 +57,16 @@ export class SingleUserPage extends Component {
     this.handleDialogConfirm = this.handleDialogConfirm.bind(this);
 
     let user = props.location.state.user;
+    let isNewUser = typeof user === 'undefined';
 
     this.state = {
       user: user,
+      isNewUser: isNewUser,
       values: {
-        lastName: typeof user === 'undefined' ? '' : user.lastName,
-        firstName: typeof user === 'undefined' ? '' : user.firstName,
-        userName: typeof user === 'undefined' ? '' : user.userName,
-        email: typeof user === 'undefined' ? '' : user.email
+        lastName: isNewUser ? '' : user.lastName,
+        firstName: isNewUser ? '' : user.firstName,
+        userName: isNewUser ? '' : user.userName,
+        email: isNewUser ? '' : user.email
       },
       errors: {
         lastName: false,
@@ -146,8 +148,8 @@ export class SingleUserPage extends Component {
     let newState = {
       errors: { lastName: false, firstName: false, userName: false, email: false }
     };
-
     let hasErrors = false;
+    let mailformatRegex = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/;
 
     if ( this.state.values.firstName.length < 3 ) {
       newState.errors.firstName = true;
@@ -161,6 +163,11 @@ export class SingleUserPage extends Component {
 
     if ( this.state.values.userName.length < 3 ) {
       newState.errors.userName = true;
+      hasErrors = true;
+    }
+
+    if ( !mailformatRegex.test(this.state.values.email) ) {
+      newState.errors.email = true;
       hasErrors = true;
     }
 
@@ -193,7 +200,7 @@ export class SingleUserPage extends Component {
   render(){
     const { classes } = this.props;
 
-    const user = this.state.user;
+    const isNewUser = this.state.isNewUser;
     const values = this.state.values;
     const errors = this.state.errors;
     const dialogState = this.state.dialogState;
@@ -204,10 +211,11 @@ export class SingleUserPage extends Component {
     let firstNameErrorMsg = errors.firstName ? 'The first name must have at least three characters.' : '';
     let lastNameErrorMsg = errors.lastName ? 'The last name must have at least three characters.' : '';
     let userNameErrorMsg = errors.userName ? 'The username must have at least three characters.' : '';
+    let emailHelperText = errors.email ? 'Please, enter a valid e-mail.' : "We'll never share your e-mail with anyone else.";
 
     // Change title, submit button's label and action and confirmation dialog message
     // according if the user is editing or registering a new user
-    if ( typeof user === 'undefined' ) {
+    if ( isNewUser ) {
       pageTitle = 'New User';
       buttonLabel = 'REGISTER';
       buttonClick = this.registerUser;
@@ -335,7 +343,7 @@ export class SingleUserPage extends Component {
                     onChange={this.handleChange}
                     margin="dense"
                     variant="outlined"
-                    helperText="We'll never share your e-mail with anyone else."
+                    helperText={emailHelperText}
                     error={errors.email}
                     fullWidth />
                 </Grid>
@@ -351,11 +359,11 @@ export class SingleUserPage extends Component {
             </Paper>
           </Grid>
 
-          { loading ? loadingDialog : null }
+          { loading && loadingDialog }
 
-          { dialogState === 1 ? successDialog : null }
+          { dialogState === 1 && successDialog }
 
-          { dialogState === 2 ? errorDialog : null }
+          { dialogState === 2 && errorDialog }
   
         </Grid>
       </DrawerTopBarLayout>
