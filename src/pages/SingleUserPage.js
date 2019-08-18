@@ -136,25 +136,31 @@ export class SingleUserPage extends Component {
   }
 
   handleChange(event) {
-    let change = { values: this.state.values };
-    change.values[event.target.id] = event.target.value;
-    this.setState(change);
+    let newState = { values: this.state.values };
+    newState.values[event.target.id] = event.target.value;
+
+    this.setState(newState);
   }
 
   validate() {
     let newState = {
-      errors: {
-        lastName: false,
-        firstName: false,
-        userName: false,
-        email: false
-      }
+      errors: { lastName: false, firstName: false, userName: false, email: false }
     };
 
     let hasErrors = false;
 
-    if ( this.state.values.firstName === '' ) {
+    if ( this.state.values.firstName.length < 3 ) {
       newState.errors.firstName = true;
+      hasErrors = true;
+    }
+
+    if ( this.state.values.lastName.length < 3 ) {
+      newState.errors.lastName = true;
+      hasErrors = true;
+    }
+
+    if ( this.state.values.userName.length < 3 ) {
+      newState.errors.userName = true;
       hasErrors = true;
     }
 
@@ -195,7 +201,9 @@ export class SingleUserPage extends Component {
 
     let pageTitle, buttonLabel, buttonClick, successMessage;
 
-    let firstNameErrorMsg = errors.firstName ? 'The first name cannot be empty.' : '';
+    let firstNameErrorMsg = errors.firstName ? 'The first name must have at least three characters.' : '';
+    let lastNameErrorMsg = errors.lastName ? 'The last name must have at least three characters.' : '';
+    let userNameErrorMsg = errors.userName ? 'The username must have at least three characters.' : '';
 
     // Change title, submit button's label and action and confirmation dialog message
     // according if the user is editing or registering a new user
@@ -291,7 +299,7 @@ export class SingleUserPage extends Component {
                     onChange={this.handleChange}
                     margin="dense"
                     variant='outlined'
-                    helperText=""
+                    helperText={lastNameErrorMsg}
                     error={errors.lastName}
                     fullWidth />
                 </Grid>
@@ -315,7 +323,7 @@ export class SingleUserPage extends Component {
                     onChange={this.handleChange}
                     margin="dense"
                     variant="outlined"
-                    helperText=""
+                    helperText={userNameErrorMsg}
                     error={errors.userName}
                     fullWidth />
                 </Grid>
