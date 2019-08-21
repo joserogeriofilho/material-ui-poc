@@ -14,26 +14,26 @@ const styles = theme => ({
 
 export class HomePage extends Component {
 
-    render(){
-        const { classes } = this.props;
-        const pageTitle = "Home";
+  render(){
+    const { classes } = this.props;
+    const pageTitle = "Home";
 
-        return (
-          <DrawerTopBarLayout title={pageTitle}>
-            <Grid container spacing={3}>
+    return (
+      <DrawerTopBarLayout title={pageTitle}>
+        <Grid container spacing={3}>
 
-              <Hidden xsDown>
-                <Grid item xs={12}>
-                  <Typography variant="h5" color='secondary'>
-                    {pageTitle}
-                  </Typography>
-                </Grid>
-              </Hidden>
-
+          <Hidden xsDown>
+            <Grid item xs={12}>
+              <Typography variant="h5" color='secondary'>
+                {pageTitle}
+              </Typography>
             </Grid>
-          </DrawerTopBarLayout>
-        );
-    }
+          </Hidden>
+
+        </Grid>
+      </DrawerTopBarLayout>
+    );
+  }
 
 }
 
