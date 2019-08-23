@@ -228,6 +228,13 @@
       "userName": "arnoldsch",
       "email": "arnold.schw@gmail.com",
       "id": 35
+    },
+    {
+      "firstName": "General Fischer",
+      "lastName": "Armstrong",
+      "userName": "fischerarmstrong",
+      "email": "fischerarmstrong@some.mail.com",
+      "id": 36
     }
   ]
 }

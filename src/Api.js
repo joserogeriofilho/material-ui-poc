@@ -20,8 +20,13 @@ class Api {
     // Insert the authorization permit into all requests
     this.axiosInstance.interceptors.request.use( (request) => {
       request.headers.Authorization = 'Bearer ';
-      //console.log(request);
       return request;
+    });
+
+    // Mock the backend response OK|EPIRED|ERROR
+    this.axiosInstance.interceptors.response.use( (response) => {
+      response.statusText = 'OK';
+      return response;
     });
 
     return this.axiosInstance.get(endpoint);

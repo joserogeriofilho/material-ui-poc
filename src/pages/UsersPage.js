@@ -64,10 +64,13 @@ export class UsersPage extends Component {
 
     API.get(API_ENDPOINT + SORT_QUERY)
     .then(response => {
-      if ( response.statusText === 'OK' ){
-        return response.data;
-      } else {
-        throw new Error('Something went wrong...')
+      switch ( response.statusText ) {
+        case 'OK':
+          return response.data;
+        case 'EXPIRED':
+          throw new Error('Your session has expired');
+        default:
+          throw new Error('Something went wrong...')
       }
     })
     .then(data =>
@@ -120,8 +123,6 @@ export class UsersPage extends Component {
     const error = this.state.error;
     const handleSearch = this.handleSearch;
     const deleteUser = this.deleteUser;
-
-    console.log('q' === true);
 
     return (
       <DrawerTopBarLayout title={pageTitle}>
