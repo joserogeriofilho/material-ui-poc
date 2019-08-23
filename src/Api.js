@@ -1,19 +1,30 @@
 import axios from 'axios';
 
 const API_URL = process.env.REACT_APP_API_URL;
-const SORT_QUERY = '?_sort=lastName&_order=asc';
 
 class Api {
-  constructor() {
-    if ( !Api.API ) {
-      Api.API = this;
-    }
 
-    return Api.API;
+  constructor() {
+    this.axiosInstance = axios.create({
+      baseURL: API_URL
+    });
+
+    if ( !this.API ) {
+      this.API = this;
+    } 
+
+    return this.API;
   }
 
-  getUsers() {
-    return axios.get(API_URL + 'users' + SORT_QUERY);
+  get(endpoint) {
+    // Insert the authorization permit into all requests
+    this.axiosInstance.interceptors.request.use( (request) => {
+      request.headers.Authorization = 'Bearer ';
+      //console.log(request);
+      return request;
+    });
+
+    return this.axiosInstance.get(endpoint);
   }
 }
 

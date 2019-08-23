@@ -93,7 +93,6 @@ export class SingleUserPage extends Component {
       }
     ).then(response => {
       if(response.ok) {
-        console.log(response.json());
         return response.json();
       } else {
         throw new Error('Something went wrong...')

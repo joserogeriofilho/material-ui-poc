@@ -36,7 +36,7 @@ const styles = theme => ({
 });
 
 const API_URL = process.env.REACT_APP_API_URL;
-const DEFAULT_QUERY = 'users';
+const API_ENDPOINT = 'users';
 const SORT_QUERY = '?_sort=lastName&_order=asc';
 
 
@@ -62,7 +62,7 @@ export class UsersPage extends Component {
   getUsers() {
     this.setState({ isLoading: true });
 
-    API.getUsers()
+    API.get(API_ENDPOINT + SORT_QUERY)
     .then(response => {
       if ( response.statusText === 'OK' ){
         return response.data;
@@ -78,7 +78,7 @@ export class UsersPage extends Component {
   }
 
   deleteUser(id){
-    fetch(API_URL + DEFAULT_QUERY + '/' + id,
+    fetch(API_URL + API_ENDPOINT + '/' + id,
       {
         method: 'DELETE',
       }
@@ -120,6 +120,8 @@ export class UsersPage extends Component {
     const error = this.state.error;
     const handleSearch = this.handleSearch;
     const deleteUser = this.deleteUser;
+
+    console.log('q' === true);
 
     return (
       <DrawerTopBarLayout title={pageTitle}>

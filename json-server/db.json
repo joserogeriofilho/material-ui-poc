@@ -214,6 +214,20 @@
       "userName": "arianagrande",
       "email": "arianagrande@somemail.com",
       "id": 33
+    },
+    {
+      "firstName": "Richard",
+      "lastName": "Gere",
+      "userName": "richardgere",
+      "email": "richardgere@gmail.com",
+      "id": 34
+    },
+    {
+      "firstName": "Arnold",
+      "lastName": "Schwarzenegger",
+      "userName": "arnoldsch",
+      "email": "arnold.schw@gmail.com",
+      "id": 35
     }
   ]
 }
