@@ -11,7 +11,7 @@ import AddIcon              from '@material-ui/icons/Add';
 import { UserTable }        from '../components/UserTable'
 import { ScoreCard }        from '../components/ScoreCard'
 import DrawerTopBarLayout   from '../layouts/DrawerTopBarLayout'
-import instance             from '../Api'
+import API                  from '../Api'
 
 
 const styles = theme => ({
@@ -62,11 +62,10 @@ export class UsersPage extends Component {
   getUsers() {
     this.setState({ isLoading: true });
 
-    //fetch(API_URL + DEFAULT_QUERY + SORT_QUERY)
-    instance.get()
+    API.getUsers()
     .then(response => {
-      if(response.ok) {
-        return response.json()
+      if ( response.statusText === 'OK' ){
+        return response.data;
       } else {
         throw new Error('Something went wrong...')
       }
