@@ -12,6 +12,7 @@ import { UserTable }        from '../components/UserTable'
 import { ScoreCard }        from '../components/ScoreCard'
 import DrawerTopBarLayout   from '../layouts/DrawerTopBarLayout'
 import API                  from '../Api'
+import { logout }           from '../Auth'
 
 
 const styles = theme => ({
@@ -68,6 +69,7 @@ export class UsersPage extends Component {
         case 'OK':
           return response.data;
         case 'EXPIRED':
+          logout();
           throw new Error('Your session has expired');
         default:
           throw new Error('Something went wrong...')
