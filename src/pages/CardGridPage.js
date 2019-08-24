@@ -15,7 +15,6 @@ const styles = theme => ({
 export class CardGridPage extends Component {
 
     render(){
-        const { classes } = this.props;
         const pageTitle = "Card Grid";
         
         return (

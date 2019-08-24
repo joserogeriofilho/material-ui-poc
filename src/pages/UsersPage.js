@@ -67,7 +67,8 @@ export class UsersPage extends Component {
     .then(response => {
       switch ( response.statusText ) {
         case 'OK':
-          return response.data;
+          this.setState({ users: response.data, matchedUsers: response.data, isLoading: false});
+          break;
         case 'EXPIRED':
           logout();
           throw new Error('Your session has expired');
@@ -75,9 +76,7 @@ export class UsersPage extends Component {
           throw new Error('Something went wrong...')
       }
     })
-    .then(data =>
-      this.setState({ users: data, matchedUsers: data, isLoading: false})
-    ).catch(error =>
+    .catch(error =>
       this.setState({ error, isLoading: false })
     );
   }

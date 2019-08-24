@@ -4,8 +4,9 @@ import Grid                   from '@material-ui/core/Grid'
 import Paper                  from '@material-ui/core/Paper'
 import TextField              from '@material-ui/core/TextField'
 import withStyles             from '@material-ui/styles/withStyles'
-import { Typography }         from '@material-ui/core';
-import { GoogleLogin }        from 'react-google-login';
+import { Typography }         from '@material-ui/core'
+import { GoogleLogin }        from 'react-google-login'
+import { login }              from '../Auth'
 
 
 const styles = theme => ({
@@ -20,6 +21,10 @@ const styles = theme => ({
       boxShadow: 'none'
     }
   },
+  loginButtons: {
+    display: 'flex',
+    justifyContent: 'flex-end'
+  },
   socialButtons: {
     width: '100%',
     justifyItems: 'center'
@@ -30,14 +35,62 @@ const GOOGLE_CLIENT_ID = "839852421288-2b65201lpgk9bqfssjo0ir45mj1va2vd.apps.goo
 
 
 class LoginPage extends Component {
-  state = {  }
+
+  constructor(props) {
+    super(props);
+
+    this.googleResponse = this.googleResponse.bind(this);
+    this.handleChange = this.handleChange.bind(this);
+    this.fakeLogin = this.fakeLogin.bind(this);
+
+    this.state = { 
+      email: '',
+      password: '',
+      googleProfileObj: null,
+      googleAccessToken: null,
+    }
+  }
 
   googleResponse = (response) => {
-    console.log(response);
+    this.setState({ googleProfileObj: response.profileObj, googleAccessToken: response.accessToken });
+    this.login();
   };
 
-  onFailure = (error) => {
+  googleFailure = (error) => {
     alert(error);
+  }
+
+  login(){
+    fetch('login',
+      {
+        method: 'POST',
+        headers: new Headers({ 'Content-Type': 'application/json' }),
+        body: JSON.stringify({
+          email: this.state.email,
+          password: this.state.password,
+          googleProfileObj: this.state.googleProfileObj,
+          googleAccessToken: this.state.googleAccessToken
+        })
+      }
+    ).then(response => {
+      if(response.statusText === 'AUTHORIZED') {
+        console.log(response);
+        return response.data;
+      } else {
+        throw new Error('Icorrect e-mail or password.')
+      }
+    }).catch((err) => {
+      console.log(err);
+    });
+  }
+
+  fakeLogin() {
+    login('mcd02w9fjrh298hd109jd01u0912e');
+    this.props.history.push('/users');
+  }
+
+  handleChange(event) {
+    this.setState({ [event.target.id]: event.target.value });
   }
 
   render() { 
@@ -51,10 +104,12 @@ class LoginPage extends Component {
               <Grid spacing={2} container item xs={12} >
                 <Grid item xs={12} >
                   <TextField
-                    id="username"
-                    label="Username"
+                    id="email"
+                    label="E-mail"
                     margin="dense"
                     variant="outlined"
+                    value={this.state.email}
+                    onChange={this.handleChange}
                     fullWidth />
                 </Grid>
                 <Grid item xs={12}>
@@ -63,12 +118,15 @@ class LoginPage extends Component {
                     label="Password"
                     margin="dense"
                     variant="outlined"
+                    value={this.state.password}
+                    onChange={this.handleChange}
                     fullWidth />
                 </Grid>
-                <Grid item xs={12}>
+                <Grid item xs={12} className={classes.loginButtons}>
                   <Button
                     variant="contained"
-                    color="secondary" >
+                    color="secondary"
+                    onClick={this.fakeLogin} >
                     SIGNIN
                   </Button>
                 </Grid>
@@ -85,7 +143,7 @@ class LoginPage extends Component {
                     clientId={GOOGLE_CLIENT_ID}
                     buttonText="Login"
                     onSuccess={this.googleResponse}
-                    onFailure={this.onFailure} />
+                    onFailure={this.googleFailure} />
                 </Grid>
               </Grid>
             </Grid>

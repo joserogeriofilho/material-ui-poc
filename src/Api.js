@@ -21,17 +21,32 @@ class Api {
     // Insert the authorization permit into all requests
     this.axiosInstance.interceptors.request.use( (request) => {
       request.headers.Authorization = 'Bearer ' + getAccessToken();
-      console.log(request);
       return request;
     });
 
-    // Mock the backend response OK|EXPIRED|ERROR
+    /***********************************************************
+    *                           MOCK                           *
+    *            Backend response OK|EXPIRED|ERROR             *
+    ***********************************************************/
     this.axiosInstance.interceptors.response.use( (response) => {
       response.statusText = 'OK';
       return response;
     });
 
     return this.axiosInstance.get(endpoint);
+  }
+
+  post(endpoint, body) {
+
+    /***********************************************************
+    *                           MOCK                           *
+    *                   Backend login response                 *
+    ***********************************************************/
+    if ( endpoint === 'login' ) {
+
+    }
+
+    return this.axiosInstance.post;
   }
 }
 

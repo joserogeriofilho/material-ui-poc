@@ -15,7 +15,7 @@ const styles = theme => ({
 export class HomePage extends Component {
 
   render(){
-    const { classes } = this.props;
+    //const { classes } = this.props;
     const pageTitle = "Home";
 
     return (
