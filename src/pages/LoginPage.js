@@ -59,7 +59,7 @@ class LoginPage extends Component {
   };
 
   googleFailure = (error) => {
-    alert(error);
+    console.log(error);
   }
 
   login(){
@@ -77,9 +77,9 @@ class LoginPage extends Component {
       } else if ( response.status === 401 ) {
         throw new Error('Icorrect e-mail or password.')
       }
-    }).catch((err) => {
+    }).catch((error) => {
       // Show message on interface
-      console.log(err);
+      console.log(error);
     });
   }
 
