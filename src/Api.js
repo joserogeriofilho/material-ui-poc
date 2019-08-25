@@ -6,11 +6,21 @@ const API_URL = process.env.REACT_APP_API_URL;
 class Api {
 
   constructor() {
-    this.axiosInstance = axios.create({
-      baseURL: API_URL
-    });
-
     if ( !this.API ) {
+      this.axiosInstance = axios.create({
+        baseURL: API_URL
+      });
+
+      /***********************************************************
+      *                  MOCK BACKEND RESPONSE                   *
+      ***********************************************************/
+      this.axiosInstance.interceptors.response.use( (response) => {
+        response.authStatus = 'authorized';
+        response.authToken = 'ihc908yc987y239hfy7t0173ryvc9rygt08gh028ry2';
+        //response.status = 401;
+        return response;
+      });
+
       this.API = this;
     } 
 
@@ -19,35 +29,22 @@ class Api {
 
   get(endpoint) {
     this.insertAccessToken();
-
-    /***********************************************************
-    *                           MOCK                           *
-    *   Backend auth response authorized|unauthorized|expired  *
-    ***********************************************************/
-    this.axiosInstance.interceptors.response.use( (response) => {
-      response.authStatus = 'authorized';
-      return response;
-    });
-
     return this.axiosInstance.get(endpoint);
   }
 
   post(endpoint, body) {
     this.insertAccessToken();
-
-    /***********************************************************
-    *                           MOCK                           *
-    *                   Backend login response                 *
-    ***********************************************************/
-    if ( endpoint === 'login' ) {
-      this.axiosInstance.interceptors.response.use( (response) => {
-        response.authToken = 'ihc908yc987y239hfy7t0173ryvc9rygt08gh028ry2';
-        //response.status = 401;
-        return response;
-      });  
-    }
-
     return this.axiosInstance.post(endpoint, body);
+  }
+
+  put(endpoint, body) {
+    this.insertAccessToken();
+    return this.axiosInstance.put(endpoint, body);
+  }
+
+  delete(endpoint) {
+    this.insertAccessToken();
+    return this.axiosInstance.delete(endpoint);
   }
 
   // Insert the authorization permit into all requests

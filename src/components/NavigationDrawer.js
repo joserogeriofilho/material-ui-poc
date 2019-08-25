@@ -94,7 +94,7 @@ export function NavigationDrawer(props){
           </ListItem>
         ))}
       </List>
-      <a href="#" onClick={logout}>Logout</a>
+      <a href="/" onClick={logout}>Logout</a>
     </React.Fragment>
   );
 

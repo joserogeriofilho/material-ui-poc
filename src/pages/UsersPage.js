@@ -36,7 +36,6 @@ const styles = theme => ({
   }
 });
 
-const API_URL = process.env.REACT_APP_API_URL;
 const API_ENDPOINT = 'users';
 const SORT_QUERY = '?_sort=lastName&_order=asc';
 
@@ -82,20 +81,17 @@ export class UsersPage extends Component {
   }
 
   deleteUser(id){
-    fetch(API_URL + API_ENDPOINT + '/' + id,
-      {
-        method: 'DELETE',
-      }
-    ).then(response => {
-      if(response.ok) {
-        return response.json();
+    API.delete(`${API_ENDPOINT}/${id}`)
+    .then(response => {
+      if(response.status === 200) {
+        this.getUsers();
       } else {
         throw new Error('Something went wrong...')
       }
-    }).then(() => {
-      this.getUsers();
     })
-    .catch((err) => console.log(err));
+    .catch((err) => {
+      console.log(err);
+    });
   }
 
   // Handles

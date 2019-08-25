@@ -78,6 +78,7 @@ class LoginPage extends Component {
         throw new Error('Icorrect e-mail or password.')
       }
     }).catch((err) => {
+      // Show message on interface
       console.log(err);
     });
   }

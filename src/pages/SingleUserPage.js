@@ -15,6 +15,7 @@ import CircularProgress     from '@material-ui/core/CircularProgress'
 import DialogActions        from '@material-ui/core/DialogActions'
 import DialogTitle          from '@material-ui/core/DialogTitle'
 import withStyles           from '@material-ui/styles/withStyles'
+import API                  from '../Api'
 
 
 const styles = theme => ({
@@ -37,8 +38,7 @@ const styles = theme => ({
   }
 });
 
-const API_URL = process.env.REACT_APP_API_URL;
-const DEFAULT_QUERY = 'users';
+const API_ENDPOINT = 'users';
 
 
 export class SingleUserPage extends Component {
@@ -46,8 +46,6 @@ export class SingleUserPage extends Component {
   constructor(props){
     super(props);
 
-    this.postUser = this.postUser.bind(this);
-    this.putUser = this.putUser.bind(this);
     this.goBack = this.goBack.bind(this);
     this.handleChange = this.handleChange.bind(this);
     this.validate = this.validate.bind(this);
@@ -77,60 +75,6 @@ export class SingleUserPage extends Component {
       loading: false,
       dialogState: 0,   // 0 closed, 1 success, 2 error
     }
-  }
-
-  postUser(){
-    fetch(API_URL + DEFAULT_QUERY,
-      {
-        method: 'POST',
-        headers: new Headers({ 'Content-Type': 'application/json' }),
-        body: JSON.stringify({
-          firstName: this.state.values.firstName,
-          lastName: this.state.values.lastName,
-          userName: this.state.values.userName,
-          email: this.state.values.email
-        })
-      }
-    ).then(response => {
-      if(response.ok) {
-        return response.json();
-      } else {
-        throw new Error('Something went wrong...')
-      }
-    }).then((data) => {
-      this.setState({ loading: false, dialogState: 1 })
-    })
-    .catch((err) => {
-      this.setState({ loading: false, dialogState: 2 })
-    });
-  }
-
-  putUser() {
-    this.setState({ loading: true });
-    
-    fetch(API_URL + DEFAULT_QUERY + '/' + this.state.user.id,
-    {
-      method: 'PUT',
-      headers: new Headers({ 'Content-Type': 'application/json' }),
-      body: JSON.stringify({
-        firstName: this.state.values.firstName,
-        lastName: this.state.values.lastName,
-        userName: this.state.values.userName,
-        email: this.state.values.email
-      })
-    }
-    ).then(response => {
-      if(response.ok) {
-        return response.json()
-      } else {
-        throw new Error('Something went wrong...')
-      }
-    })
-    .then(data =>
-      this.setState({ loading: false, dialogState: 1 })
-    ).catch(error =>
-      this.setState({ loading: false, dialogState: 2 })
-    );
   }
 
   goBack() {
@@ -173,18 +117,54 @@ export class SingleUserPage extends Component {
 
     this.setState(newState);
 
-    return hasErrors;
+    return !hasErrors;
   }
 
   registerUser() {
-    if ( !this.validate() ) {
-      this.postUser();
+    if ( this.validate() ) {
+      this.setState({ loading: true });
+
+      API.post(API_ENDPOINT,
+        {
+          firstName: this.state.values.firstName,
+          lastName: this.state.values.lastName,
+          userName: this.state.values.userName,
+          email: this.state.values.email
+        }
+      ).then(response => {
+        if(response.status === 201) {
+          this.setState({ loading: false, dialogState: 1 })
+        } else {
+          throw new Error('Something went wrong...')
+        }
+      })
+      .catch((err) => {
+        this.setState({ loading: false, dialogState: 2 })
+      });
     }
   }
 
   editUser() {
-    if ( !this.validate() ) {
-      this.putUser();
+    if ( this.validate() ) {
+      this.setState({ loading: true });
+      
+      API.put(`${API_ENDPOINT}/${this.state.user.id}`,
+      {
+        firstName: this.state.values.firstName,
+        lastName: this.state.values.lastName,
+        userName: this.state.values.userName,
+        email: this.state.values.email
+      }
+      ).then(response => {
+        if(response.status === 200) {
+          this.setState({ loading: false, dialogState: 1 });
+        } else {
+          throw new Error('Something went wrong...')
+        }
+      })
+      .catch(error =>
+        this.setState({ loading: false, dialogState: 2 })
+      );
     }
   }
 
