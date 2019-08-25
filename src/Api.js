@@ -18,18 +18,14 @@ class Api {
   }
 
   get(endpoint) {
-    // Insert the authorization permit into all requests
-    this.axiosInstance.interceptors.request.use( (request) => {
-      request.headers.Authorization = 'Bearer ' + getAccessToken();
-      return request;
-    });
+    this.insertAccessToken();
 
     /***********************************************************
     *                           MOCK                           *
-    *            Backend response OK|EXPIRED|ERROR             *
+    *   Backend auth response authorized|unauthorized|expired  *
     ***********************************************************/
     this.axiosInstance.interceptors.response.use( (response) => {
-      response.statusText = 'OK';
+      response.authStatus = 'authorized';
       return response;
     });
 
@@ -37,16 +33,29 @@ class Api {
   }
 
   post(endpoint, body) {
+    this.insertAccessToken();
 
     /***********************************************************
     *                           MOCK                           *
     *                   Backend login response                 *
     ***********************************************************/
     if ( endpoint === 'login' ) {
-
+      this.axiosInstance.interceptors.response.use( (response) => {
+        response.authToken = 'ihc908yc987y239hfy7t0173ryvc9rygt08gh028ry2';
+        //response.status = 401;
+        return response;
+      });  
     }
 
-    return this.axiosInstance.post;
+    return this.axiosInstance.post(endpoint, body);
+  }
+
+  // Insert the authorization permit into all requests
+  insertAccessToken(){
+    this.axiosInstance.interceptors.request.use( (request) => {
+      request.headers.Authorization = 'Bearer ' + getAccessToken();
+      return request;
+    });
   }
 }
 

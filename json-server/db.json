@@ -139,13 +139,6 @@
       "email": "ehicks934@skciheuqirne.net"
     },
     {
-      "id": 21,
-      "firstName": "Brandi",
-      "lastName": "Watson",
-      "userName": "brandiwatson",
-      "email": "bwatson539@nostawidnarb.net"
-    },
-    {
       "firstName": "John",
       "lastName": "Constantine",
       "userName": "john666",
@@ -174,13 +167,6 @@
       "id": 27
     },
     {
-      "firstName": "Laura",
-      "lastName": "Abba",
-      "userName": "ladyabba",
-      "email": "ladyabba@somemail.com",
-      "id": 28
-    },
-    {
       "firstName": "LastName",
       "lastName": "FirstName",
       "userName": "someUser",
@@ -195,7 +181,7 @@
       "id": 30
     },
     {
-      "firstName": "Lilian",
+      "firstName": "Lilian Potter",
       "lastName": "Abramelin",
       "userName": "lilianabramelin",
       "email": "lilianabra@somemail.com",
@@ -223,18 +209,24 @@
       "id": 34
     },
     {
-      "firstName": "Arnold",
-      "lastName": "Schwarzenegger",
-      "userName": "arnoldsch",
-      "email": "arnold.schw@gmail.com",
-      "id": 35
-    },
-    {
       "firstName": "General Fischer",
       "lastName": "Armstrong",
       "userName": "fischerarmstrong",
       "email": "fischerarmstrong@some.mail.com",
       "id": 36
+    },
+    {
+      "firstName": "Jerry",
+      "lastName": "Sullivan",
+      "userName": "jerry.sullivan",
+      "email": "jerry.sullivan@somemail.com",
+      "id": 37
     }
-  ]
+  ],
+  "login": {
+    "email": "",
+    "password": "",
+    "googleProfileObj": null,
+    "googleAccessToken": null
+  }
 }

@@ -65,11 +65,11 @@ export class UsersPage extends Component {
 
     API.get(API_ENDPOINT + SORT_QUERY)
     .then(response => {
-      switch ( response.statusText ) {
-        case 'OK':
+      switch ( response.authStatus ) {
+        case 'authorized':
           this.setState({ users: response.data, matchedUsers: response.data, isLoading: false});
           break;
-        case 'EXPIRED':
+        case 'expired':
           logout();
           throw new Error('Your session has expired');
         default:

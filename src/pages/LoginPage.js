@@ -6,6 +6,7 @@ import TextField              from '@material-ui/core/TextField'
 import withStyles             from '@material-ui/styles/withStyles'
 import { Typography }         from '@material-ui/core'
 import { GoogleLogin }        from 'react-google-login'
+import API                    from '../Api'
 import { login }              from '../Auth'
 
 
@@ -42,6 +43,7 @@ class LoginPage extends Component {
     this.googleResponse = this.googleResponse.bind(this);
     this.handleChange = this.handleChange.bind(this);
     this.fakeLogin = this.fakeLogin.bind(this);
+    this.login = this.login.bind(this);
 
     this.state = { 
       email: '',
@@ -61,22 +63,18 @@ class LoginPage extends Component {
   }
 
   login(){
-    fetch('login',
+    API.post('login',
       {
-        method: 'POST',
-        headers: new Headers({ 'Content-Type': 'application/json' }),
-        body: JSON.stringify({
-          email: this.state.email,
-          password: this.state.password,
-          googleProfileObj: this.state.googleProfileObj,
-          googleAccessToken: this.state.googleAccessToken
-        })
+        email: this.state.email,
+        password: this.state.password,
+        googleProfileObj: this.state.googleProfileObj,
+        googleAccessToken: this.state.googleAccessToken
       }
     ).then(response => {
-      if(response.statusText === 'AUTHORIZED') {
-        console.log(response);
-        return response.data;
-      } else {
+      if ( response.status === 201 ) {
+        login(response.authToken);
+        this.props.history.push('/');
+      } else if ( response.status === 401 ) {
         throw new Error('Icorrect e-mail or password.')
       }
     }).catch((err) => {
@@ -126,7 +124,7 @@ class LoginPage extends Component {
                   <Button
                     variant="contained"
                     color="secondary"
-                    onClick={this.fakeLogin} >
+                    onClick={this.login} >
                     SIGNIN
                   </Button>
                 </Grid>
@@ -141,7 +139,7 @@ class LoginPage extends Component {
                   <GoogleLogin
                     className={classes.socialButtons}
                     clientId={GOOGLE_CLIENT_ID}
-                    buttonText="Login"
+                    buttonText="Login with Google"
                     onSuccess={this.googleResponse}
                     onFailure={this.googleFailure} />
                 </Grid>
