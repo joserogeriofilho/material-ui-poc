@@ -28,7 +28,7 @@ function PrivateRoute({ component: Component, ...rest }) {
   return (
     <Route {...rest}
       render={props =>
-          getAccessToken() !== '' ? (
+          getAccessToken() ? (
           <Component {...props} />
         ) : (
           <Redirect
