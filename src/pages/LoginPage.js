@@ -1,5 +1,7 @@
 import React, { Component }   from 'react'
 import Button                 from '@material-ui/core/Button'
+import CircularProgress       from '@material-ui/core/CircularProgress'
+import Dialog                 from '@material-ui/core/Dialog'
 import Grid                   from '@material-ui/core/Grid'
 import Paper                  from '@material-ui/core/Paper'
 import TextField              from '@material-ui/core/TextField'
@@ -29,6 +31,11 @@ const styles = theme => ({
   socialButtons: {
     width: '100%',
     justifyItems: 'center'
+  },
+  loadingDialog: {
+    background: 'transparent',
+    boxShadow: 'none',
+    overflow: 'hidden'
   }
 });
 
@@ -49,6 +56,7 @@ class LoginPage extends Component {
       password: '',
       googleProfileObj: null,
       googleAccessToken: null,
+      loading: false
     }
   }
 
@@ -62,6 +70,8 @@ class LoginPage extends Component {
   }
 
   login(){
+    this.setState({ loading: true });
+
     API.post('login',
       {
         email: this.state.email,
@@ -71,6 +81,7 @@ class LoginPage extends Component {
       }
     ).then(response => {
       if ( response.status === 201 ) {
+        this.setState({ loading: false });
         login(response.authToken);
         this.props.history.push('/');
       } else if ( response.status === 401 ) {
@@ -79,6 +90,7 @@ class LoginPage extends Component {
     }).catch((error) => {
       // Show message on interface
       console.log(error);
+      this.setState({ loading: false });
     });
   }
 
@@ -88,6 +100,16 @@ class LoginPage extends Component {
 
   render() { 
     const { classes } = this.props;
+
+    const loadingDialog = (
+      <Dialog
+        open={this.state.loading}
+        classes={{paper: classes.loadingDialog}}
+        aria-labelledby="alert-dialog-title"
+        aria-describedby="alert-dialog-description" >
+          <CircularProgress color="secondary" />
+      </Dialog>
+    );
 
     return (
       <Grid className={classes.height100} container justify="center" alignItems="center" >
@@ -142,6 +164,9 @@ class LoginPage extends Component {
             </Grid>
           </Paper>
         </Grid>
+
+        { this.state.loading && loadingDialog }
+
       </Grid>
     );
   }

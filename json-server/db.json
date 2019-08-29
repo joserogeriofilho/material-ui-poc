@@ -163,7 +163,14 @@
   "login": {
     "email": "",
     "password": "",
-    "googleProfileObj": null,
-    "googleAccessToken": null
+    "googleProfileObj": {
+      "googleId": "114940959908787064040",
+      "imageUrl": "https://lh3.googleusercontent.com/a-/AAuE7mBk5ZDjUI_yyNfuvu3tP2_hT4bJx2MLW55z_7qH=s96-c",
+      "email": "roger.sama@gmail.com",
+      "name": "José Rogério Bezerra Barbosa Filho",
+      "givenName": "José Rogério",
+      "familyName": "Bezerra Barbosa Filho"
+    },
+    "googleAccessToken": "ya29.GlxzB69tS7cEcqRckjtSAUjUoM7jVQHpqMLyvtzPpoiZ0nUCHqxMiclLAoeLSuAYxaQYlUiYQ94nHmFy-hCdRrQs5Dnxym4BoWka5EvSbcnGWtBo779HuFf_GxM7zw"
   }
 }
