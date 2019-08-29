@@ -2,6 +2,10 @@ import React, { Component }   from 'react'
 import Button                 from '@material-ui/core/Button'
 import CircularProgress       from '@material-ui/core/CircularProgress'
 import Dialog                 from '@material-ui/core/Dialog'
+import DialogContent          from '@material-ui/core/DialogContent'
+import DialogContentText      from '@material-ui/core/DialogContentText'
+import DialogActions          from '@material-ui/core/DialogActions'
+import DialogTitle            from '@material-ui/core/DialogTitle'
 import Grid                   from '@material-ui/core/Grid'
 import Paper                  from '@material-ui/core/Paper'
 import TextField              from '@material-ui/core/TextField'
@@ -49,6 +53,7 @@ class LoginPage extends Component {
 
     this.googleResponse = this.googleResponse.bind(this);
     this.handleChange = this.handleChange.bind(this);
+    this.handleDialogClose = this.handleDialogClose.bind(this);
     this.login = this.login.bind(this);
 
     this.state = { 
@@ -56,7 +61,8 @@ class LoginPage extends Component {
       password: '',
       googleProfileObj: null,
       googleAccessToken: null,
-      loading: false
+      loading: false,
+      error: false
     }
   }
 
@@ -90,12 +96,16 @@ class LoginPage extends Component {
     }).catch((error) => {
       // Show message on interface
       console.log(error);
-      this.setState({ loading: false });
+      this.setState({ loading: false, error: true });
     });
   }
 
   handleChange(event) {
     this.setState({ [event.target.id]: event.target.value });
+  }
+
+  handleDialogClose() {
+    this.setState({error: false});
   }
 
   render() { 
@@ -108,6 +118,25 @@ class LoginPage extends Component {
         aria-labelledby="alert-dialog-title"
         aria-describedby="alert-dialog-description" >
           <CircularProgress color="secondary" />
+      </Dialog>
+    );
+
+    const errorDialog = (
+      <Dialog
+        open={this.state.error}
+        aria-labelledby="alert-dialog-title"
+        aria-describedby="alert-dialog-description" >
+        <DialogTitle id="alert-dialog-title">Error</DialogTitle>
+        <DialogContent>
+          <DialogContentText id="alert-dialog-description">
+            Login failed. Please, try again.
+          </DialogContentText>
+        </DialogContent>
+        <DialogActions>
+          <Button onClick={this.handleDialogClose} color="secondary">
+            OK
+          </Button>
+        </DialogActions>
       </Dialog>
     );
 
@@ -166,6 +195,8 @@ class LoginPage extends Component {
         </Grid>
 
         { this.state.loading && loadingDialog }
+
+        { this.state.error && errorDialog }
 
       </Grid>
     );
