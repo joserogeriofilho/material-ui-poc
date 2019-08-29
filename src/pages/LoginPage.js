@@ -42,7 +42,6 @@ class LoginPage extends Component {
 
     this.googleResponse = this.googleResponse.bind(this);
     this.handleChange = this.handleChange.bind(this);
-    this.fakeLogin = this.fakeLogin.bind(this);
     this.login = this.login.bind(this);
 
     this.state = { 
@@ -81,11 +80,6 @@ class LoginPage extends Component {
       // Show message on interface
       console.log(error);
     });
-  }
-
-  fakeLogin() {
-    login('mcd02w9fjrh298hd109jd01u0912e');
-    this.props.history.push('/users');
   }
 
   handleChange(event) {
