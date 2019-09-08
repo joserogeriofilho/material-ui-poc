@@ -91,6 +91,7 @@ export function NavigationDrawer(props){
               selected={props.location.pathname === item.pathname ? true : false}
               classes = {{root: classes.itemRoot, selected: classes.selectedItem}}
               button
+              onClick={props.mobileMenuClose}
               key={item.label}>
               <ListItemIcon><Icon>{item.icon}</Icon></ListItemIcon>
               <ListItemText primary={item.label} classes={{primary: classes.item}} />
@@ -116,7 +117,9 @@ export function NavigationDrawer(props){
       </Hidden>
 
       <Hidden smUp implementation="css">
-        <SwipeableDrawer anchor="left" variant="temporary"
+        <SwipeableDrawer
+          anchor="left"
+          variant="temporary"
           open={props.menuDrawer}
           onOpen={props.mobileMenuOpen}
           onClose={props.mobileMenuClose}
@@ -128,4 +131,10 @@ export function NavigationDrawer(props){
   );
 }
 
-export default withRouter(withStyles(styles, {withTheme:true})(NavigationDrawer));
+export default
+withRouter(
+  withStyles(
+    styles,
+    {withTheme:true}
+  )( NavigationDrawer )
+);

@@ -5,6 +5,8 @@ import Hidden from '@material-ui/core/Hidden'
 import Container from '@material-ui/core/Container'
 import NavigationDrawer from '../components/NavigationDrawer'
 import { TopBar } from '../components/TopBar'
+import { openNavDrawer, closeNavDrawer }      from '../redux/actions'
+import { connect }              from 'react-redux'
 
 
 const styles = theme => ({
@@ -25,17 +27,13 @@ const styles = theme => ({
 
 
 class DrawerTopBarLayout extends Component {
-
-  state = {
-    menuDrawer: false
-  };
   
   mobileMenuOpen = (event) => {
-    this.setState({ menuDrawer: true });
+    this.props.openNavDrawer();
   }
   
   mobileMenuClose = (event) => {
-    this.setState({ menuDrawer: false });
+    this.props.closeNavDrawer();
   }
 
   render(){
@@ -44,7 +42,7 @@ class DrawerTopBarLayout extends Component {
     return(
       <div className={classes.outsideWrapper}>
         <NavigationDrawer
-          menuDrawer={this.state.menuDrawer}
+          menuDrawer={this.props.navDrawer}
           mobileMenuOpen={this.mobileMenuOpen}
           mobileMenuClose={this.mobileMenuClose} />
 
@@ -67,4 +65,19 @@ class DrawerTopBarLayout extends Component {
   }
 }
 
-export default withRouter(withStyles(styles, {withTheme:true})(DrawerTopBarLayout));
+const mapStateToProps = state => ({
+  navDrawer: state.navDrawerReducer
+})
+
+export default
+withRouter(
+  connect(
+    mapStateToProps,
+    { openNavDrawer, closeNavDrawer }
+  )(
+    withStyles(
+      styles,
+      {withTheme:true}
+    ) (DrawerTopBarLayout)
+  )
+);
