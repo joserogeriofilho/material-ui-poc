@@ -1,5 +1,5 @@
 import React, { useState } from 'react'
-import { withRouter } from 'react-router-dom'
+import { withRouter, Redirect } from 'react-router-dom'
 import withStyles from '@material-ui/styles/withStyles';
 import DrawerTopBarLayout from '../layouts/DrawerTopBarLayout'
 import { AppBar, Grid, Hidden, Paper, Tab, Tabs, Typography } from '@material-ui/core'
@@ -10,7 +10,7 @@ const styles = theme => ({
 
 });
 
-export function CardGridPage({ classes, match }) {
+export function ChildRoutesPage({ classes, match }) {
   const [selectedTab, setSelectedTab] = useState(0);
   const pageTitle = "Card Grid";
 
@@ -47,12 +47,20 @@ export function CardGridPage({ classes, match }) {
           </Paper>
         </Grid>
       </Grid>
+
+      <Route
+        exact
+        path={`${match.path}/`}
+        component={() => (
+          <Redirect to={{pathname: `${match.path}/lol`}} />
+        )} />
+        
     </DrawerTopBarLayout>
   );
 
 }
 
-export default withRouter(withStyles(styles)(CardGridPage));
+export default withRouter(withStyles(styles)(ChildRoutesPage));
 
 function ComponenteLol() {
   return(

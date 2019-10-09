@@ -27,8 +27,8 @@ const Menu = [
     icon: "person"
   },
   {
-    label: "Card Grid",
-    pathname: "/cardGrid",
+    label: "Child Routes",
+    pathname: "/childRoutes",
     icon: "collections"
   }
 ];

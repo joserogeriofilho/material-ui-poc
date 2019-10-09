@@ -14,6 +14,8 @@ import DrawerTopBarLayout   from '../layouts/DrawerTopBarLayout'
 import API                  from '../Api'
 import { logout }           from '../Auth'
 
+import UserService from '../service/UserService'
+
 
 const styles = theme => ({
   paper: {
@@ -61,30 +63,23 @@ export class UsersPage extends Component {
   // Fetch API functions
   getUsers() {
     this.setState({ isLoading: true });
-
-    API.get(API_ENDPOINT + SORT_QUERY)
-    .then(response => {
-      switch ( response.authStatus ) {
-        case 'authorized':
-          this.setState({ users: response.data, matchedUsers: response.data, isLoading: false});
-          break;
-        case 'expired':
-          logout();
-          throw new Error('Your session has expired');
-        default:
-          throw new Error('Something went wrong...')
-      }
-    })
-    .catch(error =>
-      this.setState({ error, isLoading: false })
-    );
+    UserService.getUsers()
+      .then(data => {
+        this.setState({ users: data, matchedUsers: data });
+      })
+      .catch(error => {
+        this.setState({ error: error })
+      })
+      .finally(() => {
+        this.setState({ isLoading: false })
+      });
   }
 
   deleteUser(id){
     API.delete(`${API_ENDPOINT}/${id}`)
     .then(response => {
       if(response.status === 200) {
-        this.getUsers();
+        this.loadUsers();
       } else {
         throw new Error('Something went wrong...')
       }
@@ -136,10 +131,10 @@ export class UsersPage extends Component {
             <ScoreCard icon="people_outline" label="Total users" value="26" />
           </Grid>
           <Grid item xs={6} sm={4}>
-          <ScoreCard icon="work_outline" label="Categories" value="3" />
+            <ScoreCard icon="work_outline" label="Categories" value="3" />
           </Grid>
           <Grid item xs={6} sm={4}>
-          <ScoreCard icon="cake_outline" label="Mean age" value="27,6" />
+            <ScoreCard icon="cake_outline" label="Mean age" value="27,6" />
           </Grid>
 
           <Grid item xs={12}>
