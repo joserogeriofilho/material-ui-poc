@@ -14,7 +14,7 @@ API.interceptors.request.use( (request) => {
 // Mock backend response
 API.interceptors.response.use( (response) => {
   response.authToken = 'ihc908yc987y239hfy7t0173ryvc9rygt08gh028ry2';
-  //response.status = 401;
+  //response.status = 201;
   return response;
 });
 

@@ -15,7 +15,7 @@ import CircularProgress     from '@material-ui/core/CircularProgress'
 import DialogActions        from '@material-ui/core/DialogActions'
 import DialogTitle          from '@material-ui/core/DialogTitle'
 import withStyles           from '@material-ui/styles/withStyles'
-import API                  from '../Api'
+import UserService from '../service/UserService';
 
 
 const styles = theme => ({
@@ -37,8 +37,6 @@ const styles = theme => ({
     overflow: 'hidden'
   }
 });
-
-const API_ENDPOINT = 'users';
 
 
 export class SingleUserPage extends Component {
@@ -124,47 +122,48 @@ export class SingleUserPage extends Component {
     if ( this.validate() ) {
       this.setState({ loading: true });
 
-      API.post(API_ENDPOINT,
-        {
-          firstName: this.state.values.firstName,
-          lastName: this.state.values.lastName,
-          userName: this.state.values.userName,
-          email: this.state.values.email
-        }
-      ).then(response => {
-        if(response.status === 201) {
-          this.setState({ loading: false, dialogState: 1 })
-        } else {
-          throw new Error('Something went wrong...')
-        }
-      })
-      .catch((err) => {
-        this.setState({ loading: false, dialogState: 2 })
-      });
+      const newUser = {
+        firstName: this.state.values.firstName,
+        lastName: this.state.values.lastName,
+        userName: this.state.values.userName,
+        email: this.state.values.email
+      }
+
+      UserService.postUser( newUser )
+        .then(data => {
+          this.setState({ dialogState: 1 })
+        })
+        .catch(error => {
+          this.setState({ dialogState: 2 })
+        })
+        .finally(() => {
+          this.setState({ loading: false })
+        });
     }
   }
 
   editUser() {
     if ( this.validate() ) {
       this.setState({ loading: true });
-      
-      API.put(`${API_ENDPOINT}/${this.state.user.id}`,
-      {
+
+      const modifiedUser = {
+        id: this.state.user.id,
         firstName: this.state.values.firstName,
         lastName: this.state.values.lastName,
         userName: this.state.values.userName,
         email: this.state.values.email
       }
-      ).then(response => {
-        if(response.status === 200) {
-          this.setState({ loading: false, dialogState: 1 });
-        } else {
-          throw new Error('Something went wrong...')
-        }
-      })
-      .catch(error =>
-        this.setState({ loading: false, dialogState: 2 })
-      );
+
+      UserService.putUser( modifiedUser )
+        .then(data => {
+          this.setState({ dialogState: 1 })
+        })
+        .catch(error => {
+          this.setState({ dialogState: 2 })
+        })
+        .finally(() => {
+          this.setState({ loading: false })
+        });
     }
   }
 

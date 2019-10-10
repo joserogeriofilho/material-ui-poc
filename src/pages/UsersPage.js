@@ -1,19 +1,11 @@
 import React, { Component } from 'react'
 import { Link, withRouter } from 'react-router-dom'
-import Fab                  from '@material-ui/core/Fab';
-import Grid                 from '@material-ui/core/Grid'
-import Hidden               from '@material-ui/core/Hidden'
-import Paper                from '@material-ui/core/Paper'
-import TextField            from '@material-ui/core/TextField'
-import Typography           from '@material-ui/core/Typography'
-import withStyles           from '@material-ui/styles/withStyles'
-import AddIcon              from '@material-ui/icons/Add';
-import { UserTable }        from '../components/UserTable'
-import { ScoreCard }        from '../components/ScoreCard'
-import DrawerTopBarLayout   from '../layouts/DrawerTopBarLayout'
-import API                  from '../Api'
-import { logout }           from '../Auth'
-
+import { Fab, Grid, Hidden, Paper, TextField, Typography } from '@material-ui/core'
+import withStyles from '@material-ui/styles/withStyles'
+import AddIcon from '@material-ui/icons/Add';
+import DrawerTopBarLayout from '../layouts/DrawerTopBarLayout'
+import { UserTable } from '../components/UserTable'
+import { ScoreCard } from '../components/ScoreCard'
 import UserService from '../service/UserService'
 
 
@@ -38,9 +30,6 @@ const styles = theme => ({
   }
 });
 
-const API_ENDPOINT = 'users';
-const SORT_QUERY = '?_sort=lastName&_order=asc';
-
 
 export class UsersPage extends Component {
 
@@ -59,8 +48,6 @@ export class UsersPage extends Component {
     error: null
   };
 
-
-  // Fetch API functions
   getUsers() {
     this.setState({ isLoading: true });
     UserService.getUsers()
@@ -76,17 +63,16 @@ export class UsersPage extends Component {
   }
 
   deleteUser(id){
-    API.delete(`${API_ENDPOINT}/${id}`)
-    .then(response => {
-      if(response.status === 200) {
-        this.loadUsers();
-      } else {
-        throw new Error('Something went wrong...')
-      }
-    })
-    .catch((err) => {
-      console.log(err);
-    });
+    UserService.deleteUser(id)
+      .then(data => {
+        this.getUsers();
+      })
+      .catch(error => {
+        console.log(error);        
+      })
+      .finally(() => {
+        
+      });
   }
 
   // Handles
@@ -174,10 +160,7 @@ export class UsersPage extends Component {
           aria-label="add"
           className={classes.floatButton}
           component={Link}
-          to={{
-            pathname: '/singleUser',
-            state: {}
-          }} >
+          to={{ pathname: '/singleUser', state: {} }} >
           <AddIcon />
         </Fab>
       </DrawerTopBarLayout>
