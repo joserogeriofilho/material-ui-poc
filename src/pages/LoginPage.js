@@ -12,7 +12,7 @@ import TextField              from '@material-ui/core/TextField'
 import withStyles             from '@material-ui/styles/withStyles'
 import { Typography }         from '@material-ui/core'
 import { GoogleLogin }        from 'react-google-login'
-import API                    from '../Api'
+import Http                    from '../Http'
 import { login }              from '../Auth'
 
 
@@ -78,7 +78,7 @@ class LoginPage extends Component {
   login(){
     this.setState({ loading: true });
 
-    API.post('login',
+    Http.post('login',
       {
         email: this.state.email,
         password: this.state.password,

@@ -1,4 +1,4 @@
-import API from '../Api'
+import Http from '../Http'
 import { logout } from '../Auth'
 
 const API_ENDPOINT = 'users';
@@ -7,9 +7,14 @@ const SORT_QUERY = '?_sort=lastName&_order=asc';
 
 export default class UserService {
 
-  static getUsers() {
+  static getUsers(_page, _limit) {
     return new Promise( (resolve, reject) => {
-      API.get(API_ENDPOINT + SORT_QUERY)
+      Http.get(API_ENDPOINT + SORT_QUERY, {
+        params: {
+          _page,
+          _limit
+        }
+      })
       .then(response => {
         switch ( response.status ) {
           case 200:
@@ -33,7 +38,7 @@ export default class UserService {
 
   static postUser( user ) {
     return new Promise( (resolve, reject) => {
-      API.post(API_ENDPOINT,
+      Http.post(API_ENDPOINT,
         {
           firstName: user.firstName,
           lastName: user.lastName,
@@ -55,7 +60,7 @@ export default class UserService {
 
   static putUser( user ) {
     return new Promise( (resolve, reject) => {
-      API.put(`${API_ENDPOINT}/${user.id}`,
+      Http.put(`${API_ENDPOINT}/${user.id}`,
         {
           firstName: user.firstName,
           lastName: user.lastName,
@@ -79,7 +84,7 @@ export default class UserService {
 
   static deleteUser(id){
     return new Promise( (resolve, reject) => {
-      API.delete(`${API_ENDPOINT}/${id}`)
+      Http.delete(`${API_ENDPOINT}/${id}`)
       .then(response => {
         if ( response.status === 200 ) {
           resolve( response );

@@ -27,11 +27,11 @@
   ],
   "users": [
     {
-      "id": 0,
       "firstName": "Jordan",
-      "lastName": "Griffith",
+      "lastName": "Griffindor",
       "userName": "jordangriffith",
-      "email": "jgriffith848@htiffirgnadroj.net"
+      "email": "jgriffith848@htiffirgnadroj.net",
+      "id": 0
     },
     {
       "id": 1,
@@ -151,26 +151,12 @@
       "userName": "john666",
       "email": "john666@gmail.com",
       "id": 22
-    },
-    {
-      "firstName": "Edward",
-      "lastName": "Conan Doyle",
-      "userName": "ed.doyle",
-      "email": "ed.doyle@gmail.com",
-      "id": 25
     }
   ],
   "login": {
     "email": "",
     "password": "",
-    "googleProfileObj": {
-      "googleId": "114940959908787064040",
-      "imageUrl": "https://lh3.googleusercontent.com/a-/AAuE7mBk5ZDjUI_yyNfuvu3tP2_hT4bJx2MLW55z_7qH=s96-c",
-      "email": "roger.sama@gmail.com",
-      "name": "José Rogério Bezerra Barbosa Filho",
-      "givenName": "José Rogério",
-      "familyName": "Bezerra Barbosa Filho"
-    },
-    "googleAccessToken": "ya29.ImGbB8ghkmKOTv4Pa3SxPegEzTjhIA0kOJkjuDEatgwqVHdOZBXlDcHLZZt_UzKxMN6S_zK1AXAiGW7NNaK-5v5BteXNlqfZcouO3-7maU1DaYEYQ32kCazqCnrbscHDQkKR"
+    "googleProfileObj": null,
+    "googleAccessToken": null
   }
 }
