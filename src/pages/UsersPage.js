@@ -39,20 +39,32 @@ export class UsersPage extends Component {
     this.handleSearch = this.handleSearch.bind(this);
     this.getUsers = this.getUsers.bind(this);
     this.deleteUser = this.deleteUser.bind(this);
+
+    this.state = {
+      users: [],
+      pagination: {
+        page: 1,
+        totalCount: null,
+        limit: 5
+      },
+      searchValue: '',
+      isLoading: false,
+      error: null
+    };
   }
 
-  state = {
-    users: [],
-    matchedUsers: [],
-    isLoading: false,
-    error: null
-  };
-
-  getUsers() {
+  getUsers( searchValue = this.state.searchValue) {    
     this.setState({ isLoading: true });
-    UserService.getUsers()
-      .then(data => {
-        this.setState({ users: data, matchedUsers: data });
+    UserService.getUsers(
+      this.state.pagination.page,
+      this.state.pagination.limit, 
+      searchValue
+    )
+      .then(response => {        
+        this.setState({
+          users: response.data,
+          totalCount: parseInt(response.totalCount, 10)
+        });
       })
       .catch(error => {
         this.setState({ error: error })
@@ -75,19 +87,14 @@ export class UsersPage extends Component {
       });
   }
 
-  // Handles
   handleSearch(event){
-    let matches = this.state.users.filter(user => 
-      user.firstName.toLowerCase().includes( event.target.value.toLowerCase() ) ||
-      user.lastName.toLowerCase().includes( event.target.value.toLowerCase() ) ||
-      user.userName.toLowerCase().includes( event.target.value.toLowerCase() ) ||
-      user.email.toLowerCase().includes( event.target.value.toLowerCase() )
-    );
-
-    this.setState({ matchedUsers: matches })
+    const value = event.target.value.toLowerCase();
+    this.setState({
+      searchValue: value
+    });
+    this.getUsers(value);
   }
 
-  // React Components lifecycle functions
   componentDidMount() {
     this.getUsers();
   }
@@ -145,7 +152,8 @@ export class UsersPage extends Component {
                 </Grid>
                 <Grid item xs={12}>
                   <UserTable
-                    users={this.state.matchedUsers}
+                    users={this.state.users}
+                    totalCount={this.state.totalCount ? this.state.totalCount : 0}
                     isLoading={isLoading}
                     error={error}
                     deleteUser={deleteUser} />

@@ -186,7 +186,7 @@ export function UserTable(props) {
                 classes={{root: classes.paginationRoot}}
                 rowsPerPageOptions={[5, 10, 25]}
                 colSpan={2}
-                count={props.users.length}
+                count={props.totalCount}
                 rowsPerPage={rowsPerPage}
                 page={page}
                 SelectProps={{

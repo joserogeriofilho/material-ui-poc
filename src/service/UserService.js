@@ -2,23 +2,24 @@ import Http from '../Http'
 import { logout } from '../Auth'
 
 const API_ENDPOINT = 'users';
-const SORT_QUERY = '?_sort=lastName&_order=asc';
+const SORT_QUERY = '?_sort=lastName';
 
 
 export default class UserService {
 
-  static getUsers(_page, _limit) {
+  static getUsers(_page, _limit, filterValue) {
     return new Promise( (resolve, reject) => {
       Http.get(API_ENDPOINT + SORT_QUERY, {
         params: {
           _page,
-          _limit
+          _limit,
+          'q': filterValue
         }
       })
       .then(response => {
         switch ( response.status ) {
           case 200:
-            resolve(response.data);
+            resolve( {data: response.data, totalCount: response.headers['x-total-count']} );
             break;
           case 401:
             logout();
