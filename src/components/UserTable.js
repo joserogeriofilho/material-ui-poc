@@ -33,20 +33,20 @@ function TablePaginationActions(props) {
   const theme = useTheme();
   const { count, page, rowsPerPage, onChangePage } = props;
 
-  function handleFirstPageButtonClick(event) {
-    onChangePage(event, 0);
+  function handleFirstPageButtonClick() {
+    onChangePage(0);
   }
 
-  function handleBackButtonClick(event) {
-    onChangePage(event, page - 1);
+  function handleBackButtonClick() {
+    onChangePage(page - 1);
   }
 
-  function handleNextButtonClick(event) {
-    onChangePage(event, page + 1);
+  function handleNextButtonClick() {
+    onChangePage(page + 1);
   }
 
-  function handleLastPageButtonClick(event) {
-    onChangePage(event, Math.max(0, Math.ceil(count / rowsPerPage) - 1));
+  function handleLastPageButtonClick() {
+    onChangePage(Math.max(0, Math.ceil(count / rowsPerPage) - 1));
   }
 
   return (
@@ -109,97 +109,86 @@ const tableStyles = makeStyles(theme => ({
 // Actual table
 export function UserTable(props) {
   const classes = tableStyles();
+  const { users, totalCount, page, rowsPerPage, isLoading, error } = props;
+  const { onDeleteUser, onChangePage, onChangeRowsPerPage } = props;  
 
-  // States
-  const [page, setPage] = React.useState(0);
-  const [rowsPerPage, setRowsPerPage] = React.useState(5);
-
-  function handleChangePage(event, newPage) {
-    setPage(newPage);
-  }
-
-  function handleChangeRowsPerPage(event) {
-    setRowsPerPage(parseInt(event.target.value, 10));
-    setPage(0);
-  }
-
-  if ( props.isLoading ){
-    return ( <div className={classes.loading} ><CircularProgress color="secondary" /></div> );
-  }
-  
-  if ( props.error ) {
+  if ( isLoading ) {
     return (
-      <div>
-        <span>An error ocurred:</span>
-        <p>{props.error.toString()}</p>
-      </div>
+      <div className={classes.loading} ><CircularProgress color="secondary" /></div>
     );
   }
   
-  else {
+  if ( error ) {
     return (
-      <div className={classes.wrapper}>
-        <Table size="small">
-          <TableHead>
-            <TableRow>
-            <TableCell>Last Name</TableCell>
-            <TableCell>First Name</TableCell>
-            <TableCell>Username</TableCell>
-            <TableCell>E-mail</TableCell>
-            <TableCell align="center">Actions</TableCell>
-            </TableRow>
-          </TableHead>
-          <TableBody>
-            {props.users.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage).map(user => (
-            <TableRow key={user.id}>
-              <TableCell component="th" scope="row">
-              {user.lastName}
-              </TableCell>
-              <TableCell>{user.firstName}</TableCell>
-              <TableCell>{user.userName}</TableCell>
-              <TableCell>{user.email}</TableCell>
-              <TableCell align="center">
-                <div className={classes.actionsWrapper}>
-                  <IconButton
-                    aria-label="Edit"
-                    component={Link}
-                    to={{
-                      pathname: '/singleUser',
-                      state: {user: user}
-                    }} >
-                    <Icon>edit</Icon>
-                  </IconButton>
-                  <IconButton
-                    onClick={props.deleteUser.bind(this, user.id)}
-                    aria-label="Delete" >
-                    <Icon>delete</Icon>
-                  </IconButton>
-                </div>
-
-              </TableCell>
-            </TableRow>
-            ))}
-          </TableBody>
-          <TableFooter>
-            <TableRow >
-              <TablePagination
-                classes={{root: classes.paginationRoot}}
-                rowsPerPageOptions={[5, 10, 25]}
-                colSpan={2}
-                count={props.totalCount}
-                rowsPerPage={rowsPerPage}
-                page={page}
-                SelectProps={{
-                    inputProps: { 'aria-label': 'rows per page' },
-                    native: true,
-                }}
-                onChangePage={handleChangePage}
-                onChangeRowsPerPage={handleChangeRowsPerPage}
-                ActionsComponent={TablePaginationActions} />
-            </TableRow>
-          </TableFooter>
-        </Table>
+      <div>
+        <span>An error ocurred:</span>
+        <p>{ error.toString() }</p>
       </div>
-    );        
+    );
   }
+
+  return (
+    <div className={classes.wrapper}>
+      <Table size="small">
+        <TableHead>
+          <TableRow>
+          <TableCell>Last Name</TableCell>
+          <TableCell>First Name</TableCell>
+          <TableCell>Username</TableCell>
+          <TableCell>E-mail</TableCell>
+          <TableCell align="center">Actions</TableCell>
+          </TableRow>
+        </TableHead>
+        <TableBody>
+          {users.map(user => (
+          <TableRow key={user.id}>
+            <TableCell component="th" scope="row">
+            {user.lastName}
+            </TableCell>
+            <TableCell>{user.firstName}</TableCell>
+            <TableCell>{user.userName}</TableCell>
+            <TableCell>{user.email}</TableCell>
+            <TableCell align="center">
+              <div className={classes.actionsWrapper}>
+                <IconButton
+                  aria-label="Edit"
+                  component={Link}
+                  to={{
+                    pathname: '/singleUser',
+                    state: {user: user}
+                  }} >
+                  <Icon>edit</Icon>
+                </IconButton>
+                <IconButton
+                  onClick={() => onDeleteUser(user.id)}
+                  aria-label="Delete" >
+                  <Icon>delete</Icon>
+                </IconButton>
+              </div>
+
+            </TableCell>
+          </TableRow>
+          ))}
+        </TableBody>
+        <TableFooter>
+          <TableRow >
+            <TablePagination
+              classes={{root: classes.paginationRoot}}
+              rowsPerPageOptions={[5, 10, 25]}
+              colSpan={2}
+              count={totalCount}
+              rowsPerPage={rowsPerPage}
+              page={page}
+              SelectProps={{
+                  inputProps: { 'aria-label': 'rows per page' },
+                  native: true,
+              }}
+              onChangePage={ page => onChangePage(page) }
+              onChangeRowsPerPage={ event => onChangeRowsPerPage(parseInt(event.target.value, 10))}
+              ActionsComponent={TablePaginationActions} />
+          </TableRow>
+        </TableFooter>
+      </Table>
+    </div>
+  );
 }

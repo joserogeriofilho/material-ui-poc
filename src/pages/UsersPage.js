@@ -36,16 +36,12 @@ export class UsersPage extends Component {
   constructor(props){
     super(props);
 
-    this.handleSearch = this.handleSearch.bind(this);
-    this.getUsers = this.getUsers.bind(this);
-    this.deleteUser = this.deleteUser.bind(this);
-
     this.state = {
       users: [],
       pagination: {
-        page: 1,
-        totalCount: null,
-        limit: 5
+        page: 0,
+        totalCount: 0,
+        rowsPerPage: 5
       },
       searchValue: '',
       isLoading: false,
@@ -53,17 +49,20 @@ export class UsersPage extends Component {
     };
   }
 
-  getUsers( searchValue = this.state.searchValue) {    
+  getUsers = ( searchValue = this.state.searchValue) => {    
     this.setState({ isLoading: true });
     UserService.getUsers(
       this.state.pagination.page,
-      this.state.pagination.limit, 
+      this.state.pagination.rowsPerPage, 
       searchValue
     )
       .then(response => {        
         this.setState({
           users: response.data,
-          totalCount: parseInt(response.totalCount, 10)
+          pagination: {
+            ...this.state.pagination,
+            totalCount: parseInt(response.totalCount, 10)
+          }
         });
       })
       .catch(error => {
@@ -74,7 +73,7 @@ export class UsersPage extends Component {
       });
   }
 
-  deleteUser(id){
+  handleDeleteUser = id => {
     UserService.deleteUser(id)
       .then(data => {
         this.getUsers();
@@ -87,12 +86,36 @@ export class UsersPage extends Component {
       });
   }
 
-  handleSearch(event){
+  handleSearch = event => {
     const value = event.target.value.toLowerCase();
     this.setState({
-      searchValue: value
+      searchValue: value,
+      pagination: {
+        ...this.state.pagination,
+        page: 0
+      }
     });
     this.getUsers(value);
+  }
+
+  handleChangePage = page => {    
+    this.setState({
+      pagination: {
+        ...this.state.pagination,
+        page: page
+      }
+    });
+    this.getUsers();
+  }
+
+  handleChangeRowsPerPage = rowsPerPage => {    
+    this.setState({
+      pagination: {
+        ...this.state.pagination,
+        rowsPerPage: rowsPerPage
+      }
+    });
+    this.getUsers();
   }
 
   componentDidMount() {
@@ -102,12 +125,13 @@ export class UsersPage extends Component {
   render(){
     const { classes } = this.props;
     const pageTitle = "Users";
-
+    const users = this.state.users;
+    const page = this.state.pagination.page;
+    const totalCount = this.state.pagination.totalCount;
+    const rowsPerPage = this.state.pagination.rowsPerPage;
     const search = this.state.search;
     const isLoading = this.state.isLoading;
     const error = this.state.error;
-    const handleSearch = this.handleSearch;
-    const deleteUser = this.deleteUser;
 
     return (
       <DrawerTopBarLayout title={pageTitle}>
@@ -144,7 +168,7 @@ export class UsersPage extends Component {
                       id="usersSearch"
                       label="Search"
                       value={search}
-                      onChange={handleSearch}
+                      onChange={this.handleSearch}
                       margin="dense"
                       variant="outlined"
                       fullWidth />
@@ -152,11 +176,15 @@ export class UsersPage extends Component {
                 </Grid>
                 <Grid item xs={12}>
                   <UserTable
-                    users={this.state.users}
-                    totalCount={this.state.totalCount ? this.state.totalCount : 0}
+                    users={users}
+                    page={page}
+                    totalCount={totalCount}
+                    rowsPerPage={rowsPerPage}
                     isLoading={isLoading}
                     error={error}
-                    deleteUser={deleteUser} />
+                    onDeleteUser={this.handleDeleteUser}
+                    onChangePage={this.handleChangePage}
+                    onChangeRowsPerPage={this.handleChangeRowsPerPage} />
                 </Grid>
               </Grid>
             </Paper>
