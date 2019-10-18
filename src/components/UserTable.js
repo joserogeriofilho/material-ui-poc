@@ -16,6 +16,7 @@ import KeyboardArrowRight from '@material-ui/icons/KeyboardArrowRight';
 import LastPageIcon from '@material-ui/icons/LastPage';
 import CircularProgress from '@material-ui/core/CircularProgress';
 
+const FIRST_PAGE_NUMBER = 0;
 
 const paginationStyles = makeStyles(theme => ({
   wrapper: {
@@ -34,7 +35,7 @@ function TablePaginationActions(props) {
   const { count, page, rowsPerPage, onChangePage } = props;
 
   function handleFirstPageButtonClick() {
-    onChangePage(0);
+    onChangePage(FIRST_PAGE_NUMBER);
   }
 
   function handleBackButtonClick() {
@@ -46,21 +47,21 @@ function TablePaginationActions(props) {
   }
 
   function handleLastPageButtonClick() {
-    onChangePage(Math.max(0, Math.ceil(count / rowsPerPage) - 1));
+    onChangePage(Math.max(FIRST_PAGE_NUMBER, Math.ceil(count / rowsPerPage) - 1));
   }
 
   return (
     <div className={classes.wrapper}>
       <IconButton
         onClick={handleFirstPageButtonClick}
-        disabled={page === 0}
+        disabled={page === FIRST_PAGE_NUMBER}
         aria-label="first page"
       >
         {theme.direction === 'rtl' ? <LastPageIcon /> : <FirstPageIcon />}
       </IconButton>
       <IconButton
         onClick={handleBackButtonClick}
-        disabled={page === 0}
+        disabled={page === FIRST_PAGE_NUMBER}
         aria-label="previous page"
       >
         {theme.direction === 'rtl' ? <KeyboardArrowRight /> : <KeyboardArrowLeft />}

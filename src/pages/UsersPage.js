@@ -40,7 +40,7 @@ export class UsersPage extends Component {
       users: [],
       pagination: {
         page: 0,
-        totalCount: 0,
+        totalCount: 1,
         rowsPerPage: 5
       },
       searchValue: '',
@@ -52,10 +52,9 @@ export class UsersPage extends Component {
   getUsers = ( searchValue = this.state.searchValue) => {    
     this.setState({ isLoading: true });
     UserService.getUsers(
-      this.state.pagination.page,
+      this.state.pagination.page + 1,
       this.state.pagination.rowsPerPage, 
-      searchValue
-    )
+      searchValue)
       .then(response => {        
         this.setState({
           users: response.data,
@@ -80,9 +79,6 @@ export class UsersPage extends Component {
       })
       .catch(error => {
         console.log(error);        
-      })
-      .finally(() => {
-        
       });
   }
 
@@ -94,8 +90,8 @@ export class UsersPage extends Component {
         ...this.state.pagination,
         page: 0
       }
-    });
-    this.getUsers(value);
+    }, () => this.getUsers());
+    
   }
 
   handleChangePage = page => {    
@@ -104,8 +100,7 @@ export class UsersPage extends Component {
         ...this.state.pagination,
         page: page
       }
-    });
-    this.getUsers();
+    }, () => this.getUsers());
   }
 
   handleChangeRowsPerPage = rowsPerPage => {    
@@ -114,8 +109,7 @@ export class UsersPage extends Component {
         ...this.state.pagination,
         rowsPerPage: rowsPerPage
       }
-    });
-    this.getUsers();
+    }, () => this.getUsers());
   }
 
   componentDidMount() {
