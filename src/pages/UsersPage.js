@@ -1,5 +1,7 @@
 import React, { Component } from 'react'
 import { Link, withRouter } from 'react-router-dom'
+
+import { debounce } from 'lodash';
 import { Fab, Grid, Hidden, Paper, TextField, Typography } from '@material-ui/core'
 import withStyles from '@material-ui/styles/withStyles'
 import AddIcon from '@material-ui/icons/Add';
@@ -8,6 +10,8 @@ import { UserTable } from '../components/UserTable'
 import { ScoreCard } from '../components/ScoreCard'
 import UserService from '../service/UserService'
 
+
+const DEBOUNCE_TIME = 500;
 
 const styles = theme => ({
   paper: {
@@ -82,19 +86,17 @@ export class UsersPage extends Component {
       });
   }
 
-  handleSearch = event => {
-    const value = event.target.value.toLowerCase();
+  handleSearch = debounce( value => {
     this.setState({
-      searchValue: value,
+      searchValue: value.toLowerCase(),
       pagination: {
         ...this.state.pagination,
         page: 0
       }
-    }, () => this.getUsers());
-    
-  }
+    }, () => this.getUsers());    
+  }, DEBOUNCE_TIME);
 
-  handleChangePage = page => {    
+  handleChangePage = page => {
     this.setState({
       pagination: {
         ...this.state.pagination,
@@ -162,7 +164,7 @@ export class UsersPage extends Component {
                       id="usersSearch"
                       label="Search"
                       value={search}
-                      onChange={this.handleSearch}
+                      onChange={e => this.handleSearch(e.target.value)}
                       margin="dense"
                       variant="outlined"
                       fullWidth />
