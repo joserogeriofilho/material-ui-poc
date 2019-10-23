@@ -192,7 +192,7 @@ export class UsersPage extends Component {
           aria-label="add"
           className={classes.floatButton}
           component={Link}
-          to={{ pathname: '/singleUser', state: {} }} >
+          to={{ pathname: '/user', state: {} }} >
           <AddIcon />
         </Fab>
       </DrawerTopBarLayout>

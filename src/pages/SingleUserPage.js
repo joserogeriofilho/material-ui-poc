@@ -1,4 +1,5 @@
 import React, { Component } from 'react'
+import { withRouter } from 'react-router-dom'
 import DrawerTopBarLayout   from '../layouts/DrawerTopBarLayout'
 import Grid                 from '@material-ui/core/Grid'
 import Typography           from '@material-ui/core/Typography'
@@ -11,11 +12,11 @@ import Icon                 from '@material-ui/core/Icon'
 import Dialog               from '@material-ui/core/Dialog'
 import DialogContent        from '@material-ui/core/DialogContent'
 import DialogContentText    from '@material-ui/core/DialogContentText'
-import CircularProgress     from '@material-ui/core/CircularProgress'
 import DialogActions        from '@material-ui/core/DialogActions'
 import DialogTitle          from '@material-ui/core/DialogTitle'
 import withStyles           from '@material-ui/styles/withStyles'
 import UserService from '../service/UserService';
+import { LoadingDialog } from '../components/LoadingDialog';
 
 
 const styles = theme => ({
@@ -44,25 +45,14 @@ export class SingleUserPage extends Component {
   constructor(props){
     super(props);
 
-    this.goBack = this.goBack.bind(this);
-    this.handleChange = this.handleChange.bind(this);
-    this.validate = this.validate.bind(this);
-    this.registerUser = this.registerUser.bind(this);
-    this.editUser = this.editUser.bind(this);
-    this.handleDialogClose = this.handleDialogClose.bind(this);   
-    this.handleDialogConfirm = this.handleDialogConfirm.bind(this);
-
-    let user = props.location.state.user;
-    let isNewUser = typeof user === 'undefined';
-
     this.state = {
-      user: user,
-      isNewUser: isNewUser,
+      user: null,
+      isNewUser: true,
       values: {
-        lastName: isNewUser ? '' : user.lastName,
-        firstName: isNewUser ? '' : user.firstName,
-        userName: isNewUser ? '' : user.userName,
-        email: isNewUser ? '' : user.email
+        lastName: '',
+        firstName: '',
+        userName: '',
+        email: ''
       },
       errors: {
         lastName: false,
@@ -75,18 +65,18 @@ export class SingleUserPage extends Component {
     }
   }
 
-  goBack() {
+  goBack = () => {
     this.props.history.goBack();
   }
 
-  handleChange(event) {
+  handleChange = event => {
     let newState = { values: this.state.values };
     newState.values[event.target.id] = event.target.value;
 
     this.setState(newState);
   }
 
-  validate() {
+  validate = () => {
     let newState = {
       errors: { lastName: false, firstName: false, userName: false, email: false }
     };
@@ -118,7 +108,7 @@ export class SingleUserPage extends Component {
     return !hasErrors;
   }
 
-  registerUser() {
+  registerUser = () => {
     if ( this.validate() ) {
       this.setState({ loading: true });
 
@@ -142,7 +132,7 @@ export class SingleUserPage extends Component {
     }
   }
 
-  editUser() {
+  editUser = () => {
     if ( this.validate() ) {
       this.setState({ loading: true });
 
@@ -167,13 +157,38 @@ export class SingleUserPage extends Component {
     }
   }
 
-  handleDialogClose() {
-    this.setState({dialogState: 0});
+  handleDialogClose = () => {
+    this.setState({ dialogState: 0 });
   }
 
-  handleDialogConfirm() {
-    this.setState({dialogState: 0});
+  handleDialogConfirm = () => {
+    this.setState({ dialogState: 0 });
     this.goBack();
+  }
+
+  componentDidMount() {
+    const param = this.props.match.params.id;
+
+    if ( typeof param !== 'undefined' ) {
+      UserService.getUser( param )
+        .then(user => {
+          const state = {
+            user: user,
+            isNewUser: false,
+            values: {
+              lastName: user.lastName,
+              firstName: user.firstName,
+              userName: user.userName,
+              email: user.email
+            }
+          }
+          this.setState( state );
+        })
+        .catch(error => {
+          console.log(error)
+        }
+      );
+    }
   }
 
   render(){
@@ -190,10 +205,8 @@ export class SingleUserPage extends Component {
     let firstNameErrorMsg = errors.firstName ? 'The first name must have at least three characters.' : '';
     let lastNameErrorMsg = errors.lastName ? 'The last name must have at least three characters.' : '';
     let userNameErrorMsg = errors.userName ? 'The username must have at least three characters.' : '';
-    let emailHelperText = errors.email ? 'Please, enter a valid e-mail.' : "We'll never share your e-mail with anyone else.";
+    let emailHelperText = errors.email ? 'Please, enter a valid e-mail.' : "We'll never share your e-mail with anyone else.";    
 
-    // Change title, submit button's label and action and confirmation dialog message
-    // according if the user is editing or registering a new user
     if ( isNewUser ) {
       pageTitle = 'New User';
       buttonLabel = 'REGISTER';
@@ -205,16 +218,6 @@ export class SingleUserPage extends Component {
       buttonClick = this.editUser;
       successMessage = 'Changes successfully updated.'
     }
-
-    const loadingDialog = (
-      <Dialog
-        open={loading}
-        classes={{paper: classes.loadingDialog}}
-        aria-labelledby="alert-dialog-title"
-        aria-describedby="alert-dialog-description" >
-          <CircularProgress color="secondary" />
-      </Dialog>
-    );
 
     const successDialog = (
       <Dialog
@@ -338,7 +341,7 @@ export class SingleUserPage extends Component {
             </Paper>
           </Grid>
 
-          { loading && loadingDialog }
+          <LoadingDialog open={loading} />
 
           { dialogState === 1 && successDialog }
 
@@ -350,4 +353,4 @@ export class SingleUserPage extends Component {
   }
 }
 
-export default withStyles(styles)(SingleUserPage);
+export default withRouter(withStyles(styles)(SingleUserPage));
