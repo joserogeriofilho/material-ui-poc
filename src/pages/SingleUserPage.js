@@ -9,14 +9,10 @@ import Hidden               from '@material-ui/core/Hidden'
 import Button               from '@material-ui/core/Button'
 import IconButton           from '@material-ui/core/IconButton'
 import Icon                 from '@material-ui/core/Icon'
-import Dialog               from '@material-ui/core/Dialog'
-import DialogContent        from '@material-ui/core/DialogContent'
-import DialogContentText    from '@material-ui/core/DialogContentText'
-import DialogActions        from '@material-ui/core/DialogActions'
-import DialogTitle          from '@material-ui/core/DialogTitle'
 import withStyles           from '@material-ui/styles/withStyles'
 import UserService from '../service/UserService';
 import { LoadingDialog } from '../components/LoadingDialog';
+import { AlertDialog } from '../components/AlertDialog';
 
 
 const styles = theme => ({
@@ -219,44 +215,6 @@ export class SingleUserPage extends Component {
       successMessage = 'Changes successfully updated.'
     }
 
-    const successDialog = (
-      <Dialog
-        open={dialogState !== 0}
-        aria-labelledby="alert-dialog-title"
-        aria-describedby="alert-dialog-description" >
-        <DialogTitle id="alert-dialog-title">Success</DialogTitle>
-        <DialogContent>
-          <DialogContentText id="alert-dialog-description">
-            {successMessage}
-          </DialogContentText>
-        </DialogContent>
-        <DialogActions>
-          <Button onClick={this.handleDialogConfirm} color="secondary">
-            OK
-          </Button>
-        </DialogActions>
-      </Dialog>
-    );
-
-    const errorDialog = (
-      <Dialog
-        open={dialogState !== 0}
-        aria-labelledby="alert-dialog-title"
-        aria-describedby="alert-dialog-description" >
-        <DialogTitle id="alert-dialog-title">Error</DialogTitle>
-        <DialogContent>
-          <DialogContentText id="alert-dialog-description">
-            Something went wrong. Please, try again.
-          </DialogContentText>
-        </DialogContent>
-        <DialogActions>
-          <Button onClick={this.handleDialogClose} color="secondary">
-            OK
-          </Button>
-        </DialogActions>
-      </Dialog>
-    );
-
     return(
       <DrawerTopBarLayout
         returnTo={'/users'}
@@ -343,9 +301,17 @@ export class SingleUserPage extends Component {
 
           <LoadingDialog open={loading} />
 
-          { dialogState === 1 && successDialog }
+          <AlertDialog
+            open ={dialogState === 1}
+            title={"Success"}
+            message={successMessage}
+            handleDialogConfirm={this.handleDialogConfirm} />
 
-          { dialogState === 2 && errorDialog }
+          <AlertDialog
+            open ={dialogState === 2}
+            title={"Error"}
+            message={"Something went wrong. Please, try again."}
+            handleDialogConfirm={this.handleDialogClose} />
   
         </Grid>
       </DrawerTopBarLayout>

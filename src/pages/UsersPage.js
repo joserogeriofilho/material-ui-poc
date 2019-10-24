@@ -8,6 +8,8 @@ import AddIcon from '@material-ui/icons/Add';
 import DrawerTopBarLayout from '../layouts/DrawerTopBarLayout'
 import { UserTable } from '../components/UserTable'
 import { ScoreCard } from '../components/ScoreCard'
+import { LoadingDialog } from '../components/LoadingDialog';
+import { AlertDialog } from '../components/AlertDialog';
 import UserService from '../service/UserService'
 
 
@@ -48,13 +50,15 @@ export class UsersPage extends Component {
         rowsPerPage: 5
       },
       searchValue: '',
-      isLoading: false,
-      error: null
+      loadingUsers: false,
+      loadingDelete: false,
+      error: null,
+      dialogState: 0,   // 0 closed, 1 success, 2 error
     };
   }
 
   getUsers = ( searchValue = this.state.searchValue) => {    
-    this.setState({ isLoading: true });
+    this.setState({ loadingUsers: true });
     UserService.getUsers(
       this.state.pagination.page + 1,
       this.state.pagination.rowsPerPage, 
@@ -72,17 +76,22 @@ export class UsersPage extends Component {
         this.setState({ error: error })
       })
       .finally(() => {
-        this.setState({ isLoading: false })
+        this.setState({ loadingUsers: false })
       });
   }
 
   handleDeleteUser = id => {
+    this.setState({ loadingDelete: true });
     UserService.deleteUser(id)
       .then(data => {
+        this.setState({ dialogState: 1 });
         this.getUsers();
       })
       .catch(error => {
-        console.log(error);        
+        this.setState({ dialogState: 2 });     
+      })
+      .finally(()=> {
+        this.setState({ loadingDelete: false })
       });
   }
 
@@ -114,6 +123,10 @@ export class UsersPage extends Component {
     }, () => this.getUsers());
   }
 
+  handleDialogClose = () => {
+    this.setState({ dialogState: 0 });
+  }
+
   componentDidMount() {
     this.getUsers();
   }
@@ -126,7 +139,8 @@ export class UsersPage extends Component {
     const totalCount = this.state.pagination.totalCount;
     const rowsPerPage = this.state.pagination.rowsPerPage;
     const search = this.state.search;
-    const isLoading = this.state.isLoading;
+    const loadingUsers
+  = this.state.loadingUsers;
     const error = this.state.error;
 
     return (
@@ -176,7 +190,7 @@ export class UsersPage extends Component {
                     page={page}
                     totalCount={totalCount}
                     rowsPerPage={rowsPerPage}
-                    isLoading={isLoading}
+                    loadingUsers={loadingUsers}
                     error={error}
                     onDeleteUser={this.handleDeleteUser}
                     onChangePage={this.handleChangePage}
@@ -186,6 +200,20 @@ export class UsersPage extends Component {
             </Paper>
           </Grid>
         </Grid>
+
+        <LoadingDialog open={this.state.loadingDelete} />
+
+        <AlertDialog
+          open ={this.state.dialogState === 1}
+          title={"Success"}
+          message={"The user was removed successfully."}
+          handleDialogConfirm={this.handleDialogClose} />
+
+        <AlertDialog
+          open ={this.state.dialogState === 2}
+          title={"Error"}
+          message={"Something went wrong. Please, try again."}
+          handleDialogConfirm={this.handleDialogClose} />
 
         <Fab
           color="secondary"
