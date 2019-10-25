@@ -220,7 +220,7 @@ export class UsersPage extends Component {
           aria-label="add"
           className={classes.floatButton}
           component={Link}
-          to={{ pathname: '/user', state: {} }} >
+          to={{ pathname: '/users/single' }} >
           <AddIcon />
         </Fab>
       </DrawerTopBarLayout>

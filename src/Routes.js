@@ -16,10 +16,10 @@ export default props => (
   <BrowserRouter>
     <Switch>
       <PrivateRoute exact path='/' component={ HomePage } />
-      <PrivateRoute path='/users' component={ UsersPage } />
+      <PrivateRoute exact path='/users' component={ UsersPage } />
       <PrivateRoute path='/childRoutes' component={ ChildRoutesPage } />
-      <PrivateRoute path='/user/:id' component={ SingleUserPage } />
-      <PrivateRoute path='/user' component={ SingleUserPage } />
+      <PrivateRoute path='/users/single/:id' component={ SingleUserPage } />
+      <PrivateRoute path='/users/single' component={ SingleUserPage } />
       <Route exact path='/login' component={ LoginPage } />
     </Switch>
   </BrowserRouter>

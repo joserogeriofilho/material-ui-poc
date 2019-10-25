@@ -154,7 +154,7 @@ export function UserTable(props) {
                 <IconButton
                   aria-label="Edit"
                   component={Link}
-                  to={ `/user/${user.id}` } >
+                  to={ `/users/single/${user.id}` } >
                   <Icon>edit</Icon>
                 </IconButton>
                 <IconButton

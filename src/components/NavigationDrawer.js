@@ -70,8 +70,23 @@ const styles = theme => ({
 
 
 export function NavigationDrawer(props){
-
   const { classes } = props;
+
+  const isChildPath = (itemPathname, currentPathname) => {
+    if(itemPathname !== '/') {
+      if(currentPathname.startsWith(itemPathname)) {
+        return true;
+      } else {
+        return false;
+      }
+    } else {
+      if(currentPathname === '/') {
+        return true;
+      } else {
+        return false;
+      }
+    }
+  }
 
   const drawer = (
     <React.Fragment>
@@ -88,8 +103,8 @@ export function NavigationDrawer(props){
               component={item.external ? MaterialLink : Link}
               href={item.external ? item.pathname : null}
               to={item.external ? null : {pathname: item.pathname, search: props.location.search}}
-              selected={props.location.pathname === item.pathname ? true : false}
-              classes = {{root: classes.itemRoot, selected: classes.selectedItem}}
+              selected={ isChildPath(item.pathname, props.location.pathname) }
+              classes = {{ root: classes.itemRoot, selected: classes.selectedItem }}
               button
               onClick={props.mobileMenuClose}
               key={item.label}>
