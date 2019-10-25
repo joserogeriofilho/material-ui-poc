@@ -190,7 +190,7 @@ export class UsersPage extends Component {
                     page={page}
                     totalCount={totalCount}
                     rowsPerPage={rowsPerPage}
-                    loadingUsers={loadingUsers}
+                    isLoading={loadingUsers}
                     error={error}
                     onDeleteUser={this.handleDeleteUser}
                     onChangePage={this.handleChangePage}
