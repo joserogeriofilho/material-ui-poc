@@ -8,33 +8,31 @@ import Hidden from '@material-ui/core/Hidden';
 
 
 const styles = theme => ({
-
+  wrapper: {
+    padding: theme.spacing(3)
+  }
 });
 
+const pageTitle = "Home";
 
-export class HomePage extends Component {
+export function HomePage({ classes }) {
+  return (
+    <DrawerTopBarLayout title={pageTitle}>
+      <Grid className={classes.wrapper} container spacing={3}>
 
-  render(){
-    //const { classes } = this.props;
-    const pageTitle = "Home";
+        <Hidden xsDown>
+          <Grid item xs={12}>
+            <Typography variant="h5" color='secondary'>
+              {pageTitle}
+            </Typography>
+          </Grid>
+        </Hidden>
 
-    return (
-      <DrawerTopBarLayout title={pageTitle}>
-        <Grid container spacing={3}>
+        <Grid item xs={12}>This is some content</Grid>
 
-          <Hidden xsDown>
-            <Grid item xs={12}>
-              <Typography variant="h5" color='secondary'>
-                {pageTitle}
-              </Typography>
-            </Grid>
-          </Hidden>
-
-        </Grid>
-      </DrawerTopBarLayout>
-    );
-  }
-
+      </Grid>
+    </DrawerTopBarLayout>
+  );
 }
 
 export default withRouter(withStyles(styles)(HomePage));

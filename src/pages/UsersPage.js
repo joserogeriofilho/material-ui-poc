@@ -16,6 +16,9 @@ import UserService from '../service/UserService'
 const DEBOUNCE_TIME = 500;
 
 const styles = theme => ({
+  wrapper: {
+    padding: theme.spacing(3)
+  },
   paper: {
     margin: theme.spacing(3, 0, 5, 0),
     padding: theme.spacing(3),
@@ -145,7 +148,7 @@ export class UsersPage extends Component {
 
     return (
       <DrawerTopBarLayout title={pageTitle}>
-        <Grid container spacing={2}>
+        <Grid className={classes.wrapper} container spacing={2}>
           <Hidden smDown>
             <Grid item xs={12}>
               <Typography variant="h5" color='secondary'>

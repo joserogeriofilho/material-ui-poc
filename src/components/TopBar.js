@@ -37,7 +37,7 @@ export function TopBar(props) {
   );
 
   return(
-    <AppBar position="static">
+    <AppBar position="relative">
       <Toolbar>
         {typeof props.returnTo === 'undefined' ? menuButton : returnButton}
 

@@ -2,7 +2,6 @@ import React, { Component } from 'react'
 import { withRouter } from 'react-router-dom'
 import withStyles from '@material-ui/styles/withStyles'
 import Hidden from '@material-ui/core/Hidden'
-import Container from '@material-ui/core/Container'
 import NavigationDrawer from '../components/NavigationDrawer'
 import { TopBar } from '../components/TopBar'
 import { openNavDrawer, closeNavDrawer }      from '../redux/actions'
@@ -19,9 +18,6 @@ const styles = theme => ({
     width: '100%',
     height: '100%',
     overflowY: 'auto'
-  },
-  content: {
-    padding: theme.spacing(3, 0, 0, 0)
   }
 });
 
@@ -54,10 +50,8 @@ class DrawerTopBarLayout extends Component {
               mobileMenuOpen={this.mobileMenuOpen}/>
           </Hidden>
 
-          <div className={classes.content}>
-            <Container maxWidth={'lg'} className={classes.container}>
-              {this.props.children}
-            </Container>
+          <div id="content">
+            {this.props.children}
           </div>
         </div>
       </div>
