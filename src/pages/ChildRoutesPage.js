@@ -54,18 +54,16 @@ export function ChildRoutesPage({ classes, match }) {
               <Hidden xsDown>
                 <AppBar position="static">
                   <Tabs value={selectedTab} onChange={handleTabChange} aria-label="simple tabs example">
-                    <Tab component={Link} to={`${match.url}/lol`} label="LOL"/>
-                    <Tab component={Link} to={`${match.url}/lista`} label="LISTA"/>
-                    <Tab component={Link} to={`${match.url}/texto`} label="TEXTO"/>
-                    <Tab component={Link} to={`${match.url}/parametro/:someText`} label="PARAM"/>
+                    <Tab component={Link} to={`${match.url}/first`} label="First"/>
+                    <Tab component={Link} to={`${match.url}/second`} label="Second"/>
+                    <Tab component={Link} to={`${match.url}/third`} label="Third"/>
                   </Tabs>
                 </AppBar>
               </Hidden>
               <div className={classes.content}>
-                <Route value={selectedTab} index={0} path={`${match.path}/lol`} component={ ComponenteLol } />
-                <Route value={selectedTab} index={1} path={`${match.path}/lista`} component={ ComponenteLista } />
-                <Route value={selectedTab} index={2} path={`${match.path}/texto`} component={ ComponenteTexto } />
-                <Route value={selectedTab} index={3} path={`${match.path}/parametro/:someText`} component={ ComponenteParametro } />  
+                <Route value={selectedTab} index={0} path={`${match.path}/first`} component={FirstTab} />
+                <Route value={selectedTab} index={1} path={`${match.path}/second`} component={SecondTab} />
+                <Route value={selectedTab} index={2} path={`${match.path}/third`} component={ThirdTab} />
               </div>
             </Paper>
           </Grid>
@@ -75,17 +73,16 @@ export function ChildRoutesPage({ classes, match }) {
           exact
           path={`${match.path}/`}
           component={() => (
-            <Redirect to={{pathname: `${match.path}/lol`}} />
+            <Redirect to={{pathname: `${match.path}/first`}} />
           )} />
       </Container>
 
       <Hidden smUp>
         <AppBar className={classes.mobileTabs} position='fixed'>
           <Tabs value={selectedTab} onChange={handleTabChange} aria-label="simple tabs example">
-            <Tab component={Link} to={`${match.url}/lol`} label="LOL"/>
-            <Tab component={Link} to={`${match.url}/lista`} label="LISTA"/>
-            <Tab component={Link} to={`${match.url}/texto`} label="TEXTO"/>
-            <Tab component={Link} to={`${match.url}/parametro/:someText`} label="PARAM"/>
+            <Route value={selectedTab} index={0} path={`${match.path}/first`} component={FirstTab} />
+            <Route value={selectedTab} index={1} path={`${match.path}/second`} component={SecondTab} />
+            <Route value={selectedTab} index={2} path={`${match.path}/third`} component={ThirdTab} />
           </Tabs>
         </AppBar>
       </Hidden>
@@ -97,43 +94,52 @@ export function ChildRoutesPage({ classes, match }) {
 export default withRouter(withStyles(styles)(ChildRoutesPage));
 
 
-function ComponenteLol() {
-  return(
-    <div>component lol</div>
-  )
-}
-
-function ComponenteLista() {
-  return(
-    <ul>
-      <li>Bola</li>
-      <li>Macaco</li>
-      <li>Laranja</li>
-    </ul>
-  )
-}
-
-function ComponenteTexto() {
+function FirstTab() {
   return(
     <div>
       <Typography variant="h6">
         Lorem ipsum dolor sit amet
       </Typography>
-      <Typography variant="subtitle2" color='primary'>
-        "Neque porro quisquam est qui dolorem ipsum quia dolor sit amet, consectetur, adipisci velit..."
-      </Typography>
-
-      <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer molestie placerat massa eget sollicitudin. Aenean pharetra sem eget urna lacinia, ut gravida eros ornare. Aenean nec mi leo. Pellentesque velit diam, tristique in turpis rhoncus, euismod feugiat metus. Quisque id quam eu dolor hendrerit tincidunt vel non nibh. In scelerisque tempor pulvinar. Donec feugiat purus quis risus placerat ornare. Duis et felis non dolor pretium sagittis eget a justo. Aliquam consequat orci id scelerisque fringilla. Sed non justo nunc. Integer metus massa, tincidunt non vestibulum quis, molestie a lacus. Ut non maximus ante, et scelerisque ex. Aenean nec luctus arcu, sit amet dignissim nulla. Nunc vestibulum, quam in mollis vestibulum, dui urna scelerisque dolor, ac tincidunt elit tortor et lorem. Nam eu tortor quis elit tincidunt pellentesque. Pellentesque tempus non libero non porttitor.</p>
-
-      <p>Nulla malesuada, purus a eleifend ornare, libero sapien pulvinar lacus, vel feugiat nunc lorem tincidunt elit. Etiam egestas magna quis egestas pretium. Nulla elementum, metus et suscipit cursus, turpis turpis egestas risus, ut aliquet neque purus sed lectus. Vivamus eu nisi quis libero tincidunt rhoncus eu at mauris. Quisque diam enim, placerat eget purus id, facilisis bibendum ante. Morbi faucibus suscipit malesuada. Aliquam erat volutpat.</p>
-
-      <p>Pellentesque sed tempus nunc. Mauris molestie, elit nec laoreet aliquam, risus tortor elementum metus, a bibendum elit est ac nisi. Nunc ut massa a metus sollicitudin tristique. Nullam ut sem egestas, iaculis erat et, imperdiet justo. Curabitur consequat fringilla odio, ultrices sagittis velit pretium sed. Duis pharetra pharetra porttitor. Sed commodo est vel magna mattis dignissim vel eget ipsum. Vestibulum egestas risus eget ultricies hendrerit. Pellentesque non accumsan nunc.</p>
+      <p>Orci varius natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Nunc id diam quis nisl pellentesque ornare. Praesent luctus fermentum risus, id molestie justo accumsan et. Morbi bibendum quis ex in aliquet. Proin sit amet lorem nec mauris ornare tincidunt eget a diam. Duis mi neque, lobortis vel magna ac, condimentum tristique ipsum. Phasellus interdum tempor sem. Maecenas erat risus, consectetur ac malesuada id, rutrum eget libero. Phasellus mattis varius orci, ac tempus erat maximus vel. Suspendisse pharetra enim lacinia sapien tempus dignissim. Etiam vestibulum consequat porttitor. Praesent ac lacinia lectus. Vivamus eu posuere leo. Pellentesque hendrerit blandit sodales. Aliquam elementum, nibh quis finibus vulputate, mi purus ultricies nibh, eu tempus erat arcu nec turpis.</p>
     </div>
   )
 }
 
-function ComponenteParametro({ match }) {
+function SecondTab() {
   return(
-    <span>O ID entrado foi o: {match.params.someText}</span>
+    <div>
+      <Typography variant="h6">
+        Class aptent taciti sociosqu ad
+      </Typography>
+      <Typography variant="subtitle2" color='primary'>
+        Litora torquent per conubia nostra, per inceptos himenaeos.
+      </Typography>
+      <p>Morbi pellentesque leo eget sapien eleifend, id finibus mi laoreet. Phasellus ac tellus quis justo pharetra viverra nec vel ex. In ut fermentum arcu, sed congue purus. Etiam in suscipit purus. Nullam consequat diam quis consequat cursus. Aenean mattis id mauris at molestie. Aliquam ut molestie sapien. Maecenas placerat sem non tellus aliquam, a mollis mi mollis. Nam varius placerat mi, ut tincidunt lacus sodales at. Nulla vehicula nulla in tellus efficitur commodo. Integer vitae eros faucibus, laoreet mauris a, facilisis risus. Ut sodales ac ex consequat tempor. Fusce rhoncus dictum risus nec faucibus. Proin pharetra sapien sapien, vitae interdum ipsum faucibus at. Praesent ultricies mauris eget lectus tincidunt, ac viverra tellus fermentum.</p>
+    </div>
+  )
+}
+
+function ThirdTab() {
+  return(
+    <div>
+      <Typography variant="h6">
+        Morbi in risus lacinia ante dignissim dictum
+      </Typography>
+      <Typography variant="subtitle2" color='primary'>
+        "Cras non arcu eu tellus molestie tincidunt vitae id purus."
+      </Typography>
+      <p>Phasellus imperdiet sit amet neque vitae lacinia. Aenean mi arcu, posuere vitae libero vitae, porttitor sollicitudin leo. Vivamus sit amet purus viverra, scelerisque mauris non, dignissim elit. Mauris porta purus eu mattis tempus. Vivamus at condimentum lorem. Vivamus ornare diam nisl, quis consectetur lectus molestie in. Vivamus congue ante at sapien blandit pretium. Pellentesque tincidunt tincidunt dui in ornare. Aenean tempus, massa quis tristique pharetra, massa est interdum tellus, vitae rutrum risus nibh et elit. Cras tempor purus dui, sit amet bibendum justo viverra sit amet.</p>
+    </div>
+  )
+}
+
+function FourthTab({ match }) {
+  return(
+    <div>
+      <Typography variant="h6">
+        Change the parameter in the URL: {match.params.someText}
+      </Typography>
+      <p>Sed laoreet ut lorem eget ullamcorper. Fusce euismod massa sagittis felis consequat vulputate. Nullam porta lacinia suscipit. Nulla dignissim, lectus ac mattis interdum, mi nibh viverra nisl, sed elementum metus dui non neque. Cras imperdiet feugiat eleifend. Nullam ac mi elit. Integer ac ultrices leo, nec commodo libero. Vestibulum sed nisi eu tortor tempor placerat. Donec gravida dolor id orci laoreet vulputate. Proin interdum magna vitae sapien condimentum, eget semper est posuere. Donec ornare egestas mattis.</p>
+    </div>
   )
 }

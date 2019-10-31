@@ -29,7 +29,7 @@ const Menu = [
   {
     label: "Child Routes",
     pathname: "/childRoutes",
-    icon: "collections"
+    icon: "view_compact"
   }
 ];
 
