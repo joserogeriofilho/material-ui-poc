@@ -36,6 +36,14 @@ export function ChildRoutesPage({ classes, match }) {
   const handleTabChange = (event, tab) => {
     setSelectedTab(tab);
   }
+
+  const tabs = (
+    <Tabs variant="fullWidth" value={selectedTab} onChange={handleTabChange} aria-label="simple tabs example">
+      <Tab component={Link} to={`${match.url}/first`} label="First"/>
+      <Tab component={Link} to={`${match.url}/second`} label="Second"/>
+      <Tab component={Link} to={`${match.url}/third`} label="Third"/>
+    </Tabs>
+  );
     
   return (
     <DrawerTopBarLayout title={pageTitle}>
@@ -51,13 +59,9 @@ export function ChildRoutesPage({ classes, match }) {
 
           <Grid item xs={12}>
             <Paper className={classes.hidePaperxsDown}>
-              <Hidden xsDown>
+              <Hidden smDown>
                 <AppBar position="static">
-                  <Tabs value={selectedTab} onChange={handleTabChange} aria-label="simple tabs example">
-                    <Tab component={Link} to={`${match.url}/first`} label="First"/>
-                    <Tab component={Link} to={`${match.url}/second`} label="Second"/>
-                    <Tab component={Link} to={`${match.url}/third`} label="Third"/>
-                  </Tabs>
+                  {tabs}
                 </AppBar>
               </Hidden>
               <div className={classes.content}>
@@ -77,13 +81,9 @@ export function ChildRoutesPage({ classes, match }) {
           )} />
       </Container>
 
-      <Hidden smUp>
+      <Hidden mdUp>
         <AppBar className={classes.mobileTabs} position='fixed'>
-          <Tabs value={selectedTab} onChange={handleTabChange} aria-label="simple tabs example">
-            <Route value={selectedTab} index={0} path={`${match.path}/first`} component={FirstTab} />
-            <Route value={selectedTab} index={1} path={`${match.path}/second`} component={SecondTab} />
-            <Route value={selectedTab} index={2} path={`${match.path}/third`} component={ThirdTab} />
-          </Tabs>
+          {tabs}
         </AppBar>
       </Hidden>
     </DrawerTopBarLayout>
