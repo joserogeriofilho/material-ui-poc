@@ -1,21 +1,17 @@
 import React, { Component } from 'react'
 import { withRouter } from 'react-router-dom'
-import DrawerTopBarLayout   from '../layouts/DrawerTopBarLayout'
-import Grid                 from '@material-ui/core/Grid'
-import Typography           from '@material-ui/core/Typography'
-import Paper                from '@material-ui/core/Paper'
-import TextField            from '@material-ui/core/TextField'
-import Hidden               from '@material-ui/core/Hidden'
-import Button               from '@material-ui/core/Button'
-import IconButton           from '@material-ui/core/IconButton'
-import Icon                 from '@material-ui/core/Icon'
-import withStyles           from '@material-ui/styles/withStyles'
+import withStyles from '@material-ui/styles/withStyles'
+import { Button, Container, Grid, Hidden, Icon, IconButton, Paper, TextField, Typography } from '@material-ui/core'
+import DrawerTopBarLayout from '../layouts/DrawerTopBarLayout'
 import UserService from '../service/UserService';
 import { LoadingDialog } from '../components/LoadingDialog';
 import { AlertDialog } from '../components/AlertDialog';
 
 
 const styles = theme => ({
+  wrapper: {
+    padding: theme.spacing(3),
+  },
   paper: {
     padding: theme.spacing(3),
     [theme.breakpoints.down('xs')]: {
@@ -216,104 +212,103 @@ export class SingleUserPage extends Component {
     }
 
     return(
-      <DrawerTopBarLayout
-        returnTo={'/users'}
-        title={pageTitle}>
-        <Grid container spacing={3}>
-  
-          <Grid item xs={12}>
-            <Paper className={classes.paper}>
-              <Grid container spacing={2}>
+      <DrawerTopBarLayout returnTo={'/users'} title={pageTitle}>
+        <Container className={classes.wrapper}>
+          <Grid container spacing={3}>  
+            <Grid item xs={12}>
+              <Paper className={classes.paper}>
+                <Grid container spacing={2}>
 
-                <Hidden smDown>
-                  <Grid item xs={12} container justify='flex-start' alignItems='center'>
-                    <IconButton
-                      onClick={this.goBack}
-                      edge="start"
-                      aria-label="Return">
-                      <Icon>arrow_back</Icon>
-                    </IconButton>
-                    <Typography variant="h6" component="h3">
-                      {pageTitle}
-                    </Typography>
+                  <Hidden smDown>
+                    <Grid item xs={12} container justify='flex-start' alignItems='center'>
+                      <IconButton
+                        onClick={this.goBack}
+                        edge="start"
+                        aria-label="Return">
+                        <Icon>arrow_back</Icon>
+                      </IconButton>
+                      <Typography variant="h6" component="h3">
+                        {pageTitle}
+                      </Typography>
+                    </Grid>
+                  </Hidden>
+
+                  <Grid item xs={12} sm={6}>
+                    <TextField
+                      id="lastName"
+                      label="Last Name"
+                      value={values.lastName}
+                      onChange={this.handleChange}
+                      margin="dense"
+                      variant='outlined'
+                      helperText={lastNameErrorMsg}
+                      error={errors.lastName}
+                      fullWidth />
                   </Grid>
-                </Hidden>
-
-                <Grid item xs={12} sm={6}>
-                  <TextField
-                    id="lastName"
-                    label="Last Name"
-                    value={values.lastName}
-                    onChange={this.handleChange}
-                    margin="dense"
-                    variant='outlined'
-                    helperText={lastNameErrorMsg}
-                    error={errors.lastName}
-                    fullWidth />
+                  <Grid item xs={12} sm={6}>
+                    <TextField
+                      id="firstName"
+                      label="First Name"
+                      value={values.firstName}
+                      onChange={this.handleChange}
+                      margin="dense"
+                      variant="outlined"
+                      helperText={firstNameErrorMsg}
+                      error={errors.firstName}
+                      fullWidth />
+                  </Grid>
+                  <Grid item xs={12} sm={6}>
+                    <TextField
+                      id="userName"
+                      label="Username"
+                      value={values.userName}
+                      onChange={this.handleChange}
+                      margin="dense"
+                      variant="outlined"
+                      helperText={userNameErrorMsg}
+                      error={errors.userName}
+                      fullWidth />
+                  </Grid>
+                  <Grid item xs={12} sm={6}>
+                    <TextField
+                      id="email"
+                      label="E-mail"
+                      value={values.email}
+                      onChange={this.handleChange}
+                      margin="dense"
+                      variant="outlined"
+                      helperText={emailHelperText}
+                      error={errors.email}
+                      fullWidth />
+                  </Grid>
+                  <Grid item xs={12} justify="flex-end" container>
+                    <Button
+                      variant="contained"
+                      color="secondary"
+                      onClick={buttonClick} >
+                      {buttonLabel}
+                    </Button>
+                  </Grid>
                 </Grid>
-                <Grid item xs={12} sm={6}>
-                  <TextField
-                    id="firstName"
-                    label="First Name"
-                    value={values.firstName}
-                    onChange={this.handleChange}
-                    margin="dense"
-                    variant="outlined"
-                    helperText={firstNameErrorMsg}
-                    error={errors.firstName}
-                    fullWidth />
-                </Grid>
-                <Grid item xs={12} sm={6}>
-                  <TextField
-                    id="userName"
-                    label="Username"
-                    value={values.userName}
-                    onChange={this.handleChange}
-                    margin="dense"
-                    variant="outlined"
-                    helperText={userNameErrorMsg}
-                    error={errors.userName}
-                    fullWidth />
-                </Grid>
-                <Grid item xs={12} sm={6}>
-                  <TextField
-                    id="email"
-                    label="E-mail"
-                    value={values.email}
-                    onChange={this.handleChange}
-                    margin="dense"
-                    variant="outlined"
-                    helperText={emailHelperText}
-                    error={errors.email}
-                    fullWidth />
-                </Grid>
-                <Grid item xs={12} justify="flex-end" container>
-                  <Button
-                    variant="contained"
-                    color="secondary"
-                    onClick={buttonClick} >
-                    {buttonLabel}
-                  </Button>
-                </Grid>
-              </Grid>
-            </Paper>
+              </Paper>
+            </Grid>
           </Grid>
+        </Container>
 
-          <LoadingDialog open={loading} />
+        <LoadingDialog open={loading} />
 
-          <AlertDialog
-            open ={dialogState === 1}
-            title={"Success"}
-            message={successMessage}
-            handleDialogConfirm={this.handleDialogConfirm} />
+        <AlertDialog
+          open ={dialogState === 1}
+          title={"Success"}
+          message={successMessage}
+          handleDialogConfirm={this.handleDialogConfirm} />
 
-          <AlertDialog
-            open ={dialogState === 2}
-            title={"Error"}
-            message={"Something went wrong. Please, try again."}
-            handleDialogConfirm={this.handleDialogClose} />
+        <AlertDialog
+          open ={dialogState === 2}
+          title={"Error"}
+          message={"Something went wrong. Please, try again."}
+          handleDialogConfirm={this.handleDialogClose} />
   
-        </Grid>
       </DrawerTopBarLayout>
     );
   }

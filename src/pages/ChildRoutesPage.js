@@ -8,7 +8,7 @@ import { Route, Link } from 'react-router-dom'
 
 const styles = theme => ({
   wrapper: {
-    padding: theme.spacing(3, 0, 0, 0)
+    padding: theme.spacing(3)
   },
   hidePaperxsDown: {
     [theme.breakpoints.down('xs')]: {
@@ -47,9 +47,9 @@ export function ChildRoutesPage({ classes, match }) {
     
   return (
     <DrawerTopBarLayout title={pageTitle}>
-      <Container >        
-        <Grid className={classes.wrapper} container spacing={3}>
-          <Hidden xsDown>
+      <Container className={classes.wrapper}>        
+        <Grid container spacing={3}>
+          <Hidden smDown>
             <Grid item xs={12}>
               <Typography variant="h5" color='secondary'>
                 {pageTitle}

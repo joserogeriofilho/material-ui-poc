@@ -18,6 +18,9 @@ const styles = theme => ({
     width: '100%',
     height: '100%',
     overflowY: 'auto'
+  },
+  content: {
+    
   }
 });
 
@@ -50,7 +53,7 @@ class DrawerTopBarLayout extends Component {
               mobileMenuOpen={this.mobileMenuOpen}/>
           </Hidden>
 
-          <div id="content">
+          <div className={classes.content} id="content">
             {this.props.children}
           </div>
         </div>

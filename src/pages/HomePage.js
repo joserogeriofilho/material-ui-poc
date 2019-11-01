@@ -1,10 +1,8 @@
-import React, { Component } from 'react'
+import React from 'react'
 import { withRouter } from 'react-router-dom'
 import withStyles from '@material-ui/styles/withStyles';
 import DrawerTopBarLayout from '../layouts/DrawerTopBarLayout'
-import Grid from '@material-ui/core/Grid';
-import Typography from '@material-ui/core/Typography';
-import Hidden from '@material-ui/core/Hidden';
+import { Container, Grid, Hidden, Typography } from '@material-ui/core';
 
 
 const styles = theme => ({
@@ -18,19 +16,21 @@ const pageTitle = "Home";
 export function HomePage({ classes }) {
   return (
     <DrawerTopBarLayout title={pageTitle}>
-      <Grid className={classes.wrapper} container spacing={3}>
+      <Container className={classes.wrapper}>
+        <Grid container spacing={3}>
 
-        <Hidden xsDown>
-          <Grid item xs={12}>
-            <Typography variant="h5" color='secondary'>
-              {pageTitle}
-            </Typography>
-          </Grid>
-        </Hidden>
+          <Hidden smDown>
+            <Grid item xs={12}>
+              <Typography variant="h5" color='secondary'>
+                {pageTitle}
+              </Typography>
+            </Grid>
+          </Hidden>
 
-        <Grid item xs={12}>This is some content</Grid>
+          <Grid item xs={12}>This is some content</Grid>
 
-      </Grid>
+        </Grid>
+      </Container>
     </DrawerTopBarLayout>
   );
 }

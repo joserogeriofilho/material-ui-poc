@@ -2,7 +2,7 @@ import React, { Component } from 'react'
 import { Link, withRouter } from 'react-router-dom'
 
 import { debounce } from 'lodash';
-import { Fab, Grid, Hidden, Paper, TextField, Typography } from '@material-ui/core'
+import { Container, Fab, Grid, Hidden, Paper, TextField, Typography } from '@material-ui/core'
 import withStyles from '@material-ui/styles/withStyles'
 import AddIcon from '@material-ui/icons/Add';
 import DrawerTopBarLayout from '../layouts/DrawerTopBarLayout'
@@ -17,7 +17,7 @@ const DEBOUNCE_TIME = 500;
 
 const styles = theme => ({
   wrapper: {
-    padding: theme.spacing(3)
+    padding: theme.spacing(3),
   },
   paper: {
     margin: theme.spacing(3, 0, 5, 0),
@@ -148,61 +148,63 @@ export class UsersPage extends Component {
 
     return (
       <DrawerTopBarLayout title={pageTitle}>
-        <Grid className={classes.wrapper} container spacing={2}>
-          <Hidden smDown>
-            <Grid item xs={12}>
-              <Typography variant="h5" color='secondary'>
-                {pageTitle}
-              </Typography>
-            </Grid>
-          </Hidden>
-
-          <Grid item xs={12} sm={4}>
-            <ScoreCard icon="people_outline" label="Total users" value="26" />
-          </Grid>
-          <Grid item xs={6} sm={4}>
-            <ScoreCard icon="work_outline" label="Categories" value="3" />
-          </Grid>
-          <Grid item xs={6} sm={4}>
-            <ScoreCard icon="cake_outline" label="Mean age" value="27,6" />
-          </Grid>
-
-          <Grid item xs={12}>
-            <Paper className={classes.paper}>
-              <Grid container spacing={2}>
-                <Grid container item xs={12} alignItems="center">
-                  <Grid item xs={6}>
-                    <Typography variant="h6" component="h3">
-                      List and Search
-                    </Typography>
-                  </Grid>
-                  <Grid item xs={6}>
-                    <TextField
-                      id="usersSearch"
-                      label="Search"
-                      value={search}
-                      onChange={e => this.handleSearch(e.target.value)}
-                      margin="dense"
-                      variant="outlined"
-                      fullWidth />
-                  </Grid>
-                </Grid>
-                <Grid item xs={12}>
-                  <UserTable
-                    users={users}
-                    page={page}
-                    totalCount={totalCount}
-                    rowsPerPage={rowsPerPage}
-                    isLoading={loadingUsers}
-                    error={error}
-                    onDeleteUser={this.handleDeleteUser}
-                    onChangePage={this.handleChangePage}
-                    onChangeRowsPerPage={this.handleChangeRowsPerPage} />
-                </Grid>
+        <Container className={classes.wrapper}>
+          <Grid container spacing={2}>
+            <Hidden smDown>
+              <Grid item xs={12}>
+                <Typography variant="h5" color='secondary'>
+                  {pageTitle}
+                </Typography>
               </Grid>
-            </Paper>
+            </Hidden>
+
+            <Grid item xs={12} sm={4}>
+              <ScoreCard icon="people_outline" label="Total users" value="26" />
+            </Grid>
+            <Grid item xs={6} sm={4}>
+              <ScoreCard icon="work_outline" label="Categories" value="3" />
+            </Grid>
+            <Grid item xs={6} sm={4}>
+              <ScoreCard icon="cake_outline" label="Mean age" value="27,6" />
+            </Grid>
+
+            <Grid item xs={12}>
+              <Paper className={classes.paper}>
+                <Grid container spacing={2}>
+                  <Grid container item xs={12} alignItems="center">
+                    <Grid item xs={6}>
+                      <Typography variant="h6" component="h3">
+                        List and Search
+                      </Typography>
+                    </Grid>
+                    <Grid item xs={6}>
+                      <TextField
+                        id="usersSearch"
+                        label="Search"
+                        value={search}
+                        onChange={e => this.handleSearch(e.target.value)}
+                        margin="dense"
+                        variant="outlined"
+                        fullWidth />
+                    </Grid>
+                  </Grid>
+                  <Grid item xs={12}>
+                    <UserTable
+                      users={users}
+                      page={page}
+                      totalCount={totalCount}
+                      rowsPerPage={rowsPerPage}
+                      isLoading={loadingUsers}
+                      error={error}
+                      onDeleteUser={this.handleDeleteUser}
+                      onChangePage={this.handleChangePage}
+                      onChangeRowsPerPage={this.handleChangeRowsPerPage} />
+                  </Grid>
+                </Grid>
+              </Paper>
+            </Grid>
           </Grid>
-        </Grid>
+        </Container>
 
         <LoadingDialog open={this.state.loadingDelete} />
 
