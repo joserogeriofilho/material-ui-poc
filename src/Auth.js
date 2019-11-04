@@ -1,13 +1,14 @@
 function login(bearer) {
-  localStorage.setItem('bearer', bearer);
+  localStorage.setItem('Bearer', bearer);
 }
 
 function logout() {
-  localStorage.setItem('bearer', '');
+  localStorage.setItem('Bearer', '');
+  document.location.href = "/";
 }
 
 function getAccessToken() {
-  return localStorage.getItem('bearer');
+  return localStorage.getItem('Bearer');
 }
 
 export { login, logout, getAccessToken }

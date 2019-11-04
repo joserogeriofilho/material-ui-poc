@@ -132,14 +132,3 @@ function ThirdTab() {
     </div>
   )
 }
-
-function FourthTab({ match }) {
-  return(
-    <div>
-      <Typography variant="h6">
-        Change the parameter in the URL: {match.params.someText}
-      </Typography>
-      <p>Sed laoreet ut lorem eget ullamcorper. Fusce euismod massa sagittis felis consequat vulputate. Nullam porta lacinia suscipit. Nulla dignissim, lectus ac mattis interdum, mi nibh viverra nisl, sed elementum metus dui non neque. Cras imperdiet feugiat eleifend. Nullam ac mi elit. Integer ac ultrices leo, nec commodo libero. Vestibulum sed nisi eu tortor tempor placerat. Donec gravida dolor id orci laoreet vulputate. Proin interdum magna vitae sapien condimentum, eget semper est posuere. Donec ornare egestas mattis.</p>
-    </div>
-  )
-}
