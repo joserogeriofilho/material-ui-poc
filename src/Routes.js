@@ -1,7 +1,7 @@
 import React                            from 'react'
 import HomePage                         from './pages/HomePage'
 import UsersPage                        from './pages/UsersPage'
-import ChildRoutesPage                     from './pages/ChildRoutesPage'
+import NestedRoutesPage                     from './pages/NestedRoutesPage'
 import SingleUserPage                   from './pages/SingleUserPage'
 import LoginPage                        from './pages/LoginPage'
 import { getAccessToken }               from './Auth'
@@ -17,7 +17,7 @@ export default props => (
     <Switch>
       <PrivateRoute exact path='/' component={ HomePage } />
       <PrivateRoute exact path='/users' component={ UsersPage } />
-      <PrivateRoute path='/childRoutes' component={ ChildRoutesPage } />
+      <PrivateRoute path='/nestedroutes' component={ NestedRoutesPage } />
       <PrivateRoute path='/users/single/:id' component={ SingleUserPage } />
       <PrivateRoute path='/users/single' component={ SingleUserPage } />
       <Route exact path='/login' component={ LoginPage } />

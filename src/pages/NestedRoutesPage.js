@@ -29,9 +29,9 @@ const styles = theme => ({
   }
 });
 
-export function ChildRoutesPage({ classes, match }) {
+export function NestedRoutesPage({ classes, match }) {
   const [selectedTab, setSelectedTab] = useState(0);
-  const pageTitle = "Child Routes";
+  const pageTitle = "Nested Routes";
 
   const handleTabChange = (event, tab) => {
     setSelectedTab(tab);
@@ -91,7 +91,7 @@ export function ChildRoutesPage({ classes, match }) {
 
 }
 
-export default withRouter(withStyles(styles)(ChildRoutesPage));
+export default withRouter(withStyles(styles)(NestedRoutesPage));
 
 
 function FirstTab() {

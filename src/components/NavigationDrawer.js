@@ -18,8 +18,8 @@ const MENU_ITEMS = [
     icon: "person"
   },
   {
-    label: "Child Routes",
-    pathname: "/childRoutes",
+    label: "Nested Routes",
+    pathname: "/nestedroutes",
     icon: "view_compact"
   }
 ];
@@ -119,7 +119,7 @@ export function NavigationDrawer(props){
       <div>
         <div className={classes.drawerHeader}>
           <Typography variant="h6" className={classes.drawerTitle}>
-            MATERIAL-UI SHOWCASE
+            MATERIAL-UI POC
           </Typography>
           <div className={classes.userInfo}>
             <span className={classes.userName}>John Doe</span>
