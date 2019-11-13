@@ -1,7 +1,7 @@
 <p align="center"><img alt="Material-UI POC" src="https://user-images.githubusercontent.com/12038461/68550201-7abcb800-03df-11ea-96c7-1adc31d2fd3a.png"></p>
 
 # Material-UI Proof of Concept
-A simple proof of concept for a React application built with the Material-UI library and Redux state container.
+A simple proof of concept React application built with Material-UI components and Redux.
 
 ### Main Technologies
 * React v16.8
