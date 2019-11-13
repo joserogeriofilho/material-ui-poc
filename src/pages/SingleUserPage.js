@@ -10,7 +10,10 @@ import { AlertDialog } from '../components/AlertDialog';
 
 const styles = theme => ({
   wrapper: {
-    padding: theme.spacing(3),
+    padding: theme.spacing(3, 5, 5, 5),
+    [theme.breakpoints.down('xs')]: {
+      padding: theme.spacing(3)
+    }
   },
   paper: {
     padding: theme.spacing(3),

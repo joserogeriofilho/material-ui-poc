@@ -8,7 +8,11 @@ import { Route, Link } from 'react-router-dom'
 
 const styles = theme => ({
   wrapper: {
-    padding: theme.spacing(3)
+    padding: theme.spacing(3, 5, 5, 5),
+    marginTop: theme.spacing(1),
+    [theme.breakpoints.down('xs')]: {
+      padding: theme.spacing(3)
+    }
   },
   hidePaperxsDown: {
     [theme.breakpoints.down('xs')]: {

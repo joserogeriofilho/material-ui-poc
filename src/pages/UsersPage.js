@@ -17,7 +17,11 @@ const DEBOUNCE_TIME = 500;
 
 const styles = theme => ({
   wrapper: {
-    padding: theme.spacing(3),
+    padding: theme.spacing(3, 5, 5, 5),
+    marginTop: theme.spacing(1),
+    [theme.breakpoints.down('xs')]: {
+      padding: theme.spacing(3)
+    }
   },
   paper: {
     margin: theme.spacing(3, 0, 5, 0),
@@ -25,6 +29,7 @@ const styles = theme => ({
     [theme.breakpoints.down('xs')]: {
       backgroundColor: 'transparent',
       boxShadow: 'none',
+      margin: 0,
       padding: theme.spacing(0)
     }
   },
@@ -149,7 +154,7 @@ export class UsersPage extends Component {
     return (
       <DrawerTopBarLayout title={pageTitle}>
         <Container className={classes.wrapper}>
-          <Grid container spacing={2}>
+          <Grid container spacing={3}>
             <Hidden smDown>
               <Grid item xs={12}>
                 <Typography variant="h5" color='secondary'>

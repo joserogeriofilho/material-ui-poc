@@ -8,6 +8,9 @@ import { makeStyles } from '@material-ui/core/styles';
 
 
 const styles = makeStyles(theme => ({
+  root: {
+    maxHeight: '60px'
+  },
   linkButton: {
     color: 'white'
   }
@@ -37,7 +40,7 @@ export function TopBar(props) {
   );
 
   return(
-    <AppBar position="relative">
+    <AppBar position="relative" className={classes.root}>
       <Toolbar>
         {typeof props.returnTo === 'undefined' ? menuButton : returnButton}
 
