@@ -8,12 +8,12 @@ import { getAccessToken }               from './Auth'
 import {
   Route,
   Switch,
-  BrowserRouter,
+  HashRouter,
   Redirect
 } from 'react-router-dom'
 
 export default props => (
-  <BrowserRouter>
+  <HashRouter>
     <Switch>
       <PrivateRoute exact path='/' component={ HomePage } />
       <PrivateRoute exact path='/users' component={ UsersPage } />
@@ -22,7 +22,7 @@ export default props => (
       <PrivateRoute path='/users/single' component={ SingleUserPage } />
       <Route exact path='/login' component={ LoginPage } />
     </Switch>
-  </BrowserRouter>
+  </HashRouter>
 )
 
 function PrivateRoute({ component: Component, ...rest }) {

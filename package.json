@@ -38,5 +38,6 @@
   },
   "devDependencies": {
     "dotenv": "^8.0.0"
-  }
+  },
+  "homepage": "."
 }

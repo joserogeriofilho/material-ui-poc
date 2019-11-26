@@ -4,7 +4,7 @@ function login(bearer) {
 
 function logout() {
   localStorage.setItem('Bearer', '');
-  document.location.href = "/";
+  document.location.href = "";
 }
 
 function getAccessToken() {
