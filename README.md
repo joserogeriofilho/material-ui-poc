@@ -21,7 +21,7 @@ A simple proof of concept React application built with Material-UI components an
 ## Live Demo
 If in a first attempt the application fails to load showing an **application error page**, please try refreshing the browser since the Heroku plataform put applications to sleep after some time of inactivity. The second request should work wihtout any problem.
 
-https://material-ui-showcase.herokuapp.com/
+https://joserogeriofilho.github.io/material-ui-poc
 
 ## The Author
 * [Behance](https://www.behance.net/joserogeriofilho)
