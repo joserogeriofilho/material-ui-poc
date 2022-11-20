@@ -1,4 +1,6 @@
-<p align="center"><img alt="Material-UI POC" src="https://user-images.githubusercontent.com/12038461/68550201-7abcb800-03df-11ea-96c7-1adc31d2fd3a.png"></p>
+<p align="center">
+<a target="_blank" href="https://joserogeriofilho.github.io/material-ui-poc"><img alt="Material-UI POC" src="https://user-images.githubusercontent.com/12038461/68550201-7abcb800-03df-11ea-96c7-1adc31d2fd3a.png"></a>
+</p>
 
 # Material-UI Proof of Concept
 A simple proof of concept React application built with Material-UI components and Redux.
